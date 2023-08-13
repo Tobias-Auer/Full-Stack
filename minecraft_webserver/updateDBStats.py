@@ -1,10 +1,7 @@
-import json
-import os
 import sqlite3
+import os
+import json
 
-import sqlite3
-import os
-import json
 
 class StatisticsUpdater:
     def __init__(self, db_file):
@@ -42,6 +39,7 @@ class StatisticsUpdater:
                 """
 
         self.cursor.execute(create_table_query)
+
     def update_game_specific_data(self, table_name, keys, values):
         for key, value in zip(keys, values):
             update_query = f"""
@@ -95,7 +93,6 @@ class StatisticsUpdater:
             data = json.load(f)
             self.update_game_specific_tables(uuid, data)
 
-            
     def update_player_specific_tables_from_file(self):
         ...
 
