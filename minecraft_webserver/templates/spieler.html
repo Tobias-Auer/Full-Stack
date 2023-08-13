@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spieler Übersicht</title>
+
+  <link rel="stylesheet" href="./static/css/header.css" />
+  <link rel="stylesheet" href="./static/css/index.css" />
+
+  <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+</head>
+
+<body>
+  <header class="sticky">
+    <nav>
+      <ul>
+        <li>
+          <img id="logo" src="./static/images/logo2.png" alt="logo" height="40" />
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="dropbtn" onclick="window.location.href=`/`">
+              Startseite
+            </button>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="dropbtn current">Spieler</button>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="dropbtn">▼ Prefixes</button>
+            <div class="dropdown-content">
+              <a href="#">Erstellen</a>
+              <a href="#">Ändern</a>
+              <a href="#">Beitreten</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="dropbtn">Spieler Report</button>
+          </div>
+        </li>
+        <!-- Code for flask application -->
+        <li>{{ loginVar | safe}}</li>
+
+        <li>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="content">
+    <!-- content here!! -->
+    <div style="height: 20cm" class="text">
+      CONTENT
+      <br />
+
+      <br />
+    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
+      <br>
+
+    </div>
+
+  </div>
+  <footer>
+    <nav>
+      <ul>
+        <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+        <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+        <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+        <li><a href="#">🡅</a></li>
+      </ul>
+    </nav>
+  </footer>
+</body>
+
+</html>

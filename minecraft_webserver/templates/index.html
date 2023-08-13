@@ -1,0 +1,165 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css">-->
+<!--  <style>-->
+<!--    .list-group-item {-->
+<!--      border: none;-->
+<!--      border-radius: 10px;-->
+<!--      background-color: #f8f9fa;-->
+<!--      margin-bottom: 10px;-->
+<!--      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      justify-content: space-between;-->
+<!--    }-->
+<!--    .list-group-item:hover {-->
+<!--      background-color: #e9ecef;-->
+<!--    }-->
+<!--    .list-item-content {-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      flex: 1;-->
+<!--    }-->
+<!--    .list-item-text {-->
+<!--      margin: 0 15px;-->
+<!--    }-->
+<!--    .list-item-image {-->
+<!--      max-width: 50px;-->
+<!--      border-radius: 50%;-->
+<!--      margin-right: 15px;-->
+<!--      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);-->
+<!--    }-->
+<!--    .flag-icon {-->
+<!--      font-size: 24px;-->
+<!--      cursor: pointer;-->
+<!--      transition: color 0.3s; /* Füge eine Übergangsanimation hinzu */-->
+<!--    }-->
+<!--    .flag-icon:hover {-->
+<!--      color: red; /* Ändere die Farbe beim Hover */-->
+<!--    }-->
+<!--  </style>-->
+<!--  <title>Liste mit Bootstrap</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div class="container mt-5">-->
+<!--  <ul class="list-group">-->
+<!--    <li class="list-group-item">-->
+<!--      <a href="ziel-eintrag1.html" class="text-decoration-none list-item-content">-->
+<!--        <img src="https://via.placeholder.com/50" alt="Bild 1" class="list-item-image">-->
+<!--        <div class="list-item-text">Eintrag 1</div>-->
+<!--        <a href="ziel-flagge1.html" class="text-decoration-none flag-icon">⚐</a>-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    <li class="list-group-item">-->
+<!--      <a href="ziel-eintrag2.html" class="text-decoration-none list-item-content">-->
+<!--        <img src="https://via.placeholder.com/50" alt="Bild 2" class="list-item-image">-->
+<!--        <div class="list-item-text">Eintrag 2</div>-->
+<!--        <a href="ziel-flagge2.html" class="text-decoration-none flag-icon">⚐</a>-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    &lt;!&ndash; Weitere Einträge hier &ndash;&gt;-->
+<!--  </ul>-->
+<!--</div>-->
+
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en" id="top">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Startseite</title>
+
+  <link rel="stylesheet" href="./static/css/header.css" />
+  <link rel="stylesheet" href="./static/css/index.css" />
+
+  <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+</head>
+
+<body>
+  <header class="sticky">
+    <nav>
+      <ul>
+        <li>
+          <img id="logo" src="./static/images/logo2.png" alt="logo" height="40" />
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="dropbtn current">
+              Startseite
+            </button>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="dropbtn"  onclick="window.location.href=`/spieler`">Spieler</button>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="dropbtn">▼ Prefixes</button>
+            <div class="dropdown-content">
+              <a href="#">Erstellen</a>
+              <a href="#">Ändern</a>
+              <a href="#">Beitreten</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button class="dropbtn">Spieler Report</button>
+          </div>
+        </li>
+        <!-- Code for flask application -->
+        <li>{{ loginVar | safe}}</li>
+
+        <li>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="content">
+    <!-- content here!! -->
+    <div style="height: 20cm" class="text">
+      CONTENT
+      <br />
+      <br />
+      CONTENT
+      <br />
+    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
+      <br />
+      CONTENT
+      <br />
+      <br />
+      CONTENT
+      <br />
+    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
+      <br>
+    </div>
+
+  </div>
+  <footer>
+    <nav>
+      <ul>
+        <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+        <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+        <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+        <li><a href="#">🡅</a></li>
+      </ul>
+    </nav>
+  </footer>
+</body>
+
+</html>
