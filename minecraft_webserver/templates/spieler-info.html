@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Startseite</title>
+  <title>Spieler Übersicht</title>
 
   <link rel="stylesheet" href="./static/css/header.css" />
   <link rel="stylesheet" href="./static/css/index.css" />
@@ -22,14 +22,14 @@
         </li>
         <li>
           <div class="dropdown">
-            <button class="dropbtn current">
+            <button class="dropbtn" onclick="window.location.href=`/`">
               Startseite
             </button>
           </div>
         </li>
         <li>
           <div class="dropdown">
-            <button class="dropbtn"  onclick="window.location.href=`/spieler`">Spieler</button>
+            <button class="dropbtn current">Spieler</button>
           </div>
         </li>
         <li>
@@ -44,37 +44,33 @@
         </li>
         <li>
           <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href='/report'">Spieler Report</button>
+            <button class="dropbtn" onclick="window.location.href='/report'">
+              Spieler Report
+            </button>
           </div>
         </li>
         <!-- Code for flask application -->
         <li>{{ loginVar | safe}}</li>
 
-        <li>
-        </li>
+        <li></li>
       </ul>
     </nav>
   </header>
-
   <div class="content">
+    {% for result in results %}
+        <tr>
+            <td></td>
+            <td>{{result[1]}}</td>
+            <td>{{result[2]}}</td>
+        </tr>
+    {% endfor %}
     <!-- content here!! -->
-    <div style="height: 20cm" class="text">
-      CONTENT
-      <br />
-      <br />
-      CONTENT
-      <br />
-    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
-      <br />
-      CONTENT
-      <br />
-      <br />
-      CONTENT
-      <br />
-    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
-      <br>
-    </div>
+    Infos zu {{user_name}}<br><img src='https://crafatar.com/renders/body/{{uuid}}?overlay'>
+    <b>Status: {{status}}</b>
 
+      </ul>
+    </div>
+    <div class="text"></div>
   </div>
   <footer>
     <nav>
@@ -87,5 +83,4 @@
     </nav>
   </footer>
 </body>
-
 </html>
