@@ -2,6 +2,8 @@ import os
 from zipfile import ZipFile
 from datetime import datetime
 
+import requests
+
 import dataBaseOperations
 
 
@@ -84,5 +86,66 @@ def doShutdownRoutine(logger):
     logger.info("Started shutdown")
 
 
+class DatabaseApi:
+    def __init__(self, logger=None):
+        self.logger = logger
+
+    def get_all_uuids_from_db(self):
+        unique_uuids = []
+        try:
+            all_tables = dataBaseOperations.list_all_tables()
+
+            for table in all_tables:
+                uuid = str(table[0]).split('~')[0]
+                if str(uuid) not in unique_uuids:
+                    unique_uuids.append(str(uuid))
+        except Exception as e:
+            self.logger.error(e)
+            if self.logger is None:
+                print(e)
+        finally:
+            return unique_uuids
+
+class MinecraftApi:
+
+    def __init__(self, logger=None):
+        self.logger = logger
+
+    def get_username_from_uuid(self, UUID):
+        URL = f"https://api.mojang.com/user/profile/{UUID}"
+        user_name = None
+        try:
+            response = requests.get(URL)
+            if response.status_code == 200:
+                data = response.json()
+                user_name = data.get("name")
+        except Exception as e:
+            self.logger.error(e)
+            if self.logger is None:
+                print(e)
+        finally:
+            return user_name
+
+    def get_uuid_from_username(self, USERNAME):
+        uuid = None
+        URL = f"https://api.mojang.com/users/profiles/minecraft/{USERNAME}"
+        try:
+
+            response = requests.get(URL)
+            if response.status_code == 200:
+                data = response.json()
+                uuid = data.get("id")
+        except Exception as e:
+            self.logger.error(e)
+            if self.logger is None:
+                print(e)
+        finally:
+            return uuid
+
+
 if __name__ == '__main__':
-    makeBackup()
+    api = MinecraftApi()
+    print(api.get_uuid_from_username("_Tobias4444"))
+    print(api.get_username_from_uuid("4ebe5f6fc23143159d60097c48cc6d30"))
+    dataApi = DatabaseApi()
+    dataApi.get_all_uuids_from_db()

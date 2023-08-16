@@ -67,6 +67,12 @@ a.current2 {
   border: none;
 }
 
+header {
+  position: relative;
+  margin-top: -16px;
+  z-index: 999; /* Erhöhen Sie den z-index-Wert, um den Header über allem anderen Inhalt anzuzeigen */
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -78,9 +84,7 @@ a.current2 {
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
 }
-
 .dropdown-content a {
   color: black;
   padding: 12px 16px;

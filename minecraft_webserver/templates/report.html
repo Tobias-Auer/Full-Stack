@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" id="top">
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Startseite</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./static/css/header.css" />
+    <link rel="stylesheet" href="./static/css/index.css" />
 
-  <link rel="stylesheet" href="./static/css/header.css" />
-  <link rel="stylesheet" href="./static/css/index.css" />
-
-  <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+    <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+    <title>Spieler melden</title>
 </head>
-
 <body>
   <header class="sticky">
     <nav>
@@ -22,14 +19,14 @@
         </li>
         <li>
           <div class="dropdown">
-            <button class="dropbtn current">
+            <button class="dropbtn" onclick="window.location.href=`/`">
               Startseite
             </button>
           </div>
         </li>
         <li>
           <div class="dropdown">
-            <button class="dropbtn"  onclick="window.location.href=`/spieler`">Spieler</button>
+            <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
           </div>
         </li>
         <li>
@@ -44,7 +41,7 @@
         </li>
         <li>
           <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href='/report'">Spieler Report</button>
+            <button class="dropbtn current">Spieler Report</button>
           </div>
         </li>
         <!-- Code for flask application -->

@@ -1,0 +1,53 @@
+.list-group-item {
+  border: none;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list-group-item:hover {
+  background-color: #e9ecef;
+}
+.list-item-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.list-item-text {
+  margin: 0 15px;
+  text-align: right;
+}
+.list-item-image {
+  max-width: 50px;
+  border-radius: 25%;
+  margin-right: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.flag-icon {
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.5s;
+}
+.flag-icon:hover {
+  color: red;
+}
+.status-text-Online{
+  color: green;
+  border: green;
+  border-style: double;
+  margin-right: 80px;
+  padding: 0.5em;
+}
+.status-text-right {
+  margin-left: auto;
+}
+.status-text-Offline{
+  color: rgb(255, 0, 0);
+  border: red;
+  border-style: double;
+  margin-right: 80px;
+  padding: 0.5em;
+}

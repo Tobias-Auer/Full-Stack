@@ -2,7 +2,9 @@ import os
 import sqlite3
 import threading
 import time
-from flask import Flask, render_template
+
+import requests as requests
+from flask import Flask, render_template, request
 import dataBaseOperations
 import utils
 
@@ -24,6 +26,9 @@ file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
 logger.addHandler(stdout_handler)
+# #####################################Class Setups################################################
+minecraftApi = utils.MinecraftApi(logger=logger)
+databasApi = utils.DatabaseApi(logger=logger)
 # #####################################Flask setup#################################################
 app = Flask(__name__)
 logger.info('Starting')
@@ -36,8 +41,31 @@ def index_route():
 
 
 @app.route('/spieler')
-def spieler_overview_route():
-    return render_template("spieler.html")
+def player_overview_route():
+    status = "Offline"  # Todo: Get correct status
+    user_name = request.args.get('player')
+
+    if user_name:
+        uuid = minecraftApi.get_uuid_from_username(user_name)
+        return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status)
+
+    all_users = []
+    combined_users_data = []
+    all_uuids = databasApi.get_all_uuids_from_db()
+    for uuid in all_uuids:
+        user_name = minecraftApi.get_username_from_uuid(uuid)
+        all_users.append(user_name)
+        if user_name is None:
+            print("No username to " + uuid)
+
+    for i in range(len(all_users)):
+        combined_users_data.append([all_users[i], all_uuids[i]])
+    return render_template("spieler.html", results=combined_users_data, status=status)
+
+
+@app.route('/report')
+def report_player_route():
+    return render_template("report.html")
 
 
 def check_shutdown():
