@@ -1,15 +1,12 @@
-import os
-import sqlite3
+import logging
+import sys
 import threading
 import time
 
-import requests as requests
 from flask import Flask, render_template, request
+
 import dataBaseOperations
 import utils
-
-import logging
-import sys
 
 # ################################Basic Logging settings###############################################
 logger = logging.getLogger()
@@ -29,6 +26,8 @@ logger.addHandler(stdout_handler)
 # #####################################Class Setups################################################
 minecraftApi = utils.MinecraftApi(logger=logger)
 databasApi = utils.DatabaseApi(logger=logger)
+backupApi = utils.BackupApi(logger=logger)
+mixedApi = utils.MixedUtilsApi(logger=logger)
 # #####################################Flask setup#################################################
 app = Flask(__name__)
 logger.info('Starting')
@@ -69,9 +68,11 @@ def report_player_route():
 
 
 def check_shutdown():
+    print("Start check loop")
     while True:
+        print("Looping thru loop")
         if dataBaseOperations.checkForKey("meta", "doAction", "shutdown"):
-            utils.doShutdownRoutine(logger)
+            mixedApi.doShutdownRoutine()
             break
         time.sleep(5)
 
@@ -79,4 +80,4 @@ def check_shutdown():
 if __name__ == '__main__':
     thread = threading.Thread(target=check_shutdown)
     thread.start()
-    app.run(host="0.0.0.0", port=80, threaded=True, debug=True)
+    app.run(host="0.0.0.0", port=80, threaded=True, debug=True, use_reloader=False)

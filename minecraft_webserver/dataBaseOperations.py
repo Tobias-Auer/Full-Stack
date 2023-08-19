@@ -19,10 +19,6 @@ def kill(conn, cursor):
     conn.close()
 
 
-def findKey(table, key):
-    conn, cursor = init()
-
-
 def list_all_tables():
     conn, cursor = init(True)
     query = "SELECT name FROM sqlite_schema WHERE type = 'table' AND name NOT LIKE 'sqlite_%'"
