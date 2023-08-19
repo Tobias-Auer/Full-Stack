@@ -3533,3 +3533,19 @@
 08-16-2023 23:39:53 | INFO | 127.0.0.1 - - [16/Aug/2023 23:39:53] "[36mGET /static/css/header.css HTTP/1.1[0m" 304 -
 08-16-2023 23:39:53 | INFO | 127.0.0.1 - - [16/Aug/2023 23:39:53] "[36mGET /static/css/index.css HTTP/1.1[0m" 304 -
 08-16-2023 23:39:53 | INFO | 127.0.0.1 - - [16/Aug/2023 23:39:53] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+08-19-2023 19:46:02 | INFO | Starting
+08-19-2023 19:46:02 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+08-19-2023 19:46:02 | INFO | [33mPress CTRL+C to quit[0m
+08-19-2023 19:46:02 | INFO |  * Restarting with stat
+08-19-2023 19:46:03 | INFO | Starting
+08-19-2023 19:46:03 | WARNING |  * Debugger is active!
+08-19-2023 19:46:03 | INFO |  * Debugger PIN: 513-868-157
+08-19-2023 19:48:47 | INFO | Starting
+08-19-2023 19:48:47 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+08-19-2023 19:48:47 | INFO | [33mPress CTRL+C to quit[0m
