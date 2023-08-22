@@ -34,7 +34,7 @@
 .flag-icon:hover {
   color: red;
 }
-.status-text-Online{
+.status-text-online{
   color: green;
   border: green;
   border-style: double;
@@ -44,7 +44,7 @@
 .status-text-right {
   margin-left: auto;
 }
-.status-text-Offline{
+.status-text-offline{
   color: rgb(255, 0, 0);
   border: red;
   border-style: double;

@@ -70,13 +70,14 @@
     {% endfor %}
     <!-- content here!! -->
     <div class="container mt-5">
+      {{status}}
       {% for result in results %}
       <ul class="list-group">
         <li class="list-group-item">
           <a href="/spieler?player={{result[0]}}" class="text-decoration-none list-item-content">
             <img src="https://crafatar.com/avatars/{{result[1]}}?default=MHF_Steve&overlay" alt="player_head" class="list-item-image" />
             <div class="list-item-text">{{result[0]}}</div>
-            <b class="status-text-{{ status | safe }} status-text-right">{{ status | safe }}</b>
+            <b class="status-text-{{ status[loop.index-1] | safe }} status-text-right">{{ status[loop.index-1] | safe }}</b>
           </a><a href="/report?player={{result[1]}}" class="text-decoration-none flag-icon">⚐</a>
         </li>
 {% endfor %}
