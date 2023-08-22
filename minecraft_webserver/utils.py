@@ -8,10 +8,18 @@ import dataBaseOperations
 
 
 class BackupApi:
+    """
+    Class for Backup
+    """
     def __init__(self, logger=None):
         self.logger = logger
 
     def makeBackup(self):
+        """
+        If called, the function will create a backup from the paths defined in "backupPaths"
+
+        :return: Returns False if the Backup failed otherwise returns True
+        """
         self.logger.info("Creating backup")
         base_path = r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1"
         backupPaths = [r"\logs",
@@ -118,6 +126,29 @@ class DatabaseApi:
         finally:
             return unique_uuids
 
+    def get_user_status(self, user_uuid):
+        status = dataBaseOperations.get_player_status(user_uuid)
+        if type(status) != str:
+            status = "dbError"
+        return status
+
+    def check_for_status(self):
+        status_list = dataBaseOperations.return_complete_column("status", "status")
+        for status in status_list:
+            if status[0] is None or "~" not in status[0]:
+                print(f"Skipped status: {status}")
+                continue
+            print("Status:" + str(status))
+            status = status[0].split("~")
+            str(status[0]).replace("-","")
+            print(f"Updating player status for player: {status[0]} to {status[1]}")
+            self.__update_player_status(status[0], status[1])
+            dataBaseOperations.delete_specific_key("status", "status", f"{status[0]}~{status[1]}")
+
+    @staticmethod
+    def __update_player_status(player_uuid, status):
+        dataBaseOperations.write_player_status(player_uuid, status)
+
 
 class MinecraftApi:
 
@@ -162,3 +193,5 @@ if __name__ == '__main__':
     print(api.get_username_from_uuid("4ebe5f6fc23143159d60097c48cc6d30"))
     dataApi = DatabaseApi()
     dataApi.get_all_uuids_from_db()
+    dataApi.check_for_status()
+    print(dataApi.get_user_status("_Tobias4444"))
