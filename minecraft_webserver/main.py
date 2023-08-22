@@ -106,12 +106,11 @@ def check_db_events():
 
         # Check for shutdown action in the database
         if dataBaseOperations.checkForKey("meta", "doAction", "shutdown"):
-            mixedApi.doShutdownRoutine()
+            mixedApi.do_shutdown_routine()
             break
 
         # Check player statuses in the database
         databaseApi.check_for_status()
-
         time.sleep(5)
 
 

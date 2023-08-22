@@ -1,124 +1,151 @@
 import os
-from zipfile import ZipFile
 from datetime import datetime
+from zipfile import ZipFile
 
 import requests
 
 import dataBaseOperations
 
 
-class BackupApi:
+class BackupApi:  # Untested optimized version
     """
-    Class for Backup
+    Class for handling backups.
     """
+
     def __init__(self, logger=None):
+        """
+        Initialize the BackupApi instance.
+
+        :param logger: Logger object for logging
+        """
         self.logger = logger
 
-    def makeBackup(self):
+    def make_backup(self):
         """
-        If called, the function will create a backup from the paths defined in "backupPaths"
+        Create a backup from the paths defined in "backupPaths".
 
-        :return: Returns False if the Backup failed otherwise returns True
+        :return: True if the backup was successful, otherwise False.
         """
         self.logger.info("Creating backup")
         base_path = r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1"
-        backupPaths = [r"\logs",
-                       r"\world",
-                       r"\world_nether",
-                       r"\world_the_end",
-                       r"\plugins"]
-        targetPath = fr"E:\backups_mc\{datetime.now().strftime('%Y-%m-%d %H.%M.%S')}"
+        backup_paths = [r"\logs", r"\world", r"\world_nether", r"\world_the_end", r"\plugins"]
+        target_path = fr"E:\backups_mc\{datetime.now().strftime('%Y-%m-%d %H.%M.%S')}"
         self.logger.debug("base_path: %s", base_path)
-        self.logger.debug("backupPaths: %s", backupPaths)
-        self.logger.debug("targetPath: %s", targetPath)
-        # Create object of ZipFile
+        self.logger.debug("backup_paths: %s", backup_paths)
+        self.logger.debug("target_path: %s", target_path)
+
         try:
-            with ZipFile(f'{targetPath}.zip', 'w') as zip_object:
-                # Traverse all files in directory
-                for path in backupPaths:
-                    print(f"Start to backup: {path}")
+            with ZipFile(f'{target_path}.zip', 'w') as zip_object:
+                for path in backup_paths:
                     self.logger.info(f"Start to backup: {path}")
-                    path = base_path + path
+                    path = os.path.join(base_path, path)
                     for folder_name, sub_folders, file_names in os.walk(path):
-                        print(f"|----Folder: {folder_name}")
-                        self.logger.info(f"|----Folder: {folder_name}")
                         for filename in file_names:
-                            print(f"|--------File: {filename}")
-                            self.logger.info(f"|--------File: {filename}")
                             if filename.endswith(".jar"):
-                                print(f"|--------Skip file: {filename}")
                                 continue
-                            # Create filepath of files in directory
                             file_path = os.path.join(folder_name, filename)
-                            # Add files to zip file
                             zip_object.write(file_path, os.path.relpath(file_path, base_path))
-                    print(f"Done with {path}")
                     self.logger.info(f"Done with {path}")
-        except (Exception,) as e:
-            print("[ERROR] Fehler beim Backup:")
-            self.logger.error("[ERROR] Fehler beim Backup:")
-            print(e)
+        except Exception as e:
+            self.logger.error("[ERROR] Error during backup:")
+            self.logger.error(e)
             return False
 
-        if os.path.exists(f'{targetPath}.zip'):
-            print("Backup successful created")
-            self.logger.info("Backup successful created")
+        if os.path.exists(f'{target_path}.zip'):
+            self.logger.info("Backup successfully created")
             return True
         else:
-            print("[ERROR] Unknown error, zip is not created properly")
             self.logger.error("[ERROR] Unknown error, zip is not created properly")
             return False
 
-    def doBackupRoutine(self):
+    def do_backup_routine(self):
+        """
+        Perform the backup routine.
+
+        :return: True if the backup was successful, otherwise False.
+        """
         self.logger.info("Backup recognized")
-        backupStatus = self.makeBackup()
-        self.logger.info("Backup created successfully") if backupStatus else self.logger.error(
-            "Failed to create backup")
-        return backupStatus
+        backup_status = self.make_backup()
+        if backup_status:
+            self.logger.info("Backup created successfully")
+        else:
+            self.logger.error("Failed to create backup")
+        return backup_status
 
 
 class MixedUtilsApi:
+    """
+    Class containing various utility methods.
+    """
+
     def __init__(self, logger=None):
+        """
+        Initialize the MixedUtilsApi instance.
+
+        :param logger: Logger object for logging.
+        """
         self.logger = logger
 
-    def doShutdownRoutine(self):
-        self.logger.info("Shutdown recognized")
+    def do_shutdown_routine(self):
+        """
+        Perform the shutdown routine:
+        - Delete the shutdown key from the database
+        - If a backup is needed, call "backupApi.do_backup_routine()"
+        - Shutdown the computer with a 60-second timeout.
 
-        shutdownKeyDeleteStatus = dataBaseOperations.deleteKey("meta", "doAction", "shutdown")
-        if shutdownKeyDeleteStatus == True:
-            self.logger.debug("Delete Shutdown-Key from db")
+        :return: None
+        """
+        self.logger.info("Shutdown routine recognized")
+
+        shutdown_key_delete_status = dataBaseOperations.deleteKey("meta", "doAction", "shutdown")
+        if shutdown_key_delete_status:
+            self.logger.debug("Shutdown key deleted from database")
         else:
-            self.logger.error(shutdownKeyDeleteStatus)
+            self.logger.error(shutdown_key_delete_status)
 
         if dataBaseOperations.checkForKey("meta", "doAction", "backup"):
-            backupApi = BackupApi(self.logger)
-            backupApi.doBackupRoutine()
-            backupKeyDeleteStatus = dataBaseOperations.deleteKey("meta", "doAction", "backup")
-            if backupKeyDeleteStatus == True:
-                self.logger.debug("Delete Backup-Key from db")
+            backup_api = BackupApi(self.logger)
+            backup_api.do_backup_routine()
+            backup_key_delete_status = dataBaseOperations.deleteKey("meta", "doAction", "backup")
+            if backup_key_delete_status:
+                self.logger.debug("Backup key deleted from database")
             else:
-                self.logger.error(shutdownKeyDeleteStatus)
-
+                self.logger.error(backup_key_delete_status)
         else:
             self.logger.info("Backup skipped")
 
         os.system("shutdown -s")
-        self.logger.info("Started shutdown")
+        self.logger.info("Shutdown initiated")
+        exit()
 
 
 class DatabaseApi:
+    """
+    Class containing various methods to interact with the database.
+    """
+
     def __init__(self, logger=None):
+        """
+        Initialize the DatabaseApi instance.
+
+        :param logger: Logger object for logging.
+        """
         self.logger = logger
 
     def get_all_uuids_from_db(self):
+        """
+        Get all tables from the database, split them at "~" to extract the uuid, and add them to the "unique_uuids" list.
+
+        :return: List containing all known uuids.
+        """
         unique_uuids = []
         try:
             all_tables = dataBaseOperations.list_all_tables()
 
             for table in all_tables:
                 uuid = str(table[0]).split('~')[0]
-                if str(uuid) not in unique_uuids:
-                    unique_uuids.append(str(uuid))
+                if uuid not in unique_uuids:
+                    unique_uuids.append(uuid)
         except Exception as e:
             self.logger.error(e)
             if self.logger is None:
@@ -126,36 +153,66 @@ class DatabaseApi:
         finally:
             return unique_uuids
 
-    def get_user_status(self, user_uuid):
-        status = dataBaseOperations.get_player_status(user_uuid)
-        if type(status) != str:
-            status = "dbError"
+    def get_user_status(self, player_uuid):
+        """
+        Get the status of the player specified by player_uuid.
+
+        :param player_uuid: Player uuid.
+        :return: str: Status of the player.
+        """
+        status = dataBaseOperations.get_player_status(player_uuid)
         return status
 
     def check_for_status(self):
+        """
+        Check for new entries in the "data.db" database and update them in the "player_data.db" database accordingly.
+
+        :return: None
+        """
         status_list = dataBaseOperations.return_complete_column("status", "status")
-        for status in status_list:
-            if status[0] is None or "~" not in status[0]:
-                print(f"Skipped status: {status}")
+        for status_entry in status_list:
+            if status_entry[0] is None or "~" not in status_entry[0]:
+                print(f"Skipped status entry: {status_entry}")
                 continue
-            print("Status:" + str(status))
-            status = status[0].split("~")
-            str(status[0]).replace("-","")
-            print(f"Updating player status for player: {status[0]} to {status[1]}")
-            self.__update_player_status(status[0], status[1])
-            dataBaseOperations.delete_specific_key("status", "status", f"{status[0]}~{status[1]}")
+            print("Status entry:" + str(status_entry))
+            player_uuid, player_status = status_entry[0].split("~")
+            player_uuid.replace("-", "")
+            print(f"Updating player status for player: {player_uuid} to {player_status}")
+            self.__update_player_status(player_uuid, player_status)
+            dataBaseOperations.delete_specific_key("status", "status", status_entry[0])
 
     @staticmethod
     def __update_player_status(player_uuid, status):
+        """
+        Update the status of the player identified by player_uuid.
+
+        :param player_uuid: UUID of the player.
+        :param status: Status of the player.
+        :return: None
+        """
         dataBaseOperations.write_player_status(player_uuid, status)
 
 
 class MinecraftApi:
+    """
+    Class containing various methods in relation to Minecraft.
+    """
 
     def __init__(self, logger=None):
+        """
+        Initialize the MinecraftApi instance.
+
+        :param logger: Logger object for logging.
+        """
         self.logger = logger
 
     def get_username_from_uuid(self, UUID):
+        """
+        Get the username from the Mojang API using the given UUID.
+
+        :param UUID: UUID of the player.
+        :return: str: The username of the requested player.
+        """
         URL = f"https://api.mojang.com/user/profile/{UUID}"
         user_name = None
         try:
@@ -164,17 +221,22 @@ class MinecraftApi:
                 data = response.json()
                 user_name = data.get("name")
         except Exception as e:
-            self.logger.error(e)
+            self.logger.error("Error in get_username_from_uuid: " + e)
             if self.logger is None:
                 print(e)
         finally:
             return user_name
 
-    def get_uuid_from_username(self, USERNAME):
-        uuid = None
-        URL = f"https://api.mojang.com/users/profiles/minecraft/{USERNAME}"
-        try:
+    def get_uuid_from_username(self, username):
+        """
+        Get the UUID from the Mojang API using the given username.
 
+        :param username: Username of the player.
+        :return: str: The UUID of the requested player.
+        """
+        uuid = None
+        URL = f"https://api.mojang.com/users/profiles/minecraft/{username}"
+        try:
             response = requests.get(URL)
             if response.status_code == 200:
                 data = response.json()
