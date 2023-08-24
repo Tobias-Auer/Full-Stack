@@ -96,24 +96,24 @@ class MixedUtilsApi:
         :return: None
         """
         self.logger.info("Shutdown routine recognized")
-
-        shutdown_key_delete_status = dataBaseOperations.deleteKey("meta", "doAction", "shutdown")
+        db_handler = dataBaseOperations.DatabaseHandler("interface")
+        shutdown_key_delete_status = db_handler.delete_key("meta", "doAction", "shutdown")
         if shutdown_key_delete_status:
             self.logger.debug("Shutdown key deleted from database")
         else:
             self.logger.error(shutdown_key_delete_status)
 
-        if dataBaseOperations.checkForKey("meta", "doAction", "backup"):
+        if db_handler.check_for_key("meta", "doAction", "backup"):
             backup_api = BackupApi(self.logger)
             backup_api.do_backup_routine()
-            backup_key_delete_status = dataBaseOperations.deleteKey("meta", "doAction", "backup")
+            backup_key_delete_status = db_handler.delete_key("meta", "doAction", "backup")
             if backup_key_delete_status:
                 self.logger.debug("Backup key deleted from database")
             else:
                 self.logger.error(backup_key_delete_status)
         else:
             self.logger.info("Backup skipped")
-
+        db_handler.disconnect()
         os.system("shutdown -s")
         self.logger.info("Shutdown initiated")
         exit()
@@ -134,14 +134,16 @@ class DatabaseApi:
 
     def get_all_uuids_from_db(self):
         """
-        Get all tables from the database, split them at "~" to extract the uuid, and add them to the "unique_uuids" list.
+        Get all tables from the database, split them at "~" to extract the uuid, and add them to the "unique_uuids"
+        list.
 
         :return: List containing all known uuids.
         """
         unique_uuids = []
         try:
-            all_tables = dataBaseOperations.list_all_tables()
-
+            db_handler = dataBaseOperations.DatabaseHandler("playerData")
+            all_tables = db_handler.list_all_tables()
+            db_handler.disconnect()
             for table in all_tables:
                 uuid = str(table[0]).split('~')[0]
                 if uuid not in unique_uuids:
@@ -153,15 +155,17 @@ class DatabaseApi:
         finally:
             return unique_uuids
 
-    def get_user_status(self, player_uuid):
-        """
-        Get the status of the player specified by player_uuid.
-
-        :param player_uuid: Player uuid.
-        :return: str: Status of the player.
-        """
-        status = dataBaseOperations.get_player_status(player_uuid)
-        return status
+    # def get_user_status(self, player_uuid):
+    #     """
+    #     Get the status of the player specified by player_uuid.
+    #
+    #     :param player_uuid: Player uuid.
+    #     :return: str: Status of the player.
+    #     """
+    #     db_handler = dataBaseOperations.DatabaseHandler("playerData")
+    #     status = db_handler.get_player_status(player_uuid)
+    #     db_handler.disconnect()
+    #     return status
 
     def check_for_status(self):
         """
@@ -169,7 +173,9 @@ class DatabaseApi:
 
         :return: None
         """
-        status_list = dataBaseOperations.return_complete_column("status", "status")
+        db_handler = dataBaseOperations.DatabaseHandler("interface")
+
+        status_list = db_handler.return_complete_column("status", "status")
         for status_entry in status_list:
             if status_entry[0] is None or "~" not in status_entry[0]:
                 print(f"Skipped status entry: {status_entry}")
@@ -179,7 +185,8 @@ class DatabaseApi:
             player_uuid.replace("-", "")
             print(f"Updating player status for player: {player_uuid} to {player_status}")
             self.__update_player_status(player_uuid, player_status)
-            dataBaseOperations.delete_specific_key("status", "status", status_entry[0])
+            db_handler.delete_key("status", "status", status_entry[0])
+        db_handler.disconnect()
 
     @staticmethod
     def __update_player_status(player_uuid, status):
@@ -190,7 +197,9 @@ class DatabaseApi:
         :param status: Status of the player.
         :return: None
         """
-        dataBaseOperations.write_player_status(player_uuid, status)
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        db_handler.write_player_status(player_uuid, status)
+        db_handler.disconnect()
 
 
 class MinecraftApi:
@@ -221,7 +230,7 @@ class MinecraftApi:
                 data = response.json()
                 user_name = data.get("name")
         except Exception as e:
-            self.logger.error("Error in get_username_from_uuid: " + e)
+            self.logger.error("Error in get_username_from_uuid: " + str(e))
             if self.logger is None:
                 print(e)
         finally:
@@ -256,4 +265,3 @@ if __name__ == '__main__':
     dataApi = DatabaseApi()
     dataApi.get_all_uuids_from_db()
     dataApi.check_for_status()
-    print(dataApi.get_user_status("_Tobias4444"))

@@ -47,7 +47,9 @@ def player_overview_route():  # Untested optimized version
 
     if user_name:
         uuid = minecraftApi.get_uuid_from_username(user_name)
-        status = databaseApi.get_user_status(uuid)
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        status = db_handler.get_player_status(uuid)
+        db_handler.disconnect()
         return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status)
 
     all_users = []
@@ -62,7 +64,9 @@ def player_overview_route():  # Untested optimized version
             continue  # Skip processing if no username found
 
         all_users.append(user_name)
-        status = databaseApi.get_user_status(uuid)
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        status = db_handler.get_player_status(uuid)
+        db_handler.disconnect()
         print(f"Status from user: {user_name} with UUID: {uuid} is: {status}")
         all_status.append(status)
         combined_users_data.append([user_name, uuid])
@@ -101,13 +105,16 @@ def check_db_events():
     :return: None
     """
     print("Starting the check loop")
+    db_handler = dataBaseOperations.DatabaseHandler("interface")
     while True:
         print("Looping through the loop")
 
         # Check for shutdown action in the database
-        if dataBaseOperations.checkForKey("meta", "doAction", "shutdown"):
+
+        if db_handler.check_for_key("meta", "doAction", "shutdown"):
             mixedApi.do_shutdown_routine()
             break
+        # db_handler.disconnect()
 
         # Check player statuses in the database
         databaseApi.check_for_status()
