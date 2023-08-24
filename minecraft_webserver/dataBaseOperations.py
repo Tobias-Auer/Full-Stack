@@ -18,6 +18,12 @@ class DatabaseHandler:
         """
         self.conn = None
         self.cursor = None
+        if db_file == "interface":
+            db_file = r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\database_webserver\data.db"
+        elif db_file == "playerData":
+            db_file = r"./player_data.db"
+        else:
+            db_file = db_file
         self.__connect(db_file)
 
     def __connect(self, db_file):
