@@ -62,26 +62,25 @@
 
   <div class="content">
     {% for result in results %}
-        <tr>
-            <td></td>
-            <td>{{result[1]}}</td>
-            <td>{{result[2]}}</td>
-        </tr>
+    <tr>
+      <td></td>
+      <td>{{result[1]}}</td>
+      <td>{{result[2]}}</td>
+    </tr>
     {% endfor %}
     <!-- content here!! -->
     <div class="container mt-5">
-      {{status}}
-      {% for result in results %}
+      {{status}} {% for result in results %}
       <ul class="list-group">
         <li class="list-group-item">
           <a href="/spieler?player={{result[0]}}" class="text-decoration-none list-item-content">
-            <img src="https://crafatar.com/avatars/{{result[1]}}?default=MHF_Steve&overlay" alt="player_head" class="list-item-image" />
+            <img src="https://crafatar.com/avatars/{{result[1]}}?default=MHF_Steve&overlay" alt="player_head"
+              class="list-item-image" />
             <div class="list-item-text">{{result[0]}}</div>
-            <b class="status-text-{{ status[loop.index-1] | safe }} status-text-right">{{ status[loop.index-1] | safe }}</b>
+            <b id="status-text-{{loop.index-1}}" class="status-text-{{ status[loop.index-1] | safe }} status-text-right">{{ status[loop.index-1] | safe}}</b>
           </a><a href="/report?player={{result[1]}}" class="text-decoration-none flag-icon">⚐</a>
         </li>
-{% endfor %}
-
+        {% endfor %}
       </ul>
     </div>
     <div class="text"></div>
@@ -96,6 +95,32 @@
       </ul>
     </nav>
   </footer>
+
+  <script>
+    const eventSource = new EventSource("/api/status");
+
+    eventSource.onmessage = (event) => {
+      console.log(event.data.replaceAll("'", '"'));
+      const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
+      console.log(parsedArray)
+      // Iteration über das Array
+      i = 0;
+      for (const element of parsedArray) {
+        console.log(i + ": " + element);
+        if (element == "offline") {
+          document.getElementById("status-text-"+ i).classList.remove('status-text-online');
+          document.getElementById("status-text-"+ i).classList.add("status-text-offline")
+        } else {
+          document.getElementById("status-text-"+ i).classList.remove('status-text-offline');
+          document.getElementById("status-text-"+ i).classList.add("status-text-online")
+        
+        }
+        document.getElementById("status-text-"+ i).innerText = element
+        i+=1;
+}
+    };
+  </script>
+
 </body>
 
 </html>

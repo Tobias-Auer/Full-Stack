@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 from zipfile import ZipFile
 
@@ -118,6 +119,31 @@ class MixedUtilsApi:
         self.logger.info("Shutdown initiated")
         exit()
 
+    def format_time(self, seconds):
+        """
+        Formats a given number of seconds into a human-readable time string.
+
+        Args:
+            seconds (int): The number of seconds to be formatted.
+
+        Returns:
+            str: A formatted time string in the format "X Stunden, Y Minuten, Z Sekunden",
+                 where the parts are included only if they are non-zero.
+        """
+        hours = seconds // 3600
+        minutes = (seconds % 3600) // 60
+        seconds = seconds % 60
+
+        time_parts = []
+        if hours > 0:
+            time_parts.append(f"{hours} Stunde{'n' if hours > 1 else ''}")
+        if minutes > 0:
+            time_parts.append(f"{minutes} Minute{'n' if minutes > 1 else ''}")
+        if seconds > 0:
+            time_parts.append(f"{seconds} Sekunde{'n' if seconds > 1 else ''}")
+
+        return ', '.join(time_parts)
+
 
 class DatabaseApi:
     """
@@ -140,15 +166,25 @@ class DatabaseApi:
         :return: List containing all known uuids.
         """
         unique_uuids = []
+        regex = r"^[A-F\d]{8}[A-F\d]{4}4[A-F\d]{3}[89AB][A-F\d]{3}[A-F\d]{12}$"
+
         try:
             db_handler = dataBaseOperations.DatabaseHandler("playerData")
             all_tables = db_handler.list_all_tables()
             db_handler.disconnect()
+            unique_uuids = []
+
             for table in all_tables:
                 uuid = str(table[0]).split('~')[0]
                 if uuid not in unique_uuids:
-                    unique_uuids.append(uuid)
+                    print("Checking regex: '%s'" % uuid)
+                    if re.search(regex, uuid, re.IGNORECASE):
+                        print("Matched regex")
+                        unique_uuids.append(uuid)
+                    else:
+                        print("Matched no regex")
         except Exception as e:
+
             self.logger.error(e)
             if self.logger is None:
                 print(e)
@@ -173,6 +209,7 @@ class DatabaseApi:
 
         :return: None
         """
+        print("start check for status")
         db_handler = dataBaseOperations.DatabaseHandler("interface")
 
         status_list = db_handler.return_complete_column("status", "status")
@@ -187,6 +224,7 @@ class DatabaseApi:
             self.__update_player_status(player_uuid, player_status)
             db_handler.delete_key("status", "status", status_entry[0])
         db_handler.disconnect()
+        print("done with check for status")
 
     @staticmethod
     def __update_player_status(player_uuid, status):
@@ -215,6 +253,19 @@ class MinecraftApi:
         """
         self.logger = logger
 
+    def list_all_json_file_names(self):
+        """
+        List all the JSON files in the "C:/Users/balus/OneDrive/Desktop/mc-docker-1.20.1/world/stats" folder.
+        :return: All filenames in list
+        """
+        print("start reading files")
+        json_files = []
+        for filename in os.listdir(r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\world\stats"):
+            print(filename)
+            if filename.endswith(".json"):
+                json_files.append(filename)
+        return json_files
+
     def get_username_from_uuid(self, UUID):
         """
         Get the username from the Mojang API using the given UUID.
@@ -234,6 +285,9 @@ class MinecraftApi:
             if self.logger is None:
                 print(e)
         finally:
+            if (user_name is
+                    None):
+                user_name = "error"
             return user_name
 
     def get_uuid_from_username(self, username):
@@ -257,11 +311,24 @@ class MinecraftApi:
         finally:
             return uuid
 
+    def get_cached_uuid_from_username(self, user_name):
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        uuid = db_handler.return_specific_key("cache", "UUID", "name", user_name)
+        db_handler.disconnect()
+        return uuid
+
+    def get_cached_username_from_uuid(self, uuid):
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        name = db_handler.return_specific_key("cache", "name", "UUID", uuid)
+        db_handler.disconnect()
+        return name
+
 
 if __name__ == '__main__':
     api = MinecraftApi()
-    print(api.get_uuid_from_username("_Tobias4444"))
-    print(api.get_username_from_uuid("4ebe5f6fc23143159d60097c48cc6d30"))
-    dataApi = DatabaseApi()
-    dataApi.get_all_uuids_from_db()
-    dataApi.check_for_status()
+    # print(api.get_uuid_from_username("_Tobias4444"))
+    # print(api.get_username_from_uuid("4ebe5f6fc23143159d60097c48cc6d30"))
+    # dataApi = DatabaseApi()
+    # dataApi.get_all_uuids_from_db()
+    # dataApi.check_for_status()
+    print(api.get_cached_uuid_from_username("_Tobias4444"))

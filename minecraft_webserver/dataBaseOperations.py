@@ -1,6 +1,9 @@
 # TODO: Convert this file into class
 
 import sqlite3
+import time
+
+import utils
 
 USE_TEST_DB = False
 
@@ -16,6 +19,7 @@ class DatabaseHandler:
 
         :param db_file: Filepath of the database.
         """
+        self.minecraftApi = utils.MinecraftApi()
         self.conn = None
         self.cursor = None
         if db_file == "interface":
@@ -73,19 +77,23 @@ class DatabaseHandler:
         queryResult = self.cursor.fetchone()[0]
         return queryResult > 0
 
-    def return_specific_key(self, table, column, key):
+    def return_specific_key(self, table, column, key_column, key_value):
         """
         Retrieve the value associated with a specific key in the specified table and column.
 
         :param table: Table name.
         :param column: Column name.
-        :param key: Key value to search for.
+        :param key_column: Column where to search for the key.
+        :param key_value: Value of the key to search for.
         :return: The value associated with the key.
         """
-        query = f"SELECT value FROM [{table}] WHERE {column} = ?"
-        params = (key,)
+        query = f"SELECT [{column}] FROM [{table}] WHERE {key_column} = ?"
+        params = (key_value,)
         self.cursor.execute(query, params)
-        queryResult = self.cursor.fetchone()[0]
+        try:
+            queryResult = self.cursor.fetchone()[0]
+        except TypeError:
+            queryResult = None
         return queryResult
 
     def return_complete_column(self, table, column):
@@ -117,6 +125,12 @@ class DatabaseHandler:
         except (Exception,):
             status = "offline"
         return str(status)
+
+    def get_cached_player_name(self, uuid):
+        ...
+
+    def get_cached_uuid(self, player_name):
+        ...
 
     # Writing
     def delete_key(self, table, column, key):
@@ -173,6 +187,34 @@ class DatabaseHandler:
             self.cursor.execute(query_insert, (uuid, status))
             print("New player entry added:", uuid)
         self.conn.commit()
+
+    def insert_or_update_cache(self, uuid):
+        """
+        Inserts a new entry or updates an existing entry in the 'cache' table.
+
+        If an entry with the provided UUID exists in the 'cache' table, its 'name' and 'timestamp'
+        will be updated. If no entry with the provided UUID exists, a new entry will be inserted.
+
+        :param uuid: The UUID of the player.
+        :type uuid: str
+        :return: None
+        """
+        # Check if entry exists
+        count = self.check_for_key("cache", "UUID", uuid)
+        CURRENT_TIMESTAMP = int(time.time())
+        print(uuid)
+        name = self.minecraftApi.get_username_from_uuid(uuid)
+        print(name)
+        if count:
+            # Update existing entry
+            self.cursor.execute(f"UPDATE cache SET name = ?, timestamp = ? WHERE UUID = ?",
+                                (name, CURRENT_TIMESTAMP, uuid))
+        else:
+            # Insert new entry
+            self.cursor.execute(f"INSERT INTO cache (UUID, name, timestamp) VALUES (?, ?, ?)",
+                                (uuid, name, CURRENT_TIMESTAMP))
+        self.conn.commit()
+
 # if __name__ == '__main__':
 #     print(return_specific_key("36c5cd1361f444f199870390f20c9ea2~minecraft:custom", "key", "minecraft:jump"))
 #     print(return_complete_column("status", "status"))
@@ -211,15 +253,15 @@ class DatabaseHandler:
 #     except Exception as e:
 #         return str(e)
 
-    # def delete_specific_key(self, table, column, field):
-    #     """
-    #
-    #     :param table: Table name
-    #     :param column: Column name
-    #     :param field:
-    #     :return:
-    #     """
-    #     query = f"DELETE FROM [{table}] WHERE {column} = \"{field}\""
-    #     print(query)
-    #     self.cursor.execute(query)
-    #     self.conn.commit()
+# def delete_specific_key(self, table, column, field):
+#     """
+#
+#     :param table: Table name
+#     :param column: Column name
+#     :param field:
+#     :return:
+#     """
+#     query = f"DELETE FROM [{table}] WHERE {column} = \"{field}\""
+#     print(query)
+#     self.cursor.execute(query)
+#     self.conn.commit()
