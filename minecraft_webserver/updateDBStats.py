@@ -2,6 +2,10 @@
 import sqlite3
 import os
 import json
+import time
+
+import dataBaseOperations
+import utils
 
 
 class StatisticsUpdater:
@@ -9,12 +13,13 @@ class StatisticsUpdater:
     Class for handling various database operations but only for player statistics.
     """
 
-    def __init__(self, db_file):
+    def __init__(self, db_file="./player_data.db"):
         """
         Initialize a DatabaseHandler instance.
 
         :param db_file: Filepath of the database.
         """
+        self.mixedApi = utils.MixedUtilsApi()
         self.conn = None
         self.cursor = None
         self.connect(db_file)
@@ -58,14 +63,14 @@ class StatisticsUpdater:
         :return: None
         """
         create_table_query = f"""
-            CREATE TABLE IF NOT EXISTS {table_name} (
+            CREATE TABLE IF NOT EXISTS '{table_name}' (
                 "key" VARCHAR(64) PRIMARY KEY,
                 "value" INTEGER
             )
         """
         self.cursor.execute(create_table_query)
 
-    def create_player_info_table(self, table_name):
+    def create_player_info_table(self, uuid):
         """
         Method to create a table in the database with the following format:
         username(Str) - last_seen(Str) - banned(bool) - ban_count(int) - ban_reasons(Str)
@@ -76,7 +81,7 @@ class StatisticsUpdater:
         :return: None
         """
         create_table_query = f"""
-                    CREATE TABLE IF NOT EXISTS {table_name} (
+                    CREATE TABLE IF NOT EXISTS {uuid}~webserver:meta (
                         "username" VARCHAR(64) PRIMARY KEY,
                         "last_seen" VARCHAR(16),
                         "banned" BOOLEAN,
@@ -96,7 +101,7 @@ class StatisticsUpdater:
         :return: None
         """
         uuid = os.path.splitext(filename)[0].replace("-", "").split("\\")[-1]
-        with open(filename, 'r') as f:
+        with open(r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\world\stats\\"+ filename, 'r') as f:
             data = json.load(f)
             # self.__update_game_specific_tables(uuid, data)
         for key, action in data["stats"].items():
@@ -109,11 +114,11 @@ class StatisticsUpdater:
             existing_table = self.cursor.fetchone()
             if existing_table is not None:
                 print(f"Updating {table_name}")
-                self.update_or_insert_game_data(table_name, all_keys, all_values)
+                self.update_or_insert_game_data(table_name_unescaped, all_keys, all_values)
             else:
                 print(f"Creating {table_name}")
-                self.__create_game_specific_table(table_name)
-                self.update_or_insert_game_data(table_name, all_keys, all_values)
+                self.__create_game_specific_table(table_name_unescaped)
+                self.update_or_insert_game_data(table_name_unescaped, all_keys, all_values)
 
     def update_or_insert_game_data(self, table_name, keys, values):
         """
@@ -163,6 +168,41 @@ class StatisticsUpdater:
         """
         self.cursor.execute(update_query, (value, key))
         self.conn.commit()
+
+    def update_player_cache(self, uuid=None, OVERRIDE=False):
+        """
+        Update the player cache with current timestamps.
+
+        :param uuid: Optional UUID of a specific player to update. If not provided, all players' caches will be checked.
+        :param OVERRIDE: Optional boolean flag to force updating even if the timestamp criteria are not met.
+        :return: None
+        """
+        CURRENT_TIMESTAMP = int(time.time())
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        if uuid is None:  # Try to update all players
+            timestamps = db_handler.return_complete_column("cache", "timestamp")
+            UUIDs = db_handler.return_complete_column("cache", "UUID")
+            print(UUIDs)
+            for index, timestamp in enumerate(timestamps):
+
+                print(UUIDs[index][0])
+                if CURRENT_TIMESTAMP - timestamp[0] >= 3600 or OVERRIDE:
+                    db_handler.insert_or_update_cache(UUIDs[index][0])
+                else:
+                    print(f"no updating needed {CURRENT_TIMESTAMP - timestamp[0]}")
+                    print("Update in: " + self.mixedApi.format_time(3600-(CURRENT_TIMESTAMP - timestamp[0])))
+        else:  # Only update one player
+            timestamp = db_handler.return_specific_key("cache", "timestamp", "UUID", uuid)
+            if timestamp is None:
+                db_handler.insert_or_update_cache(uuid)
+                return
+            print(timestamp)
+            if CURRENT_TIMESTAMP - timestamp >= 3600 or OVERRIDE:
+                db_handler.insert_or_update_cache(uuid)
+            else:
+                print("Update in: " + self.mixedApi.format_time(3600-(CURRENT_TIMESTAMP - timestamp)))
+
+        db_handler.disconnect()
 
     def insert_game_data(self, table_name, key, value):
         """
@@ -228,6 +268,9 @@ class StatisticsUpdater:
 
 
 if __name__ == '__main__':
+    i = StatisticsUpdater()
+    i.update_player_cache()
+
     ...
     # directory = './sampleData'
     # files = os.listdir(directory)

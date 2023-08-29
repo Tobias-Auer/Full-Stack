@@ -1,9 +1,10 @@
 import threading
 import time
 import Logger
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 
 import dataBaseOperations
+import updateDBStats
 import utils
 
 # Logger Setup
@@ -46,11 +47,12 @@ def player_overview_route():  # Untested optimized version
     user_name = request.args.get('player')
 
     if user_name:
-        uuid = minecraftApi.get_uuid_from_username(user_name)
+        uuid = minecraftApi.get_cached_uuid_from_username(user_name)
         db_handler = dataBaseOperations.DatabaseHandler("playerData")
         status = db_handler.get_player_status(uuid)
+        stats = db_handler.return_complete_column(uuid + "~minecraft:custom", "value")
         db_handler.disconnect()
-        return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status)
+        return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status, stats=stats)
 
     all_users = []
     all_status = []
@@ -58,7 +60,7 @@ def player_overview_route():  # Untested optimized version
     all_uuids = databaseApi.get_all_uuids_from_db()
 
     for uuid in all_uuids:
-        user_name = minecraftApi.get_username_from_uuid(uuid)
+        user_name = minecraftApi.get_cached_username_from_uuid(uuid)
         if user_name is None:
             print(f"No username found for UUID: {uuid}")
             continue  # Skip processing if no username found
@@ -90,6 +92,23 @@ def report_player_route():
     return render_template("report.html")
 
 
+@app.route('/api/status')
+def stream():
+    db_handler = dataBaseOperations.DatabaseHandler("playerData")
+
+    def generate():
+        while True:
+            # Hier könntest du deine Daten vorbereiten, z.B. aus einer Liste von Strings
+            all_uuids = databaseApi.get_all_uuids_from_db()
+            data = []
+            for uuid in all_uuids:
+                data.append(db_handler.get_player_status(uuid))
+            yield f"data: {data}\n\n"  # Wichtiger Teil: Datenformat für SSE
+            time.sleep(5)
+
+    return Response(generate(), mimetype='text/event-stream')
+
+
 # Other main functions
 def check_db_events():
     """
@@ -105,20 +124,37 @@ def check_db_events():
     :return: None
     """
     print("Starting the check loop")
+    counter_5_sec = 9999
+    counter_300_sec = 9999
     db_handler = dataBaseOperations.DatabaseHandler("interface")
+    statisticUpdater = updateDBStats.StatisticsUpdater()
     while True:
         print("Looping through the loop")
 
-        # Check for shutdown action in the database
+        if counter_5_sec >= 5:
+            counter_5_sec = 0
+            # Check for shutdown action in the database
+            if db_handler.check_for_key("meta", "doAction", "shutdown"):
+                mixedApi.do_shutdown_routine()
+                break
+            # Check player statuses in the database
+            databaseApi.check_for_status()
 
-        if db_handler.check_for_key("meta", "doAction", "shutdown"):
-            mixedApi.do_shutdown_routine()
-            break
-        # db_handler.disconnect()
+        if counter_300_sec >= 300:
+            # print("Player cache")
+            # statisticUpdater.update_player_cache()
+            # print("Player cache done")
+            counter_300_sec = 0
+            # Update player stats
+            filenames = minecraftApi.list_all_json_file_names()
+            for filename in filenames:
+                print(filename)
+                statisticUpdater.update_game_specific_tables_from_file(filename)
+                statisticUpdater.update_player_cache(filename.split('.')[0].replace("-", ""))
 
-        # Check player statuses in the database
-        databaseApi.check_for_status()
-        time.sleep(5)
+        time.sleep(1)
+        counter_5_sec += 1
+        counter_300_sec += 1
 
 
 if __name__ == '__main__':

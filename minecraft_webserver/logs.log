@@ -4518,3 +4518,9 @@
 08-21-2023 20:25:09 | INFO | 91.47.200.76 - - [21/Aug/2023 20:25:09] "[36mGET /static/css/index.css HTTP/1.1[0m" 304 -
 08-21-2023 20:25:09 | INFO | 91.47.200.76 - - [21/Aug/2023 20:25:09] "[36mGET /static/css/header.css HTTP/1.1[0m" 304 -
 08-21-2023 20:25:09 | INFO | 91.47.200.76 - - [21/Aug/2023 20:25:09] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+08-29-2023 20:04:21 | INFO | Application started
+08-29-2023 20:04:21 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+08-29-2023 20:04:21 | INFO | [33mPress CTRL+C to quit[0m

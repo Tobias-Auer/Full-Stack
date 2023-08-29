@@ -57,13 +57,6 @@
     </nav>
   </header>
   <div class="content">
-    {% for result in results %}
-        <tr>
-            <td></td>
-            <td>{{result[1]}}</td>
-            <td>{{result[2]}}</td>
-        </tr>
-    {% endfor %}
     <!-- content here!! -->
     Infos zu {{user_name}}<br><img src='https://crafatar.com/renders/body/{{uuid}}?overlay'>
     <b>Status: {{status}}</b>
@@ -71,6 +64,7 @@
       </ul>
     </div>
     <div class="text"></div>
+  {{ stats }}
   </div>
   <footer>
     <nav>
