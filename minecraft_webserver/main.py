@@ -95,14 +95,9 @@ def report_player_route():
 
 
 @app.route('/api/status')
-def stream():
-    db_handler = dataBaseOperations.DatabaseHandler("playerData")
-    while not proceedStatusUpdate:
-        ...
-
+def stream_status():
     def generate():
         while True:
-            # Hier könntest du deine Daten vorbereiten, z.B. aus einer Liste von Strings
             all_uuids = databaseApi.get_all_uuids_from_db()
             data = []
             for uuid in all_uuids:
@@ -110,12 +105,38 @@ def stream():
             yield f"data: {data}\n\n"  # Wichtiger Teil: Datenformat für SSE
             time.sleep(2)
 
+    db_handler = dataBaseOperations.DatabaseHandler("playerData")
+    while not proceedStatusUpdate:
+        ...
+    return Response(generate(), mimetype='text/event-stream')
+
+
+@app.route('/api/player_info/<path:path>')
+def stream_player_info(path):
+    player_name = path
+    def generate():
+        while True:
+            # get uuid, get status, get death, get first seen, get last seen, get death time
+            uuid = minecraftApi.get_cached_uuid_from_username(player_name)
+            status = db_handler.get_player_status(uuid)
+            death_count = db_handler.return_specific_key(f"{uuid}~minecraft:custom", "value", "key", "minecraft:deaths")
+            first_seen = db_handler.return_specific_key("cache", "first_seen", "UUID", uuid)
+            last_seen = db_handler.return_specific_key("cache", "last_seen", "UUID", uuid)
+            death_time = db_handler.return_specific_key(f"{uuid}~minecraft:custom", "value", "key", "minecraft:time_since_death")
+            death_time = mixedApi.format_time(death_time/20)
+            data = [uuid, status, death_count, first_seen, last_seen, death_time]
+            yield f"data: {data}\n\n"  # Wichtiger Teil: Datenformat für SSE
+            time.sleep(10)
+
+    db_handler = dataBaseOperations.DatabaseHandler("playerData")
+
+    # while not proceedStatusUpdate:
+    #     ...
     return Response(generate(), mimetype='text/event-stream')
 
 
 # Other main functions
 def check_db_events():
-
     global proceedStatusUpdate
     """
     Monitor the thread for various database events:

@@ -64,7 +64,7 @@
     </nav>
   </header>
   <div class="content">
-    <h1><b class="center-v">Spieler: {{name}}</b></h1>
+    <h1><b class="center-v">Spieler: {{user_name}}</b></h1>
     <br>
     <div class="row center-v">
       <div class="column center">
@@ -72,23 +72,23 @@
       </div>
       <div class="column text">
         <table>
-        <tr>
-          <td>
-            <p>Status:</p>
-            <p>Tode:</p>
-            <p>Zeit seit letztdem Tod:</p>
-            <p>Zuletzt gesehen:</p>
-            <p>Beigetreten am:</p>
-          </td>
-          <td>
-            <p>{{status}}</p>
-            <p>"LAST SEEN"</p>
-            <p>"Tode"</p>
-            <p> "time"</p>
-            <p>"Datum"</p>
-          </td>
-        </tr>
-      </table>
+          <tr>
+            <td>
+              <p>Status:</p>
+              <p>Tode:</p>
+              <p>Zeit seit letztdem Tod:</p>
+              <p>Zuletzt gesehen:</p>
+              <p>Beigetreten am:</p>
+            </td>
+            <td>
+              <p id="1">{{status}}</p>
+              <p id="2">Loading</p>
+              <p id="5">Loading</p>
+              <p id="4">Loading</p>
+              <p id="3">Loading</p>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
@@ -117,6 +117,25 @@
       document.getElementById("mySkinContainer")
     );
     skinRender.render("{{user_name}}");
+
+    const eventSource = new EventSource("/api/player_info/{{user_name}}");
+
+    eventSource.onmessage = (event) => {
+      const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
+      console.log(parsedArray)
+
+      // Iteration über das Array
+      i = 0;
+      for (const element of parsedArray) {
+        if (i==0) {
+          i += 1;
+          continue
+        }
+        console.log(i + ": " + element);
+        document.getElementById(""+i).innerText = element
+        i += 1;
+      }
+    }
   </script>
 </body>
 

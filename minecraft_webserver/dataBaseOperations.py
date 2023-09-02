@@ -126,12 +126,6 @@ class DatabaseHandler:
             status = "offline"
         return str(status)
 
-    def get_cached_player_name(self, uuid):
-        ...
-
-    def get_cached_uuid(self, player_name):
-        ...
-
     # Writing
     def delete_key(self, table, column, key):
         """
