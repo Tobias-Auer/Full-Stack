@@ -29,7 +29,7 @@ class BackupApi:  # Untested optimized version
         """
         self.logger.info("Creating backup")
         base_path = r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1"
-        backup_paths = [r"\logs", r"\world", r"\world_nether", r"\world_the_end", r"\plugins"]
+        backup_paths = ["logs", "world", "world_nether", "world_the_end", "plugins"]  # Remove the leading backslashes
         target_path = fr"E:\backups_mc\{datetime.now().strftime('%Y-%m-%d %H.%M.%S')}"
         self.logger.debug("base_path: %s", base_path)
         self.logger.debug("backup_paths: %s", backup_paths)
