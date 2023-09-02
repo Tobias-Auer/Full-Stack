@@ -20,6 +20,8 @@ mixedApi = utils.MixedUtilsApi(logger=logger)
 app = Flask(__name__)
 logger.info('Application started')
 
+proceedStatusUpdate = False
+
 
 # Flask Routes
 @app.route('/')
@@ -95,6 +97,8 @@ def report_player_route():
 @app.route('/api/status')
 def stream():
     db_handler = dataBaseOperations.DatabaseHandler("playerData")
+    while not proceedStatusUpdate:
+        ...
 
     def generate():
         while True:
@@ -104,13 +108,15 @@ def stream():
             for uuid in all_uuids:
                 data.append(db_handler.get_player_status(uuid))
             yield f"data: {data}\n\n"  # Wichtiger Teil: Datenformat für SSE
-            time.sleep(5)
+            time.sleep(2)
 
     return Response(generate(), mimetype='text/event-stream')
 
 
 # Other main functions
 def check_db_events():
+
+    global proceedStatusUpdate
     """
     Monitor the thread for various database events:
 
@@ -124,21 +130,23 @@ def check_db_events():
     :return: None
     """
     print("Starting the check loop")
-    counter_5_sec = 9999
+    counter_2_sec = 9999
     counter_300_sec = 9999
     db_handler = dataBaseOperations.DatabaseHandler("interface")
     statisticUpdater = updateDBStats.StatisticsUpdater()
     while True:
         print("Looping through the loop")
 
-        if counter_5_sec >= 5:
-            counter_5_sec = 0
+        if counter_2_sec >= 2:
+            # Check player statuses in the database
+            databaseApi.check_for_status()
+            proceedStatusUpdate = True
+            counter_2_sec = 0
             # Check for shutdown action in the database
             if db_handler.check_for_key("meta", "doAction", "shutdown"):
                 mixedApi.do_shutdown_routine()
                 break
-            # Check player statuses in the database
-            databaseApi.check_for_status()
+            proceedStatusUpdate = False
 
         if counter_300_sec >= 300:
             # print("Player cache")
@@ -153,7 +161,7 @@ def check_db_events():
                 statisticUpdater.update_player_cache(filename.split('.')[0].replace("-", ""))
 
         time.sleep(1)
-        counter_5_sec += 1
+        counter_2_sec += 1
         counter_300_sec += 1
 
 

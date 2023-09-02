@@ -1,0 +1,37 @@
+#mySkinContainer {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgb(238, 238, 238);
+    border: 1px solid black;
+    margin-left: auto;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding-left: 20px;
+    box-sizing: border-box;
+    /* border: 1px solid red; */
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-v {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

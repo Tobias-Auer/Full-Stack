@@ -9,8 +9,15 @@
 
   <link rel="stylesheet" href="./static/css/header.css" />
   <link rel="stylesheet" href="./static/css/index.css" />
+  <link rel="stylesheet" href="./static/css/player-info.css">
 
   <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"
+    integrity="sha256-NGC9JEuTWN4GhTj091wctgjzftr+8WNDmw0H8J5YPYE=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/MineRender@1.4.6/dist/skin.min.js">
+  </script>
 </head>
 
 <body>
@@ -57,13 +64,35 @@
     </nav>
   </header>
   <div class="content">
-    <!-- content here!! -->
-    Infos zu {{user_name}}<br><img src='https://crafatar.com/renders/body/{{uuid}}?overlay'>
-    <b>Status: {{status}}</b>
-
-      </ul>
+    <h1><b class="center-v">Spieler: {{name}}</b></h1>
+    <br>
+    <div class="row center-v">
+      <div class="column center">
+        <div id="mySkinContainer"></div>
+      </div>
+      <div class="column text">
+        <table>
+        <tr>
+          <td>
+            <p>Status:</p>
+            <p>Tode:</p>
+            <p>Zeit seit letztdem Tod:</p>
+            <p>Zuletzt gesehen:</p>
+            <p>Beigetreten am:</p>
+          </td>
+          <td>
+            <p>{{status}}</p>
+            <p>"LAST SEEN"</p>
+            <p>"Tode"</p>
+            <p> "time"</p>
+            <p>"Datum"</p>
+          </td>
+        </tr>
+      </table>
+      </div>
     </div>
-    <div class="text"></div>
+  </div>
+  <!-- <div class="text"></div> -->
   {{ stats }}
   </div>
   <footer>
@@ -76,5 +105,19 @@
       </ul>
     </nav>
   </footer>
+  <script>
+    var skinRender = new SkinRender(
+      {
+        autoResize: true,
+        canvas: {
+          width: 350,
+          height: 350,
+        },
+      },
+      document.getElementById("mySkinContainer")
+    );
+    skinRender.render("{{user_name}}");
+  </script>
 </body>
+
 </html>
