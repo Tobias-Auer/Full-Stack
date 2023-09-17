@@ -1,3 +1,4 @@
+import datetime
 import threading
 import time
 import Logger
@@ -102,7 +103,7 @@ def stream_status():
             data = []
             for uuid in all_uuids:
                 data.append(db_handler.get_player_status(uuid))
-            yield f"data: {data}\n\n"  # Wichtiger Teil: Datenformat für SSE
+            yield f"data: {data}\n\n"
             time.sleep(2)
 
     db_handler = dataBaseOperations.DatabaseHandler("playerData")
@@ -114,6 +115,7 @@ def stream_status():
 @app.route('/api/player_info/<path:path>')
 def stream_player_info(path):
     player_name = path
+
     def generate():
         while True:
             # get uuid, get status, get death, get first seen, get last seen, get death time
@@ -122,16 +124,15 @@ def stream_player_info(path):
             death_count = db_handler.return_specific_key(f"{uuid}~minecraft:custom", "value", "key", "minecraft:deaths")
             first_seen = db_handler.return_specific_key("cache", "first_seen", "UUID", uuid)
             last_seen = db_handler.return_specific_key("cache", "last_seen", "UUID", uuid)
-            death_time = db_handler.return_specific_key(f"{uuid}~minecraft:custom", "value", "key", "minecraft:time_since_death")
-            death_time = mixedApi.format_time(death_time/20)
+            death_time = db_handler.return_specific_key(f"{uuid}~minecraft:custom", "value", "key",
+                                                        "minecraft:time_since_death")
+            death_time = mixedApi.format_time(death_time / 20)
             data = [uuid, status, death_count, first_seen, last_seen, death_time]
-            yield f"data: {data}\n\n"  # Wichtiger Teil: Datenformat für SSE
+            yield f"data: {data}\n\n"
             time.sleep(10)
 
     db_handler = dataBaseOperations.DatabaseHandler("playerData")
 
-    # while not proceedStatusUpdate:
-    #     ...
     return Response(generate(), mimetype='text/event-stream')
 
 
@@ -157,6 +158,14 @@ def check_db_events():
     statisticUpdater = updateDBStats.StatisticsUpdater()
     while True:
         print("Looping through the loop")
+        if counter_300_sec >= 300:
+            counter_300_sec = 0
+            # Update player stats
+            filenames = minecraftApi.list_all_json_file_names()
+            for filename in filenames:
+                print(filename)
+                statisticUpdater.update_game_specific_tables_from_file(filename)
+                statisticUpdater.update_player_cache(filename.split('.')[0].replace("-", ""))
 
         if counter_2_sec >= 2:
             # Check player statuses in the database
@@ -168,18 +177,6 @@ def check_db_events():
                 mixedApi.do_shutdown_routine()
                 break
             proceedStatusUpdate = False
-
-        if counter_300_sec >= 300:
-            # print("Player cache")
-            # statisticUpdater.update_player_cache()
-            # print("Player cache done")
-            counter_300_sec = 0
-            # Update player stats
-            filenames = minecraftApi.list_all_json_file_names()
-            for filename in filenames:
-                print(filename)
-                statisticUpdater.update_game_specific_tables_from_file(filename)
-                statisticUpdater.update_player_cache(filename.split('.')[0].replace("-", ""))
 
         time.sleep(1)
         counter_2_sec += 1
