@@ -1,7 +1,6 @@
-# TODO: Convert this file into class
-
 import sqlite3
 import time
+from datetime import datetime
 
 import utils
 
@@ -167,18 +166,22 @@ class DatabaseHandler:
         """
         self.cursor.execute(query_check, (uuid,))
         count = self.cursor.fetchone()[0]
-
+        now = datetime.now()
+        CURRENT_DATE = now.strftime("%d.%m.%Y")
         if count > 0:
             query_update = """
                 UPDATE status SET status = ? WHERE player = ?
             """
             self.cursor.execute(query_update, (status, uuid))
+            self.cursor.execute(f"UPDATE cache SET last_seen = ? WHERE UUID = ?",
+                                (CURRENT_DATE, uuid))
             print("Status updated for", uuid)
         else:
             query_insert = """
                 INSERT INTO status ("player", "status") VALUES (?, ?)
             """
             self.cursor.execute(query_insert, (uuid, status))
+
             print("New player entry added:", uuid)
         self.conn.commit()
 
@@ -196,18 +199,22 @@ class DatabaseHandler:
         # Check if entry exists
         count = self.check_for_key("cache", "UUID", uuid)
         CURRENT_TIMESTAMP = int(time.time())
+
+        now = datetime.now()
+        CURRENT_DATE = now.strftime("%d.%m.%Y")
         print(uuid)
         name = self.minecraftApi.get_username_from_uuid(uuid)
         print(name)
         if count:
             # Update existing entry
-            self.cursor.execute(f"UPDATE cache SET name = ?, timestamp = ? WHERE UUID = ?",
-                                (name, CURRENT_TIMESTAMP, uuid))
+            self.cursor.execute(f"UPDATE cache SET name = ?, timestamp = ?, last_seen = ? WHERE UUID = ?",
+                                (name, CURRENT_TIMESTAMP, CURRENT_DATE, uuid))
         else:
             # Insert new entry
-            self.cursor.execute(f"INSERT INTO cache (UUID, name, timestamp) VALUES (?, ?, ?)",
-                                (uuid, name, CURRENT_TIMESTAMP))
+            self.cursor.execute(f"INSERT INTO cache (UUID, name, timestamp, first_seen, last_seen) VALUES (?, ?, ?, ?, ?)",
+                                (uuid, name, CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE))
         self.conn.commit()
+
 
 # if __name__ == '__main__':
 #     print(return_specific_key("36c5cd1361f444f199870390f20c9ea2~minecraft:custom", "key", "minecraft:jump"))

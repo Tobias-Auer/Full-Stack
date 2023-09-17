@@ -115,6 +115,7 @@ class StatisticsUpdater:
             if existing_table is not None:
                 print(f"Updating {table_name}")
                 self.update_or_insert_game_data(table_name_unescaped, all_keys, all_values)
+                # Updating last seen date
             else:
                 print(f"Creating {table_name}")
                 self.__create_game_specific_table(table_name_unescaped)
@@ -184,7 +185,6 @@ class StatisticsUpdater:
             UUIDs = db_handler.return_complete_column("cache", "UUID")
             print(UUIDs)
             for index, timestamp in enumerate(timestamps):
-
                 print(UUIDs[index][0])
                 if CURRENT_TIMESTAMP - timestamp[0] >= 3600 or OVERRIDE:
                     db_handler.insert_or_update_cache(UUIDs[index][0])

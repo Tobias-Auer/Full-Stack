@@ -1,142 +1,173 @@
 <!DOCTYPE html>
 <html lang="en" id="top">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spieler Übersicht</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spieler Übersicht</title>
+    <link rel="stylesheet" href="./static/css/header.css" />
+    <link rel="stylesheet" href="./static/css/index.css" />
+    <link rel="stylesheet" href="./static/css/player-info.css" />
 
-  <link rel="stylesheet" href="./static/css/header.css" />
-  <link rel="stylesheet" href="./static/css/index.css" />
-  <link rel="stylesheet" href="./static/css/player-info.css">
+    <link
+      rel="icon"
+      type="image/vnd.microsoft.icon"
+      href="./static/images/favicon.ico"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"
+      integrity="sha256-NGC9JEuTWN4GhTj091wctgjzftr+8WNDmw0H8J5YPYE="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/MineRender@1.4.6/dist/skin.min.js"></script>
+  </head>
 
-  <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"
-    integrity="sha256-NGC9JEuTWN4GhTj091wctgjzftr+8WNDmw0H8J5YPYE=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/MineRender@1.4.6/dist/skin.min.js">
-  </script>
-</head>
-
-<body>
-  <header class="sticky">
-    <nav>
-      <ul>
-        <li>
-          <img id="logo" src="./static/images/logo2.png" alt="logo" height="40" />
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href=`/`">
-              Startseite
-            </button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn current">Spieler</button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn">▼ Prefixes</button>
-            <div class="dropdown-content">
-              <a href="#">Erstellen</a>
-              <a href="#">Ändern</a>
-              <a href="#">Beitreten</a>
+  <body>
+    <header class="sticky">
+      <nav>
+        <ul>
+          <li>
+            <img
+              id="logo"
+              src="./static/images/logo2.png"
+              alt="logo"
+              height="40"
+            />
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn" onclick="window.location.href=`/`">
+                Startseite
+              </button>
             </div>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href='/report'">
-              Spieler Report
-            </button>
-          </div>
-        </li>
-        <!-- Code for flask application -->
-        <li>{{ loginVar | safe}}</li>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn current">Spieler</button>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn">▼ Prefixes</button>
+              <div class="dropdown-content">
+                <a href="#">Erstellen</a>
+                <a href="#">Ändern</a>
+                <a href="#">Beitreten</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn" onclick="window.location.href='/report'">
+                Spieler Report
+              </button>
+            </div>
+          </li>
+          <!-- Code for flask application -->
+          <li>{{ loginVar | safe}}</li>
 
-        <li></li>
-      </ul>
-    </nav>
-  </header>
-  <div class="content">
-    <h1><b class="center-v">Spieler: {{user_name}}</b></h1>
-    <br>
-    <div class="row center-v">
-      <div class="column center">
-        <div id="mySkinContainer"></div>
+          <li></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="content">
+      <h1><b class="center-v">Spieler: {{user_name}}</b></h1>
+      <br />
+      <div class="row center-v">
+        <div class="column center" style="display: block !important">
+          <div id="mySkinContainer"></div>
+          <!-- Add a container for the button and apply the ID -->
+          <div id="downloadButton">
+            <button style="width: 400px" onclick='forceDownload("https://crafatar.com/skins/{{uuid}}", "Skin-{{user_name}}.png");'>Download</button>
+          </div>
+        </div>
+        <div class="column text">
+          <table>
+            <tr>
+              <td>
+                <p>Status:</p>
+                <p>Tode:</p>
+                <p>Zeit seit letztdem Tod:</p>
+                <p>Zuletzt gesehen:</p>
+                <p>Beigetreten am:</p>
+              </td>
+              <td>
+                <p id="1">{{status}}</p>
+                <p id="2">Loading</p>
+                <p id="5">Loading</p>
+                <p id="4">Loading</p>
+                <p id="3">Loading</p>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
-      <div class="column text">
-        <table>
-          <tr>
-            <td>
-              <p>Status:</p>
-              <p>Tode:</p>
-              <p>Zeit seit letztdem Tod:</p>
-              <p>Zuletzt gesehen:</p>
-              <p>Beigetreten am:</p>
-            </td>
-            <td>
-              <p id="1">{{status}}</p>
-              <p id="2">Loading</p>
-              <p id="5">Loading</p>
-              <p id="4">Loading</p>
-              <p id="3">Loading</p>
-            </td>
-          </tr>
-        </table>
-      </div>
+      {{ stats }}
     </div>
-  </div>
-  <!-- <div class="text"></div> -->
-  {{ stats }}
-  </div>
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
-        <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
-        <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
-        <li><a href="#">🡅</a></li>
-      </ul>
-    </nav>
-  </footer>
-  <script>
-    var skinRender = new SkinRender(
-      {
-        autoResize: true,
-        canvas: {
-          width: 350,
-          height: 350,
+    <footer>
+      <nav>
+        <ul>
+          <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+          <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+          <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+          <li><a href="#">🡅</a></li>
+        </ul>
+      </nav>
+    </footer>
+    <script>
+      var skinRender = new SkinRender(
+        {
+          autoResize: true,
+          canvas: {
+            width: 350,
+            height: 350,
+          },
         },
-      },
-      document.getElementById("mySkinContainer")
-    );
-    skinRender.render("{{user_name}}");
+        document.getElementById("mySkinContainer")
+      );
+      skinRender.render("{{user_name}}");
 
-    const eventSource = new EventSource("/api/player_info/{{user_name}}");
+      const eventSource = new EventSource("/api/player_info/{{user_name}}");
 
-    eventSource.onmessage = (event) => {
-      const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
-      console.log(parsedArray)
+      eventSource.onmessage = (event) => {
+        console.warn(event.data)
+        const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
+        console.log(parsedArray);
 
-      // Iteration über das Array
-      i = 0;
-      for (const element of parsedArray) {
-        if (i==0) {
+        // Iteration über das Array
+        i = 0;
+        for (const element of parsedArray) {
+          if (i == 0) {
+            i += 1;
+            continue;
+          }
+          console.log(i + ": " + element);
+          document.getElementById("" + i).innerText = element;
           i += 1;
-          continue
         }
-        console.log(i + ": " + element);
-        document.getElementById(""+i).innerText = element
-        i += 1;
+      };
+      function forceDownload(url, fileName) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+        xhr.onload = function () {
+          var urlCreator = window.URL || window.webkitURL;
+          var imageUrl = urlCreator.createObjectURL(this.response);
+          var tag = document.createElement("a");
+          tag.href = imageUrl;
+          tag.download = fileName;
+          document.body.appendChild(tag);
+          tag.click();
+          document.body.removeChild(tag);
+        };
+        xhr.send();
       }
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

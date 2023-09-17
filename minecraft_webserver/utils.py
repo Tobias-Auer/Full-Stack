@@ -130,9 +130,9 @@ class MixedUtilsApi:
             str: A formatted time string in the format "X Stunden, Y Minuten, Z Sekunden",
                  where the parts are included only if they are non-zero.
         """
-        hours = seconds // 3600
-        minutes = (seconds % 3600) // 60
-        seconds = seconds % 60
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        seconds = int(seconds % 60)
 
         time_parts = []
         if hours > 0:
@@ -191,18 +191,6 @@ class DatabaseApi:
         finally:
             return unique_uuids
 
-    # def get_user_status(self, player_uuid):
-    #     """
-    #     Get the status of the player specified by player_uuid.
-    #
-    #     :param player_uuid: Player uuid.
-    #     :return: str: Status of the player.
-    #     """
-    #     db_handler = dataBaseOperations.DatabaseHandler("playerData")
-    #     status = db_handler.get_player_status(player_uuid)
-    #     db_handler.disconnect()
-    #     return status
-
     def check_for_status(self):
         """
         Check for new entries in the "data.db" database and update them in the "player_data.db" database accordingly.
@@ -224,6 +212,7 @@ class DatabaseApi:
             self.__update_player_status(player_uuid, player_status)
             db_handler.delete_key("status", "status", status_entry[0])
         db_handler.disconnect()
+
         print("done with check for status")
 
     @staticmethod
