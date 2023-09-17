@@ -104,8 +104,11 @@ class DatabaseHandler:
         :return: List of all values in the specified column.
         """
         query = f"SELECT [{column}] FROM [{table}]"
-        self.cursor.execute(query)
-        queryResult = self.cursor.fetchall()
+        try:
+            self.cursor.execute(query)
+            queryResult = self.cursor.fetchall()
+        except sqlite3.OperationalError:
+            queryResult = ["null",]
         return queryResult
 
     def get_player_status(self, player_uuid):

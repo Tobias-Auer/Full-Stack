@@ -53,7 +53,15 @@ def player_overview_route():  # Untested optimized version
         uuid = minecraftApi.get_cached_uuid_from_username(user_name)
         db_handler = dataBaseOperations.DatabaseHandler("playerData")
         status = db_handler.get_player_status(uuid)
-        stats = db_handler.return_complete_column(uuid + "~minecraft:custom", "value")
+        stats = {"minecraft:custom": db_handler.return_complete_column(uuid + "~minecraft:custom", "value"),
+                 "minecraft:broken": db_handler.return_complete_column(uuid + "~minecraft:broken", "value"),
+                 "minecraft:crafted": db_handler.return_complete_column(uuid + "~minecraft:crafted", "value"),
+                 "minecraft:dropped": db_handler.return_complete_column(uuid + "~minecraft:dropped", "value"),
+                 "minecraft:killed_by": db_handler.return_complete_column(uuid + "~minecraft:killed_by", "value"),
+                 "minecraft:killed": db_handler.return_complete_column(uuid + "~minecraft:killed", "value"),
+                 "minecraft:picked_up": db_handler.return_complete_column(uuid + "~minecraft:picked_up", "value"),
+                 "minecraft:used": db_handler.return_complete_column(uuid + "~minecraft:used", "value"),
+                 "minecraft:mined": db_handler.return_complete_column(uuid + "~minecraft:mined", "value")}
         db_handler.disconnect()
         return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status, stats=stats)
 

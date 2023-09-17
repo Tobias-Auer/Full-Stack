@@ -319,12 +319,44 @@ class MinecraftApi:
         db_handler.disconnect()
         return name
 
+def format_time(seconds):
+    """
+    Formats a given number of seconds into a human-readable time string.
+
+    Args:
+        seconds (int): The number of seconds to be formatted.
+
+    Returns:
+        str: A formatted time string in the format "X Tage, Y Stunden, Z Minuten, W Sekunden",
+             where the parts are included only if they are non-zero.
+    """
+    days = int(seconds // 86400)
+    seconds %= 86400
+
+    hours = int(seconds // 3600)
+    seconds %= 3600
+
+    minutes = int(seconds // 60)
+    seconds = int(seconds % 60)
+
+    time_parts = []
+    if days > 0:
+        time_parts.append(f"{days} Tag{'e' if days > 1 else ''}")
+    if hours > 0:
+        time_parts.append(f"{hours} Stunde{'n' if hours > 1 else ''}")
+    if minutes > 0:
+        time_parts.append(f"{minutes} Minute{'n' if minutes > 1 else ''}")
+    if seconds > 0:
+        time_parts.append(f"{seconds} Sekunde{'n' if seconds > 1 else ''}")
+
+    return ', '.join(time_parts)
 
 if __name__ == '__main__':
-    api = MinecraftApi()
-    # print(api.get_uuid_from_username("_Tobias4444"))
-    # print(api.get_username_from_uuid("4ebe5f6fc23143159d60097c48cc6d30"))
-    # dataApi = DatabaseApi()
-    # dataApi.get_all_uuids_from_db()
-    # dataApi.check_for_status()
-    print(api.get_cached_uuid_from_username("_Tobias4444"))
+    # api = MinecraftApi()
+    # # print(api.get_uuid_from_username("_Tobias4444"))
+    # # print(api.get_username_from_uuid("4ebe5f6fc23143159d60097c48cc6d30"))
+    # # dataApi = DatabaseApi()
+    # # dataApi.get_all_uuids_from_db()
+    # # dataApi.check_for_status()
+    # print(api.get_cached_uuid_from_username("_Tobias4444"))
+    print(format_time(8315225//20))
