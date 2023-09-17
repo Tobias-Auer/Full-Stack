@@ -127,14 +127,21 @@ class MixedUtilsApi:
             seconds (int): The number of seconds to be formatted.
 
         Returns:
-            str: A formatted time string in the format "X Stunden, Y Minuten, Z Sekunden",
+            str: A formatted time string in the format "X Tage, Y Stunden, Z Minuten, W Sekunden",
                  where the parts are included only if they are non-zero.
         """
+        days = int(seconds // 86400)
+        seconds %= 86400
+
         hours = int(seconds // 3600)
-        minutes = int((seconds % 3600) // 60)
+        seconds %= 3600
+
+        minutes = int(seconds // 60)
         seconds = int(seconds % 60)
 
         time_parts = []
+        if days > 0:
+            time_parts.append(f"{days} Tag{'e' if days > 1 else ''}")
         if hours > 0:
             time_parts.append(f"{hours} Stunde{'n' if hours > 1 else ''}")
         if minutes > 0:
