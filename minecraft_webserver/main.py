@@ -126,8 +126,11 @@ def stream_player_info(path):
             last_seen = db_handler.return_specific_key("cache", "last_seen", "UUID", uuid)
             death_time = db_handler.return_specific_key(f"{uuid}~minecraft:custom", "value", "key",
                                                         "minecraft:time_since_death")
+            play_time = db_handler.return_specific_key(f"{uuid}~minecraft:custom", "value", "key",
+                                                       "minecraft:play_time")
             death_time = mixedApi.format_time(death_time / 20)
-            data = [uuid, status, death_count, first_seen, last_seen, death_time]
+            play_time = mixedApi.format_time(play_time / 20)
+            data = [uuid, status, death_count, first_seen, last_seen, death_time, play_time]
             yield f"data: {data}\n\n"
             time.sleep(10)
 
