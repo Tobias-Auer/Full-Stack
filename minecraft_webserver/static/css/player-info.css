@@ -24,10 +24,7 @@
     flex-direction: row;
 }
 
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.center {margin: auto;
 }
 
 .center-v {
@@ -47,7 +44,16 @@
 .column > div {
     display: block;
 }
-/* 
-div {
+
+.under-div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+
+/* div {
     border: 1px solid red; /* Hier können Sie die gewünschte Farbe und Breite der Grenzen anpassen */
 } */
