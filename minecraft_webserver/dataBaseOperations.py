@@ -208,16 +208,60 @@ class DatabaseHandler:
         print(uuid)
         name = self.minecraftApi.get_username_from_uuid(uuid)
         print(name)
-        if count:
-            # Update existing entry
-            self.cursor.execute(f"UPDATE cache SET name = ?, timestamp = ?, last_seen = ? WHERE UUID = ?",
-                                (name, CURRENT_TIMESTAMP, CURRENT_DATE, uuid))
-        else:
-            # Insert new entry
-            self.cursor.execute(f"INSERT INTO cache (UUID, name, timestamp, first_seen, last_seen) VALUES (?, ?, ?, ?, ?)",
-                                (uuid, name, CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE))
+        # if count:
+        #     # Update existing entry
+        #     self.cursor.execute(f"UPDATE cache SET name = ?, timestamp = ?, last_seen = ? WHERE UUID = ?",
+        #                         (name, CURRENT_TIMESTAMP, CURRENT_DATE, uuid))
+        # else:
+        #     # Insert new entry
+        #     self.cursor.execute(f"INSERT INTO cache (UUID, name, timestamp, first_seen, last_seen) VALUES (?, ?, ?, ?, ?)",
+        #                         (uuid, name, CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE))
         self.conn.commit()
 
+    def return_complete_column_filter_like(self, table, column, filter_list):
+        """
+        Retrieve the complete column specified in the table with additional filter (LIKE list).
+
+        :param table: Table name.
+        :param column: Column name.
+        :param filter_list: List of filter values.
+        :return: List of all values in the specified column matching any of the filter values.
+        """
+        like_conditions = ' OR '.join([f"[{column}] LIKE ?" for _ in filter_list])
+        print("like_conditions: " + like_conditions)
+        query = f"SELECT [{column}] FROM [{table}] WHERE {like_conditions}"
+        print("query: " + query)
+
+        try:
+            results = []
+            self.cursor.execute(query, tuple(f"%{filter_value}%" for filter_value in filter_list))
+            results.extend([row[0] for row in self.cursor.fetchall()])
+        except sqlite3.OperationalError:
+            results = ["null"]
+
+        return results
+
+    def return_specific_values_with_filter(self, table, search_column, target_column, filter_list):
+        """
+        Retrieve values from a target column where the search column matches a LIKE statement with a filter list.
+
+        :param table: Table name.
+        :param search_column: Column name where to search after the filter.
+        :param target_column: Target column name.
+        :param filter_list: List of filter values.
+        :return: List of values in the specified target column matching any of the filter values.
+        """
+        like_conditions = ' OR '.join([f"[{search_column}] LIKE ?" for _ in filter_list])
+        query = f"SELECT [{target_column}] FROM [{table}] WHERE {like_conditions}"
+
+        try:
+            results = []
+            self.cursor.execute(query, tuple(f"%{filter_value}%" for filter_value in filter_list))
+            results.extend([row[0] for row in self.cursor.fetchall()])
+        except sqlite3.OperationalError:
+            results = ["null"]
+
+        return results
 
 # if __name__ == '__main__':
 #     print(return_specific_key("36c5cd1361f444f199870390f20c9ea2~minecraft:custom", "key", "minecraft:jump"))
