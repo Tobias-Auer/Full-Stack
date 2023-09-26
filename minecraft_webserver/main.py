@@ -62,8 +62,49 @@ def player_overview_route():  # Untested optimized version
                  "minecraft:picked_up": db_handler.return_complete_column(uuid + "~minecraft:picked_up", "value"),
                  "minecraft:used": db_handler.return_complete_column(uuid + "~minecraft:used", "value"),
                  "minecraft:mined": db_handler.return_complete_column(uuid + "~minecraft:mined", "value")}
+
+        tools_substrings = ["axe", "shovel", "hoe", "sword", "pickaxe", "shield"]
+        tools_broken_names = db_handler.return_complete_column_filter_like(uuid + "~minecraft:broken", "key",
+                                                                           tools_substrings)
+        tools_broken_stats = db_handler.return_specific_values_with_filter(uuid + "~minecraft:broken", "key", "value",
+                                                                           tools_substrings)
+        tools_broken = dict(zip(tools_broken_names, tools_broken_stats))
+
+        tools_crafted_names = db_handler.return_complete_column_filter_like(uuid + "~minecraft:crafted", "key",
+                                                                            tools_substrings)
+        tools_crafted_stats = db_handler.return_specific_values_with_filter(uuid + "~minecraft:crafted", "key", "value",
+                                                                            tools_substrings)
+        tools_crafted = dict(zip(tools_crafted_names, tools_crafted_stats))
+
+        tools_dropped_names = db_handler.return_complete_column_filter_like(uuid + "~minecraft:dropped", "key",
+                                                                            tools_substrings)
+        tools_dropped_stats = db_handler.return_specific_values_with_filter(uuid + "~minecraft:crafted", "key", "value",
+                                                                            tools_substrings)
+        tools_dropped = dict(zip(tools_dropped_names, tools_dropped_stats))
+
+        tools_picked_up_names = db_handler.return_complete_column_filter_like(uuid + "~minecraft:picked_up", "key",
+                                                                              tools_substrings)
+        tools_picked_up_stats = db_handler.return_specific_values_with_filter(uuid + "~minecraft:picked_up", "key",
+                                                                              "value", tools_substrings)
+        tools_picked_up = dict(zip(tools_picked_up_names, tools_picked_up_stats))
+
+        tools_used_names = db_handler.return_complete_column_filter_like(uuid + "~minecraft:used", "key",
+                                                                         tools_substrings)
+        tools_used_stats = db_handler.return_specific_values_with_filter(uuid + "~minecraft:used", "key", "value",
+                                                                         tools_substrings)
+        tools_used = dict(zip(tools_used_names, tools_used_stats))
+
+        tools_names = list(
+            set(tools_broken_names + tools_crafted_names + tools_dropped_names + tools_picked_up_names + tools_used_names))
+
+        stats_tools = {}
+        # check every single dict if current tool is present(key) if so, get value otherwise value is 0
+        for tool_name in tools_names:
+            stat_list = [tools_broken.get(tool_name, 0), tools_crafted.get(tool_name, 0), tools_dropped.get(tool_name, 0), tools_picked_up.get(tool_name, 0), tools_used.get(tool_name, 0)]
+            stats_tools.update({tool_name: stat_list})
         db_handler.disconnect()
-        return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status, stats=stats)
+        return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status, stats=stats,
+                               stats_tools=stats_tools)
 
     all_users = []
     all_status = []

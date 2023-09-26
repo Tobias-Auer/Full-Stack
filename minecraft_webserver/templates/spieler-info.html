@@ -100,7 +100,7 @@
     <br>
     <hr>
     <br>
-    <div class="center" style="width:500px!important;">
+    <div class="center" style="width:1600px!important;">
       <div>
         <button disabled id="blocks" class="tabButton" onclick="doTabAction('blocks')">
           Blöcke
@@ -116,11 +116,12 @@
         </button>
       </div>
       <br>
-      <div style="background-color: black;color:white;width: 300px;height: 300px;overflow-wrap: break-word;overflow: scroll;">
+      <div style="background-color: black;color:white;width: 1600px;height: 600px;overflow-wrap: break-word;overflow: scroll;">
         <p id="staticsContentDiv">:::::::</p>
       </div>
     </div>
     <br>
+    {{info}}
     <p style="color: red;">Das wird noch schöner, versprochen: </p>
     {{ stats }}
   </div>
@@ -189,8 +190,11 @@
     }
     
     var stats = decodeHtmlEntities("{{stats}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
-    console.warn(stats)
     stats = JSON.parse(stats)
+
+    var stats_tools = decodeHtmlEntities("{{stats_tools}}").replaceAll("'", '"');
+    console.log(stats_tools)
+    stats_tools = JSON.parse(stats_tools)
 
     function doTabAction(action) {
       buttons = document.getElementsByClassName("tabButton")
@@ -206,7 +210,39 @@
       } else if (action == "blocks") {
         document.getElementById("staticsContentDiv").innerText = stats["minecraft:mined"]
       } else if (action == "tools") {
-        document.getElementById("staticsContentDiv").innerText = stats["minecraft:used"]
+        htmlString = `
+        <table style=border:dotted;>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Broken</th>
+            <th>Crafted</th>
+            <th>Dropped</th>
+            <th>Picked up</th>
+            <th>Used</th>           
+          </tr>
+        </thead>
+        <tbody>
+        `
+        for (const itemName in stats_tools) {
+          const itemAttributes = stats_tools[itemName];
+          htmlString += `
+        <tr>
+            <td>${itemName}</td>
+            `
+          for (const itemAttrName in itemAttributes) {
+            htmlString += `
+            <td>${itemAttributes[itemAttrName]}</td>
+          `
+          }
+          
+        }
+
+        htmlString +=`</tr>
+        </tbody>
+        </table>`
+
+        document.getElementById("staticsContentDiv").innerHTML = htmlString
       } else {
         document.getElementById("staticsContentDiv").innerText = "undefined"
       }

@@ -220,65 +220,7 @@ class StatisticsUpdater:
         self.cursor.execute(insert_query, (key, value))
         self.conn.commit()
 
-    # def insert_player_specific_data(self, table_name, column_names, values):
-    #     """
-    #     Inserts metadata for the player in the player meta table created in "create_player_info_table()"
-    #
-    #     Idk what I was thinking back then when i was creating this function, so I have no clue what it is doing xD
-    #
-    #     WILL BE REWRITTEN WHEN NEEDED!
-    #     NOT FOR READY FOR USE!
-    #
-    #     :param table_name:
-    #     :param column_names:
-    #     :param values:
-    #     :return:
-    #     """
-    #     column_names_string = ", ".join([f'"{name}"' for name in column_names])
-    #     value_placeholders = ", ".join(["?" for _ in column_names])
-    #     insert_query = f"""
-    #         INSERT INTO {table_name} ({column_names_string})
-    #         VALUES ({value_placeholders})
-    #     """
-    #     default_values = [None if value is None else value for value in values]
-    #     self.cursor.execute(insert_query, default_values)
-
-    # def __update_game_specific_tables(self, UUID, data):
-    #     for key, action in data["stats"].items():
-    #         all_keys = list(action.keys())
-    #         all_values = list(action.values())
-    #         table_name_unescaped = UUID + "~" + key
-    #         table_name = "[" + table_name_unescaped + "]"
-    #
-    #         self.cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name_unescaped}'")
-    #         existing_table = self.cursor.fetchone()
-    #         if existing_table is not None:
-    #             print(f"Updating {table_name}")
-    #             self.update_game_specific_data(table_name, all_keys, all_values)
-    #         else:
-    #             print(f"Creating {table_name}")
-    #             self.create_game_specific_table(table_name)
-    #             self.insert_game_specific_data(table_name, all_keys, all_values)
-
-    def update_player_specific_tables(self, UUID, data):
-        ...
-
-    def update_player_specific_tables_from_file(self):
-        ...
-
 
 if __name__ == '__main__':
     i = StatisticsUpdater()
     i.update_player_cache()
-
-    ...
-    # directory = './sampleData'
-    # files = os.listdir(directory)
-    # statistic_updater = StatisticsUpdater("main.db")
-    # # statistic_updater.create_player_info_table("SAMPLE_UUID")
-    # # statistic_updater.insert_player_specific_data("SAMPLE_UUID", ["username", "banned"], ["_Tobias", "TRUE"])
-    # for file in files:
-    #     if file.endswith('.json'):
-    #         filepath = os.path.join(directory, file)
-    #         statistic_updater.update_database_from_file(filepath)
-    # statistic_updater.disconnect()
