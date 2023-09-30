@@ -53,7 +53,33 @@
     margin-left: auto;
 }
 
+.stats_table table {
+    width: 98%; /* Ensure the table takes the full width of its container */
+  }
 
+.stats_table thead {
+position: sticky;
+background-color: black;
+width: 90%;
+top: 0; /* Stick the header to the top */
+}
+
+/* Optional styling for the table */
+table {
+border-collapse: collapse;
+width: 98%;
+}
+
+.stats_div {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stats_table th, td {
+    padding: 8px;
+    text-align: center;
+  }
 /* div {
     border: 1px solid red; /* Hier können Sie die gewünschte Farbe und Breite der Grenzen anpassen */
 } */
