@@ -108,6 +108,9 @@
         <button id="tools" class="tabButton" onclick="doTabAction('tools')">
           Tools
         </button>
+        <button id="armor" class="tabButton" onclick="doTabAction('armor')">
+          Armor
+        </button>
         <button id="mobs" class="tabButton" onclick="doTabAction('mobs')">
           Mobs
         </button>
@@ -117,7 +120,7 @@
       </div>
       <br>
       <div style="background-color: black;color:white;width: 1600px;height: 600px;overflow-wrap: break-word;overflow: scroll;">
-        <p id="staticsContentDiv">:::::::</p>
+        <p class="stats_div" id="staticsContentDiv">:::::::</p>
       </div>
     </div>
     <br>
@@ -193,8 +196,13 @@
     stats = JSON.parse(stats)
 
     var stats_tools = decodeHtmlEntities("{{stats_tools}}").replaceAll("'", '"');
+    var stats_armor = decodeHtmlEntities("{{stats_armor}}").replaceAll("'", '"');
+    var stats_mobs = decodeHtmlEntities("{{stats_killed}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
     console.log(stats_tools)
-    stats_tools = JSON.parse(stats_tools)
+    stats_tools = JSON.parse(stats_tools);
+    stats_armor = JSON.parse(stats_armor);
+    stats_mobs = JSON.parse(stats_mobs)
+    console.warn(stats_mobs)
 
     function doTabAction(action) {
       buttons = document.getElementsByClassName("tabButton")
@@ -209,9 +217,42 @@
         document.getElementById("staticsContentDiv").innerText = stats["minecraft:custom"]
       } else if (action == "blocks") {
         document.getElementById("staticsContentDiv").innerText = stats["minecraft:mined"]
+      } else if (action == "armor") {
+        htmlString = `
+        <table class="stats_table" style=border:dotted;>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Broken</th>
+            <th>Crafted</th>
+            <th>Dropped</th>
+            <th>Picked up</th>
+            <th>Used</th>           
+          </tr>
+        </thead>
+        <tbody>
+        `
+        for (const itemName in stats_armor) {
+          const itemAttributes = stats_armor[itemName];
+          htmlString += `
+        <tr>
+            <td>${itemName}</td>
+            `
+          for (const itemAttrName in itemAttributes) {
+            htmlString += `
+            <td>${itemAttributes[itemAttrName]}</td>
+          `
+          }
+          
+        }
+
+        htmlString +=`</tr>
+        </tbody>
+        </table>`
+        document.getElementById("staticsContentDiv").innerHTML = htmlString
       } else if (action == "tools") {
         htmlString = `
-        <table style=border:dotted;>
+        <table class="stats_table" style=border:dotted;>
           <thead>
           <tr>
             <th>Name</th>
@@ -244,7 +285,36 @@
 
         document.getElementById("staticsContentDiv").innerHTML = htmlString
       } else {
-        document.getElementById("staticsContentDiv").innerText = "undefined"
+        htmlString = `
+        <table class="stats_table" style=border:dotted;>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Killed</th>
+            <th>Killed By</th>   
+          </tr>
+        </thead>
+        <tbody>
+        `
+        for (const itemName in stats_mobs) {
+          const itemAttributes = stats_mobs[itemName];
+          htmlString += `
+        <tr>
+            <td>${itemName}</td>
+            `
+          for (const itemAttrName in itemAttributes) {
+            htmlString += `
+            <td>${itemAttributes[itemAttrName]}</td>
+          `
+          }
+          
+        }
+
+        htmlString +=`</tr>
+        </tbody>
+        </table>`
+
+        document.getElementById("staticsContentDiv").innerHTML = htmlString
       }
 
     }

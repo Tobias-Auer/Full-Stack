@@ -208,14 +208,6 @@ class DatabaseHandler:
         print(uuid)
         name = self.minecraftApi.get_username_from_uuid(uuid)
         print(name)
-        # if count:
-        #     # Update existing entry
-        #     self.cursor.execute(f"UPDATE cache SET name = ?, timestamp = ?, last_seen = ? WHERE UUID = ?",
-        #                         (name, CURRENT_TIMESTAMP, CURRENT_DATE, uuid))
-        # else:
-        #     # Insert new entry
-        #     self.cursor.execute(f"INSERT INTO cache (UUID, name, timestamp, first_seen, last_seen) VALUES (?, ?, ?, ?, ?)",
-        #                         (uuid, name, CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE))
         self.conn.commit()
 
     def return_complete_column_filter_like(self, table, column, filter_list):
