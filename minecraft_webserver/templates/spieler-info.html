@@ -195,14 +195,15 @@
     var stats = decodeHtmlEntities("{{stats}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
     stats = JSON.parse(stats)
 
-    var stats_tools = decodeHtmlEntities("{{stats_tools}}").replaceAll("'", '"');
-    var stats_armor = decodeHtmlEntities("{{stats_armor}}").replaceAll("'", '"');
+    var stats_tools = decodeHtmlEntities("{{stats_tools}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");;
+    var stats_armor = decodeHtmlEntities("{{stats_armor}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");;
     var stats_mobs = decodeHtmlEntities("{{stats_killed}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
+    var stats_custom = decodeHtmlEntities("{{stats_custom}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");;
     console.log(stats_tools)
     stats_tools = JSON.parse(stats_tools);
     stats_armor = JSON.parse(stats_armor);
-    stats_mobs = JSON.parse(stats_mobs)
-    console.warn(stats_mobs)
+    stats_mobs = JSON.parse(stats_mobs);
+    stats_custom = JSON.parse(stats_custom);
 
     function doTabAction(action) {
       buttons = document.getElementsByClassName("tabButton")
@@ -214,7 +215,35 @@
       clickedButton = document.getElementById(action)
       clickedButton.disabled = true
       if (action == "other") {
-        document.getElementById("staticsContentDiv").innerText = stats["minecraft:custom"]
+        htmlString = `
+        <table class="stats_table" style=border:dotted;>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Wert</th>
+          </tr>
+        </thead>
+        <tbody>
+        `
+        for (const itemName in stats_custom) {
+          const itemAttributes = stats_custom[itemName];
+          htmlString += `
+        <tr>
+            <td>${itemName}</td>
+            `
+          for (const itemAttrName in itemAttributes) {
+            htmlString += `
+            <td>${itemAttributes[itemAttrName]}</td>
+          `
+          }
+          
+        }
+
+        htmlString +=`</tr>
+        </tbody>
+        </table>`
+
+        document.getElementById("staticsContentDiv").innerHTML = htmlString
       } else if (action == "blocks") {
         document.getElementById("staticsContentDiv").innerText = stats["minecraft:mined"]
       } else if (action == "armor") {
@@ -316,7 +345,6 @@
 
         document.getElementById("staticsContentDiv").innerHTML = htmlString
       }
-
     }
 
     
