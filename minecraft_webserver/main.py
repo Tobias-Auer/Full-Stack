@@ -165,9 +165,28 @@ def player_overview_route():  # Untested optimized version
             stats_killed.update({tool_name: stat_list})
         ################
 
+        custom_names = db_handler.return_complete_column(uuid + "~minecraft:custom", "key")
+        custom_stats = db_handler.return_complete_column(uuid + "~minecraft:custom", "value")
+
+        for index, item in enumerate(custom_names):
+            print(item)
+            if "time" in item[0]:
+                custom_stats[index] = str(int(custom_stats[index][0]) // 20 // 60) + " min."
+        custom = dict(zip(custom_names, custom_stats))
+        custom_names_all = custom_names
+        print(custom)
+
+        stats_custom = {}
+        # check every single dict if current tool is present(key) if so, get value otherwise value is 0
+        for tool_name in custom_names_all:
+            stat_list = [custom.get(tool_name, 0), ]
+            stats_custom.update({tool_name: stat_list})
+        ################
+        print(stats_custom)
         db_handler.disconnect()
         return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status, stats=stats,
-                               stats_tools=stats_tools, stats_armor=stats_armor, stats_killed=stats_killed)
+                               stats_tools=stats_tools, stats_armor=stats_armor, stats_killed=stats_killed,
+                               stats_custom=stats_custom)
     all_users = []
     all_status = []
     combined_users_data = []
