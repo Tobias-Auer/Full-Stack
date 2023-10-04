@@ -220,7 +220,6 @@ class DatabaseHandler:
         :return: List of all values in the specified column matching any of the filter values.
         """
         like_conditions = ' OR '.join([f"[{column}] LIKE ?" for _ in filter_list])
-        print("like_conditions: " + like_conditions)
         query = f"SELECT [{column}] FROM [{table}] WHERE {like_conditions}"
         print("query: " + query)
 
