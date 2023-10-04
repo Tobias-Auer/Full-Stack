@@ -119,6 +119,7 @@
         </button>
       </div>
       <br>
+      <h3 style="color: red;">WARNUNG: Werte sind unteranderem Falsch. Fix ist unterwegs</h3>
       <div style="background-color: black;color:white;width: 1600px;height: 600px;overflow-wrap: break-word;overflow: scroll;">
         <p class="stats_div" id="staticsContentDiv">:::::::</p>
       </div>
@@ -195,15 +196,18 @@
     var stats = decodeHtmlEntities("{{stats}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
     stats = JSON.parse(stats)
 
-    var stats_tools = decodeHtmlEntities("{{stats_tools}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");;
-    var stats_armor = decodeHtmlEntities("{{stats_armor}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");;
+    var stats_tools = decodeHtmlEntities("{{stats_tools}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
+    var stats_armor = decodeHtmlEntities("{{stats_armor}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
     var stats_mobs = decodeHtmlEntities("{{stats_killed}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
-    var stats_custom = decodeHtmlEntities("{{stats_custom}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");;
+    var stats_custom = decodeHtmlEntities("{{stats_custom}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
+    var stats_blocks = decodeHtmlEntities("{{stats_blocks}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
+    
     console.log(stats_tools)
     stats_tools = JSON.parse(stats_tools);
     stats_armor = JSON.parse(stats_armor);
     stats_mobs = JSON.parse(stats_mobs);
     stats_custom = JSON.parse(stats_custom);
+    stats_blocks = JSON.parse(stats_blocks);
 
     function doTabAction(action) {
       buttons = document.getElementsByClassName("tabButton")
@@ -245,7 +249,39 @@
 
         document.getElementById("staticsContentDiv").innerHTML = htmlString
       } else if (action == "blocks") {
-        document.getElementById("staticsContentDiv").innerText = stats["minecraft:mined"]
+        htmlString = `
+        <table class="stats_table" style=border:dotted;>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Mined</th>
+            <th>Placed</th>
+            <th>Picked up</th>
+            <th>Dropped</th>
+            <th style="color:red;">!! Crafted !!</th>
+          </tr>
+        </thead>
+        <tbody>
+        `
+        for (const itemName in stats_blocks) {
+          const itemAttributes = stats_blocks[itemName];
+          htmlString += `
+        <tr>
+            <td>${itemName}</td>
+            `
+          for (const itemAttrName in itemAttributes) {
+            htmlString += `
+            <td>${itemAttributes[itemAttrName]}</td>
+          `
+          }
+          
+        }
+
+        htmlString +=`</tr>
+        </tbody>
+        </table>`
+
+        document.getElementById("staticsContentDiv").innerHTML = htmlString
       } else if (action == "armor") {
         htmlString = `
         <table class="stats_table" style=border:dotted;>

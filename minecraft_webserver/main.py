@@ -169,12 +169,10 @@ def player_overview_route():  # Untested optimized version
         custom_stats = db_handler.return_complete_column(uuid + "~minecraft:custom", "value")
 
         for index, item in enumerate(custom_names):
-            print(item)
             if "time" in item[0]:
-                custom_stats[index] = str(int(custom_stats[index][0]) // 20 // 60) + " min."
+                custom_stats[index] = str(mixedApi.format_time(int(custom_stats[index][0]) // 20))
         custom = dict(zip(custom_names, custom_stats))
         custom_names_all = custom_names
-        print(custom)
 
         stats_custom = {}
         # check every single dict if current tool is present(key) if so, get value otherwise value is 0
@@ -182,11 +180,47 @@ def player_overview_route():  # Untested optimized version
             stat_list = [custom.get(tool_name, 0), ]
             stats_custom.update({tool_name: stat_list})
         ################
-        print(stats_custom)
+
+        blocks_mined_names = db_handler.return_complete_column(uuid + "~minecraft:mined", "key")
+        blocks_mined_stats = db_handler.return_complete_column(uuid + "~minecraft:mined", "value")
+        blocks_mined = dict(zip(blocks_mined_names, blocks_mined_stats))
+        blocks_whitelist = [item[0] if len(item) == 1 else item for item in blocks_mined_names]
+
+        blocks_placed_names = db_handler.return_complete_column_filter_like(uuid + "~minecraft:used", "key",
+                                                                            blocks_whitelist)
+
+        blocks_placed_stats = db_handler.return_specific_values_with_filter(uuid + "~minecraft:used", "key", "value",
+                                                                            blocks_whitelist)
+        blocks_placed = dict(zip(blocks_placed_names, blocks_placed_stats))
+        print("Blocks placed: {}".format(str(blocks_placed_names)))
+
+        blocks_collected_names = db_handler.return_complete_column_filter_like(uuid + "~minecraft:picked_up", "key",
+                                                                               blocks_whitelist)
+        blocks_collected_stats = db_handler.return_specific_values_with_filter(uuid + "~minecraft:picked_up", "key",
+                                                                               "value",
+                                                                               blocks_whitelist)
+        blocks_collected = dict(zip(blocks_collected_names, blocks_collected_stats))
+
+        blocks_dropped_names = db_handler.return_complete_column_filter_like(uuid + "~minecraft:dropped", "key",
+                                                                             blocks_whitelist)
+        blocks_dropped_stats = db_handler.return_specific_values_with_filter(uuid + "~minecraft:dropped", "key",
+                                                                             "value",
+                                                                             blocks_whitelist)
+        blocks_dropped = dict(zip(blocks_dropped_names, blocks_dropped_stats))
+
+        blocks_names_all = list(
+            set(blocks_mined_names + blocks_placed_names + blocks_collected_names + blocks_dropped_names))
+        stats_blocks = {}
+        # check every single dict if current tool is present(key) if so, get value otherwise value is 0
+        for tool_name in blocks_names_all:
+            stat_list = [blocks_mined.get(tool_name, 0), blocks_placed.get(tool_name, 0),
+                         blocks_collected.get(tool_name, 0), blocks_dropped.get(tool_name, 0)]
+            stats_blocks.update({tool_name: stat_list})
+        ################
         db_handler.disconnect()
         return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status, stats=stats,
                                stats_tools=stats_tools, stats_armor=stats_armor, stats_killed=stats_killed,
-                               stats_custom=stats_custom)
+                               stats_custom=stats_custom, stats_blocks=stats_blocks)
     all_users = []
     all_status = []
     combined_users_data = []
@@ -290,7 +324,6 @@ def check_db_events():
     db_handler = dataBaseOperations.DatabaseHandler("interface")
     statisticUpdater = updateDBStats.StatisticsUpdater()
     while True:
-        print("Looping through the loop")
         if counter_300_sec >= 300:
             counter_300_sec = 0
             # Update player stats
