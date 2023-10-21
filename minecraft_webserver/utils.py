@@ -248,6 +248,7 @@ class MinecraftApi:
         :param logger: Logger object for logging.
         """
         self.logger = logger
+        self.mixedApi = MixedUtilsApi(logger=logger)
 
     def list_all_json_file_names(self):
         """
@@ -319,44 +320,149 @@ class MinecraftApi:
         db_handler.disconnect()
         return name
 
-def format_time(seconds):
-    """
-    Formats a given number of seconds into a human-readable time string.
+    @staticmethod
+    def merge_stats_dicts(names, *stat_dicts):
+        stats = {}
+        for tool_name in names:
+            stat_list = [stat.get(tool_name, 0) for stat in stat_dicts]
+            stats[tool_name] = stat_list
+        return stats
 
-    Args:
-        seconds (int): The number of seconds to be formatted.
+    @staticmethod
+    def get_stats_data(uuid, db_handler, substrings, stat_type):
+        names = db_handler.return_complete_column_filter_like(f"{uuid}~minecraft:{stat_type}", "key", substrings)
+        stats = db_handler.return_specific_values_with_filter(f"{uuid}~minecraft:{stat_type}", "key", "value",
+                                                              substrings)
+        return dict(zip(names, stats))
 
-    Returns:
-        str: A formatted time string in the format "X Tage, Y Stunden, Z Minuten, W Sekunden",
-             where the parts are included only if they are non-zero.
-    """
-    days = int(seconds // 86400)
-    seconds %= 86400
+    def get_all_stats(self, uuid, db_handler):
+        tools_substrings = ["axe", "shovel", "hoe", "sword", "pickaxe", "shield"]
+        armor_substrings = ["boots", "leggings", "chestplate", "helmet"]
+        block_substrings = list(db_handler.return_complete_column("blockInformation", "blocks")[0])[0]
+        print(block_substrings)
 
-    hours = int(seconds // 3600)
-    seconds %= 3600
+        def get_stats_tools():
+            tools_broken = self.get_stats_data(uuid, db_handler, tools_substrings, "broken")
+            tools_crafted = self.get_stats_data(uuid, db_handler, tools_substrings, "crafted")
+            tools_dropped = self.get_stats_data(uuid, db_handler, tools_substrings, "dropped")
+            tools_picked_up = self.get_stats_data(uuid, db_handler, tools_substrings, "picked_up")
+            tools_used = self.get_stats_data(uuid, db_handler, tools_substrings, "used")
 
-    minutes = int(seconds // 60)
-    seconds = int(seconds % 60)
+            tools_names = list(set(
+                list(tools_broken.keys()) + list(tools_crafted.keys()) + list(tools_dropped.keys()) + list(
+                    tools_picked_up.keys()) + list(tools_used.keys())))
 
-    time_parts = []
-    if days > 0:
-        time_parts.append(f"{days} Tag{'e' if days > 1 else ''}")
-    if hours > 0:
-        time_parts.append(f"{hours} Stunde{'n' if hours > 1 else ''}")
-    if minutes > 0:
-        time_parts.append(f"{minutes} Minute{'n' if minutes > 1 else ''}")
-    if seconds > 0:
-        time_parts.append(f"{seconds} Sekunde{'n' if seconds > 1 else ''}")
+            stats_tools = self.merge_stats_dicts(tools_names, tools_broken, tools_crafted, tools_dropped,
+                                                 tools_picked_up, tools_used)
 
-    return ', '.join(time_parts)
+            return stats_tools
+
+        def get_stats_armor():
+            armor_broken = self.get_stats_data(uuid, db_handler, armor_substrings, "broken")
+            armor_crafted = self.get_stats_data(uuid, db_handler, armor_substrings, "crafted")
+            armor_dropped = self.get_stats_data(uuid, db_handler, armor_substrings, "dropped")
+            armor_picked_up = self.get_stats_data(uuid, db_handler, armor_substrings, "picked_up")
+            armor_used = self.get_stats_data(uuid, db_handler, armor_substrings, "used")
+
+            armor_names = list(set(
+                list(armor_broken.keys()) + list(armor_crafted.keys()) + list(armor_dropped.keys()) + list(
+                    armor_picked_up.keys()) + list(armor_used.keys())))
+
+            stats_armor = self.merge_stats_dicts(armor_names, armor_broken, armor_crafted, armor_dropped,
+                                                 armor_picked_up, armor_used)
+            return stats_armor
+
+        def get_stats_blocks():
+            blocks_mined = self.get_stats_data(uuid, db_handler, block_substrings, "mined")
+            print("Blocks mined: ", blocks_mined)
+            blocks_placed = self.get_stats_data(uuid, db_handler, block_substrings, "used")
+            blocks_picked_up = self.get_stats_data(uuid, db_handler, block_substrings, "picked_up")
+            blocks_dropped = self.get_stats_data(uuid, db_handler, block_substrings, "dropped")
+            blocks_crafted = self.get_stats_data(uuid, db_handler, block_substrings, "crafted")
+
+            blocks_names = list(set(
+                list(blocks_mined.keys()) + list(blocks_placed.keys()) + list(blocks_picked_up.keys()) + list(
+                    blocks_dropped.keys()) + list(blocks_crafted.keys())))
+
+            stats_blocks = self.merge_stats_dicts(blocks_names, blocks_mined, blocks_placed, blocks_picked_up,
+                                                  blocks_dropped, blocks_crafted)
+
+            return stats_blocks
+
+        def get_stats_killed():
+            killed_names = db_handler.return_complete_column(uuid + "~minecraft:killed", "key")
+            killed_stats = db_handler.return_complete_column(uuid + "~minecraft:killed", "value")
+            killed = dict(zip(killed_names, killed_stats))
+
+            killed_by_names = db_handler.return_complete_column(uuid + "~minecraft:killed_by", "key")
+            killed_by_stats = db_handler.return_complete_column(uuid + "~minecraft:killed_by", "value")
+            killed_by = dict(zip(killed_by_names, killed_by_stats))
+
+            killed_names_all = list(set(killed_names + killed_by_names))
+
+            stats_killed = self.merge_stats_dicts(killed_names_all, killed, killed_by)
+            return stats_killed
+
+        def get_stats_custom():
+            custom_names = db_handler.return_complete_column(uuid + "~minecraft:custom", "key")
+            custom_stats = db_handler.return_complete_column(uuid + "~minecraft:custom", "value")
+
+            for index, item in enumerate(custom_names):
+                if "time" in item[0]:
+                    custom_stats[index] = str(self.mixedApi.format_time(int(custom_stats[index][0]) // 20))
+            custom = dict(zip(custom_names, custom_stats))
+            custom_names_all = custom_names
+
+            stats_custom = self.merge_stats_dicts(custom_names_all, custom)
+            return stats_custom
+
+        return get_stats_tools(), get_stats_armor(), get_stats_killed(), get_stats_custom(), get_stats_blocks()
+
+    def update_blocks(self):
+        """
+        This function updates the valid blocks in the game and insert them into the database Runs every time the
+        server is started and checks hash of the file to check if it has changed to save resouurces when the server
+        starts.
+        File source: https://github.com/PrismarineJS/minecraft-data/blob/master/data/pc/1.20/blocks.json
+
+        Filename: blocks.json
+        :return:
+        """
+        import json
+        file_path = 'blocks.json'
+        import hashlib
+
+        BUF_SIZE = 65536
+        md5 = hashlib.md5()
+        with open(file_path, 'rb') as f:
+            while True:
+                data = f.read(BUF_SIZE)
+                if not data:
+                    break
+                md5.update(data)
+        md5_hash = md5.hexdigest().lower()
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        db_md5_hash = db_handler.return_complete_column("blockInformation", "hash")[0][0].lower()
+        print(md5_hash)
+        print(db_md5_hash)
+        if md5_hash == db_md5_hash:
+            print("same")
+            db_handler.disconnect()
+            return
+
+        name_list = []
+
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+
+        for item in data:
+            name_list.append(item["name"])
+
+        print(name_list)
+        db_handler.write_specific_value("blockInformation", "hash", db_md5_hash, "blocks", str(name_list))
+        db_handler.write_specific_value("blockInformation", "hash", db_md5_hash, "hash", str(md5_hash))
+        db_handler.disconnect()
+
 
 if __name__ == '__main__':
-    # api = MinecraftApi()
-    # # print(api.get_uuid_from_username("_Tobias4444"))
-    # # print(api.get_username_from_uuid("4ebe5f6fc23143159d60097c48cc6d30"))
-    # # dataApi = DatabaseApi()
-    # # dataApi.get_all_uuids_from_db()
-    # # dataApi.check_for_status()
-    # print(api.get_cached_uuid_from_username("_Tobias4444"))
-    print(format_time(8315225//20))
+    ...

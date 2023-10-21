@@ -125,9 +125,6 @@
       </div>
     </div>
     <br>
-    {{info}}
-    <p style="color: red;">Das wird noch schöner, versprochen: </p>
-    {{ stats }}
   </div>
   <footer>
     <nav>
@@ -193,8 +190,8 @@
       return textarea.value;
     }
     
-    var stats = decodeHtmlEntities("{{stats}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
-    stats = JSON.parse(stats)
+    // var stats = decodeHtmlEntities("{{stats}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
+    // stats = JSON.parse(stats)
 
     var stats_tools = decodeHtmlEntities("{{stats_tools}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
     var stats_armor = decodeHtmlEntities("{{stats_armor}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
@@ -203,6 +200,13 @@
     var stats_blocks = decodeHtmlEntities("{{stats_blocks}}").replaceAll("'", '"').replaceAll("(", "").replaceAll(",)", "");
     
     console.log(stats_tools)
+    var stats = {
+      other: JSON.parse(stats_custom),
+      blocks: JSON.parse(stats_blocks),
+      armor: JSON.parse(stats_armor),
+      tools: JSON.parse(stats_tools),
+      mobs: JSON.parse(stats_mobs)
+    } 
     stats_tools = JSON.parse(stats_tools);
     stats_armor = JSON.parse(stats_armor);
     stats_mobs = JSON.parse(stats_mobs);
@@ -229,25 +233,7 @@
         </thead>
         <tbody>
         `
-        for (const itemName in stats_custom) {
-          const itemAttributes = stats_custom[itemName];
-          htmlString += `
-        <tr>
-            <td>${itemName}</td>
-            `
-          for (const itemAttrName in itemAttributes) {
-            htmlString += `
-            <td>${itemAttributes[itemAttrName]}</td>
-          `
-          }
-          
-        }
-
-        htmlString +=`</tr>
-        </tbody>
-        </table>`
-
-        document.getElementById("staticsContentDiv").innerHTML = htmlString
+        
       } else if (action == "blocks") {
         htmlString = `
         <table class="stats_table" style=border:dotted;>
@@ -258,30 +244,12 @@
             <th>Placed</th>
             <th>Picked up</th>
             <th>Dropped</th>
-            <th style="color:red;">!! Crafted !!</th>
+            <th>Crafted</th>
           </tr>
         </thead>
         <tbody>
         `
-        for (const itemName in stats_blocks) {
-          const itemAttributes = stats_blocks[itemName];
-          htmlString += `
-        <tr>
-            <td>${itemName}</td>
-            `
-          for (const itemAttrName in itemAttributes) {
-            htmlString += `
-            <td>${itemAttributes[itemAttrName]}</td>
-          `
-          }
-          
-        }
-
-        htmlString +=`</tr>
-        </tbody>
-        </table>`
-
-        document.getElementById("staticsContentDiv").innerHTML = htmlString
+        
       } else if (action == "armor") {
         htmlString = `
         <table class="stats_table" style=border:dotted;>
@@ -297,24 +265,7 @@
         </thead>
         <tbody>
         `
-        for (const itemName in stats_armor) {
-          const itemAttributes = stats_armor[itemName];
-          htmlString += `
-        <tr>
-            <td>${itemName}</td>
-            `
-          for (const itemAttrName in itemAttributes) {
-            htmlString += `
-            <td>${itemAttributes[itemAttrName]}</td>
-          `
-          }
-          
-        }
-
-        htmlString +=`</tr>
-        </tbody>
-        </table>`
-        document.getElementById("staticsContentDiv").innerHTML = htmlString
+        
       } else if (action == "tools") {
         htmlString = `
         <table class="stats_table" style=border:dotted;>
@@ -330,26 +281,8 @@
         </thead>
         <tbody>
         `
-        for (const itemName in stats_tools) {
-          const itemAttributes = stats_tools[itemName];
-          htmlString += `
-        <tr>
-            <td>${itemName}</td>
-            `
-          for (const itemAttrName in itemAttributes) {
-            htmlString += `
-            <td>${itemAttributes[itemAttrName]}</td>
-          `
-          }
-          
-        }
-
-        htmlString +=`</tr>
-        </tbody>
-        </table>`
-
-        document.getElementById("staticsContentDiv").innerHTML = htmlString
-      } else {
+        
+      } else if (action == "mobs") {
         htmlString = `
         <table class="stats_table" style=border:dotted;>
           <thead>
@@ -361,8 +294,10 @@
         </thead>
         <tbody>
         `
-        for (const itemName in stats_mobs) {
-          const itemAttributes = stats_mobs[itemName];
+      }
+      
+      for (const itemName in stats[action]) {
+          const itemAttributes = stats[action][itemName];
           htmlString += `
         <tr>
             <td>${itemName}</td>
@@ -371,16 +306,13 @@
             htmlString += `
             <td>${itemAttributes[itemAttrName]}</td>
           `
-          }
-          
+          } 
         }
-
-        htmlString +=`</tr>
+      htmlString +=`</tr>
         </tbody>
         </table>`
 
         document.getElementById("staticsContentDiv").innerHTML = htmlString
-      }
     }
 
     

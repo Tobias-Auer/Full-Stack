@@ -1,4 +1,4 @@
-# TODO: Mainloop to call these functions regularly
+# TODO: Mainloop to call these functions regularly (Is it done? Need to check!)
 import sqlite3
 import os
 import json
