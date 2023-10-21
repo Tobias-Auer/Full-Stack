@@ -4848,3 +4848,72 @@
 08-29-2023 20:53:35 | INFO | 192.168.2.139 - - [29/Aug/2023 20:53:35] "[36mGET /static/css/header.css HTTP/1.1[0m" 304 -
 08-29-2023 20:53:35 | INFO | 192.168.2.139 - - [29/Aug/2023 20:53:35] "[36mGET /static/css/player-info.css HTTP/1.1[0m" 304 -
 08-29-2023 20:53:35 | INFO | 192.168.2.139 - - [29/Aug/2023 20:53:35] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+10-21-2023 15:17:24 | INFO | Application started
+10-21-2023 15:17:24 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:17:24 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:18:19 | INFO | Application started
+10-21-2023 15:18:19 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:18:19 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:18:47 | INFO | Application started
+10-21-2023 15:18:47 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:18:47 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:19:02 | INFO | Application started
+10-21-2023 15:19:02 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:19:02 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:19:50 | INFO | Application started
+10-21-2023 15:19:50 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:19:50 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:20:29 | INFO | Application started
+10-21-2023 15:20:29 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:20:29 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:21:09 | INFO | Application started
+10-21-2023 15:21:09 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:21:09 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:21:25 | INFO | Application started
+10-21-2023 15:21:25 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:21:25 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:22:33 | INFO | Application started
+10-21-2023 15:22:33 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-21-2023 15:22:33 | INFO | [33mPress CTRL+C to quit[0m
+10-21-2023 15:23:02 | INFO | Application started
+10-21-2023 15:23:40 | INFO | Application started
+10-21-2023 15:24:14 | INFO | Application started
+10-21-2023 15:24:16 | INFO | Application started
+10-21-2023 15:24:28 | INFO | Application started
+10-21-2023 15:24:29 | INFO | Application started
+10-21-2023 15:24:59 | INFO | Application started
+10-21-2023 15:25:46 | INFO | Application started
+10-21-2023 15:25:57 | INFO | Application started
+10-21-2023 15:26:09 | INFO | Application started
+10-21-2023 15:26:41 | INFO | Application started
+10-21-2023 15:26:47 | INFO | Application started
+10-21-2023 15:31:28 | INFO | Application started
+10-21-2023 15:31:42 | INFO | Application started
+10-21-2023 15:31:59 | INFO | Application started

@@ -108,7 +108,7 @@ class DatabaseHandler:
             self.cursor.execute(query)
             queryResult = self.cursor.fetchall()
         except sqlite3.OperationalError:
-            queryResult = ["null",]
+            queryResult = ["null", ]
         return queryResult
 
     def get_player_status(self, player_uuid):
@@ -219,16 +219,20 @@ class DatabaseHandler:
         :param filter_list: List of filter values.
         :return: List of all values in the specified column matching any of the filter values.
         """
-        like_conditions = ' OR '.join([f"[{column}] LIKE ?" for _ in filter_list])
-        query = f"SELECT [{column}] FROM [{table}] WHERE {like_conditions}"
-        print("query: " + query)
+        chunk_size = 100  # Define the maximum number of filter values per query to avoid expression tree too long erro
+        results = []
 
-        try:
-            results = []
-            self.cursor.execute(query, tuple(f"%{filter_value}%" for filter_value in filter_list))
-            results.extend([row[0] for row in self.cursor.fetchall()])
-        except sqlite3.OperationalError:
-            results = ["null"]
+        for i in range(0, len(filter_list), chunk_size):
+            chunk = filter_list[i:i + chunk_size]
+            like_conditions = ' OR '.join([f"[{column}] LIKE ?" for _ in chunk])
+            query = f"SELECT [{column}] FROM [{table}] WHERE {like_conditions}"
+
+            try:
+                self.cursor.execute(query, tuple(f"%{filter_value}%" for filter_value in chunk))
+                results.extend([row[0] for row in self.cursor.fetchall()])
+            except sqlite3.OperationalError as e:
+                print(f"\nError:\n{e}\n")
+                results.extend(["null"] * len(chunk))
 
         return results
 
@@ -242,65 +246,29 @@ class DatabaseHandler:
         :param filter_list: List of filter values.
         :return: List of values in the specified target column matching any of the filter values.
         """
-        like_conditions = ' OR '.join([f"[{search_column}] LIKE ?" for _ in filter_list])
-        query = f"SELECT [{target_column}] FROM [{table}] WHERE {like_conditions}"
+        chunk_size = 100  # Define the maximum number of filter values per query to avoid expression tree too long error
+        results = []
 
-        try:
-            results = []
-            self.cursor.execute(query, tuple(f"%{filter_value}%" for filter_value in filter_list))
-            results.extend([row[0] for row in self.cursor.fetchall()])
-        except sqlite3.OperationalError:
-            results = ["null"]
+        for i in range(0, len(filter_list), chunk_size):
+            chunk = filter_list[i:i + chunk_size]
+            like_conditions = ' OR '.join([f"[{search_column}] LIKE ?" for _ in chunk])
+            query = f"SELECT [{target_column}] FROM [{table}] WHERE {like_conditions}"
+
+            try:
+                self.cursor.execute(query, tuple(f"%{filter_value}%" for filter_value in chunk))
+                results.extend([row[0] for row in self.cursor.fetchall()])
+            except sqlite3.OperationalError as e:
+                print(f"\nError:\n{e}\n")
+                results.extend(["null"] * len(chunk))
 
         return results
 
-# if __name__ == '__main__':
-#     print(return_specific_key("36c5cd1361f444f199870390f20c9ea2~minecraft:custom", "key", "minecraft:jump"))
-#     print(return_complete_column("status", "status"))
-#     write_player_status("_Tobias4444", "Online")
-# def init(player_data_db=False):
-#     if player_data_db:
-#         print("Connect to player data db")
-#         conn = sqlite3.connect(fr'./player_data.db')
-#     else:
-#         conn = sqlite3.connect(r'C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\databse_webserver\data.db')
-#     if USE_TEST_DB:
-#         print("Connect to minecraft interface")
-#         conn = sqlite3.connect(r'./data.db')
-#
-#     cursor = conn.cursor()
-#     return conn, cursor
-
-# def kill(conn, cursor):
-#     conn.commit()
-#     cursor.close()
-#     conn.close()
-
-# def deleteKey(self, table, field, key):
-#     try:
-#         recursionCounter = 0
-#         while self.checkForKey(table, field, key):
-#             if recursionCounter >= 100:
-#                 return "recursionLimit reached"
-#             recursionCounter += 1
-#
-#             query = f"DELETE FROM {table} WHERE {field} = ?"
-#             params = (key,)
-#             self.cursor.execute(query, params)
-#             self.conn.commit()
-#         return True
-#     except Exception as e:
-#         return str(e)
-
-# def delete_specific_key(self, table, column, field):
-#     """
-#
-#     :param table: Table name
-#     :param column: Column name
-#     :param field:
-#     :return:
-#     """
-#     query = f"DELETE FROM [{table}] WHERE {column} = \"{field}\""
-#     print(query)
-#     self.cursor.execute(query)
-#     self.conn.commit()
+    def write_specific_value(self, table, search_column, search_value, target_column, value):
+        try:
+            # SQL statement to update the target_column with the new value
+            update_query = f"UPDATE {table} SET {target_column} = ? WHERE {search_column} = ?"
+            self.cursor.execute(update_query, (value, search_value))
+            self.conn.commit()
+            print("Updated table successfully")
+        except sqlite3.Error as e:
+            print("Error:", e)
