@@ -329,8 +329,11 @@ class MinecraftApi:
         return stats
 
     @staticmethod
-    def get_stats_data(uuid, db_handler, substrings, stat_type):
-        names = db_handler.return_complete_column_filter_like(f"{uuid}~minecraft:{stat_type}", "key", substrings)
+    def get_stats_data(uuid, db_handler, substrings, stat_type, block_flag=False):
+        if block_flag:
+            names = db_handler.return_complete_column_filter_like2(f"{uuid}~minecraft:{stat_type}", "key", substrings)
+        else:
+            names = db_handler.return_complete_column_filter_like(f"{uuid}~minecraft:{stat_type}", "key", substrings)
         stats = db_handler.return_specific_values_with_filter(f"{uuid}~minecraft:{stat_type}", "key", "value",
                                                               substrings)
         return dict(zip(names, stats))
@@ -339,7 +342,6 @@ class MinecraftApi:
         tools_substrings = ["axe", "shovel", "hoe", "sword", "pickaxe", "shield"]
         armor_substrings = ["boots", "leggings", "chestplate", "helmet"]
         block_substrings = list(db_handler.return_complete_column("blockInformation", "blocks")[0])[0]
-        print(block_substrings)
 
         def get_stats_tools():
             tools_broken = self.get_stats_data(uuid, db_handler, tools_substrings, "broken")
@@ -373,15 +375,14 @@ class MinecraftApi:
             return stats_armor
 
         def get_stats_blocks():
-            blocks_mined = self.get_stats_data(uuid, db_handler, block_substrings, "mined")
-            print("Blocks mined: ", blocks_mined)
-            blocks_placed = self.get_stats_data(uuid, db_handler, block_substrings, "used")
-            blocks_picked_up = self.get_stats_data(uuid, db_handler, block_substrings, "picked_up")
-            blocks_dropped = self.get_stats_data(uuid, db_handler, block_substrings, "dropped")
-            blocks_crafted = self.get_stats_data(uuid, db_handler, block_substrings, "crafted")
+            blocks_mined = self.get_stats_data(uuid, db_handler, block_substrings, "mined", True)
+            blocks_placed = self.get_stats_data(uuid, db_handler, block_substrings, "used", True)
+            blocks_picked_up = self.get_stats_data(uuid, db_handler, block_substrings, "picked_up", True)
+            blocks_dropped = self.get_stats_data(uuid, db_handler, block_substrings, "dropped", True)
+            blocks_crafted = self.get_stats_data(uuid, db_handler, block_substrings, "crafted", True)
 
-            blocks_names = list(set(
-                list(blocks_mined.keys()) + list(blocks_placed.keys()) + list(blocks_picked_up.keys()) + list(
+            blocks_names = list(
+                set(list(blocks_mined.keys()) + list(blocks_placed.keys()) + list(blocks_picked_up.keys()) + list(
                     blocks_dropped.keys()) + list(blocks_crafted.keys())))
 
             stats_blocks = self.merge_stats_dicts(blocks_names, blocks_mined, blocks_placed, blocks_picked_up,
