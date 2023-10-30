@@ -8,7 +8,7 @@ import requests
 import dataBaseOperations
 
 
-class BackupApi:  # Untested optimized version
+class BackupApi:
     """
     Class for handling backups.
     """
@@ -328,27 +328,22 @@ class MinecraftApi:
             stats[tool_name] = stat_list
         return stats
 
-    @staticmethod
-    def get_stats_data(uuid, db_handler, substrings, stat_type, block_flag=False):
-        if block_flag:
-            names = db_handler.return_complete_column_filter_like2(f"{uuid}~minecraft:{stat_type}", "key", substrings)
-        else:
-            names = db_handler.return_complete_column_filter_like(f"{uuid}~minecraft:{stat_type}", "key", substrings)
-        stats = db_handler.return_specific_values_with_filter(f"{uuid}~minecraft:{stat_type}", "key", "value",
-                                                              substrings)
-        return dict(zip(names, stats))
-
     def get_all_stats(self, uuid, db_handler):
         tools_substrings = ["axe", "shovel", "hoe", "sword", "pickaxe", "shield"]
         armor_substrings = ["boots", "leggings", "chestplate", "helmet"]
         block_substrings = list(db_handler.return_complete_column("blockInformation", "blocks")[0])[0]
 
         def get_stats_tools():
-            tools_broken = self.get_stats_data(uuid, db_handler, tools_substrings, "broken")
-            tools_crafted = self.get_stats_data(uuid, db_handler, tools_substrings, "crafted")
-            tools_dropped = self.get_stats_data(uuid, db_handler, tools_substrings, "dropped")
-            tools_picked_up = self.get_stats_data(uuid, db_handler, tools_substrings, "picked_up")
-            tools_used = self.get_stats_data(uuid, db_handler, tools_substrings, "used")
+            tools_broken = db_handler.return_table(f"{uuid}~minecraft:broken")
+            tools_broken = dict((key, value) for key, value in tools_broken if any(substring in key for substring in tools_substrings))
+            tools_crafted = db_handler.return_table(f"{uuid}~minecraft:crafted")
+            tools_crafted = dict((key, value) for key, value in tools_crafted if any(substring in key for substring in tools_substrings))
+            tools_dropped = db_handler.return_table(f"{uuid}~minecraft:dropped")
+            tools_dropped = dict((key, value) for key, value in tools_dropped if any(substring in key for substring in tools_substrings))
+            tools_picked_up = db_handler.return_table(f"{uuid}~minecraft:picked_up")
+            tools_picked_up = dict((key, value) for key, value in tools_picked_up if any(substring in key for substring in tools_substrings))
+            tools_used = db_handler.return_table(f"{uuid}~minecraft:used")
+            tools_used = dict((key, value) for key, value in tools_used if any(substring in key for substring in tools_substrings))
 
             tools_names = list(set(
                 list(tools_broken.keys()) + list(tools_crafted.keys()) + list(tools_dropped.keys()) + list(
@@ -360,11 +355,16 @@ class MinecraftApi:
             return stats_tools
 
         def get_stats_armor():
-            armor_broken = self.get_stats_data(uuid, db_handler, armor_substrings, "broken")
-            armor_crafted = self.get_stats_data(uuid, db_handler, armor_substrings, "crafted")
-            armor_dropped = self.get_stats_data(uuid, db_handler, armor_substrings, "dropped")
-            armor_picked_up = self.get_stats_data(uuid, db_handler, armor_substrings, "picked_up")
-            armor_used = self.get_stats_data(uuid, db_handler, armor_substrings, "used")
+            armor_broken = db_handler.return_table(f"{uuid}~minecraft:broken")
+            armor_broken = dict((key, value) for key, value in armor_broken if any(substring in key for substring in armor_substrings))
+            armor_crafted = db_handler.return_table(f"{uuid}~minecraft:crafted")
+            armor_crafted = dict((key, value) for key, value in armor_crafted if any(substring in key for substring in armor_substrings))
+            armor_dropped = db_handler.return_table(f"{uuid}~minecraft:dropped")
+            armor_dropped = dict((key, value) for key, value in armor_dropped if any(substring in key for substring in armor_substrings))
+            armor_picked_up = db_handler.return_table(f"{uuid}~minecraft:picked_up")
+            armor_picked_up = dict((key, value) for key, value in armor_picked_up if any(substring in key for substring in armor_substrings))
+            armor_used = db_handler.return_table(f"{uuid}~minecraft:used")
+            armor_used = dict((key, value) for key, value in armor_used if any(substring in key for substring in armor_substrings))
 
             armor_names = list(set(
                 list(armor_broken.keys()) + list(armor_crafted.keys()) + list(armor_dropped.keys()) + list(
@@ -375,11 +375,16 @@ class MinecraftApi:
             return stats_armor
 
         def get_stats_blocks():
-            blocks_mined = self.get_stats_data(uuid, db_handler, block_substrings, "mined", True)
-            blocks_placed = self.get_stats_data(uuid, db_handler, block_substrings, "used", True)
-            blocks_picked_up = self.get_stats_data(uuid, db_handler, block_substrings, "picked_up", True)
-            blocks_dropped = self.get_stats_data(uuid, db_handler, block_substrings, "dropped", True)
-            blocks_crafted = self.get_stats_data(uuid, db_handler, block_substrings, "crafted", True)
+            blocks_mined = db_handler.return_table(f"{uuid}~minecraft:mined")
+            blocks_mined = dict([(key, value) for key, value in blocks_mined if key in block_substrings])
+            blocks_placed = db_handler.return_table(f"{uuid}~minecraft:used")
+            blocks_placed = dict([(key, value) for key, value in blocks_placed if key in block_substrings])
+            blocks_picked_up = db_handler.return_table(f"{uuid}~minecraft:picked_up")
+            blocks_picked_up = dict([(key, value) for key, value in blocks_picked_up if key in block_substrings])
+            blocks_dropped = db_handler.return_table(f"{uuid}~minecraft:dropped")
+            blocks_dropped = dict([(key, value) for key, value in blocks_dropped if key in block_substrings])
+            blocks_crafted = db_handler.return_table(f"{uuid}~minecraft:crafted")
+            blocks_crafted = dict([(key, value) for key, value in blocks_crafted if key in block_substrings])
 
             blocks_names = list(
                 set(list(blocks_mined.keys()) + list(blocks_placed.keys()) + list(blocks_picked_up.keys()) + list(
@@ -402,6 +407,10 @@ class MinecraftApi:
             killed_names_all = list(set(killed_names + killed_by_names))
 
             stats_killed = self.merge_stats_dicts(killed_names_all, killed, killed_by)
+            try:
+                del stats_killed["Null"]  # remove some Null's from stats if tables are missing
+            except KeyError:
+                pass
             return stats_killed
 
         def get_stats_custom():

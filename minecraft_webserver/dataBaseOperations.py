@@ -107,8 +107,9 @@ class DatabaseHandler:
         try:
             self.cursor.execute(query)
             queryResult = self.cursor.fetchall()
-        except sqlite3.OperationalError:
-            queryResult = ["null", ]
+        except sqlite3.OperationalError as e:
+            print("Failed to retrieve complete column: error: {}".format(e))
+            queryResult = ["Null", ]
         return queryResult
 
     def get_player_status(self, player_uuid):
@@ -210,46 +211,15 @@ class DatabaseHandler:
         print(name)
         self.conn.commit()
 
-    def return_complete_column_filter_like(self, table, column, filter_list):
-        query = f"SELECT [{column}] FROM [{table}]"
-        self.cursor.execute(query)
-        results = [row[0] for row in self.cursor.fetchall()]
-        filtered_data = [value for value in results if any(substring in value for substring in filter_list)]
-        return filtered_data
-
-    def return_complete_column_filter_like2(self, table, column, filter_list):
-        query = f"SELECT [{column}] FROM [{table}]"
-        self.cursor.execute(query)
-        results = [row[0] for row in self.cursor.fetchall()]
-        filtered_data = [item for item in results if item.replace("minecraft:", "") in filter_list]
-        return filtered_data
-
-    #
-    # def return_complete_column_filter_like(self, table, column, filter_list):
-    #     """
-    #     Retrieve the complete column specified in the table with additional filter (LIKE list).
-    #
-    #     :param table: Table name.
-    #     :param column: Column name.
-    #     :param filter_list: List of filter values.
-    #     :return: List of all values in the specified column matching any of the filter values.
-    #     """
-    #     chunk_size = 100  # Define the maximum number of filter values per query to avoid expression tree too long error
-    #     results = []
-    #
-    #     for i in range(0, len(filter_list), chunk_size):
-    #         chunk = filter_list[i:i + chunk_size]
-    #         like_conditions = ' OR '.join([f"[{column}] LIKE ?" for _ in chunk])
-    #         query = f"SELECT [{column}] FROM [{table}] WHERE {like_conditions}"
-    #
-    #         try:
-    #             self.cursor.execute(query, tuple(f"%{filter_value}%" for filter_value in chunk))
-    #             results.extend([row[0] for row in self.cursor.fetchall()])
-    #         except sqlite3.OperationalError as e:
-    #             print(f"\nError:\n{e}\n")
-    #             results.extend(["null"] * len(chunk))
-    #
-    #     return results
+    def return_table(self, table_name):
+        query = f"SELECT * FROM [{table_name}]"
+        try:
+            self.cursor.execute(query)
+            results = self.cursor.fetchall()
+        except sqlite3.OperationalError as e:
+            print(e)
+            results = []
+        return results
 
     def return_specific_values_with_filter(self, table, search_column, target_column, filter_list):
         """
