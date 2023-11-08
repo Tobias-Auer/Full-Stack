@@ -256,3 +256,39 @@ class DatabaseHandler:
             print("Updated table successfully")
         except sqlite3.Error as e:
             print("Error:", e)
+
+    def create_login_entry(self, uuid, secret_pin):
+        if self.check_for_login_entry(uuid):
+            self.delete_login_entry(uuid)
+        CURRENT_TIMESTAMP = int(time.time())
+        query = "INSERT INTO login (uuid, secret_pin, timestamp) VALUES (?, ?, ?)"
+        self.cursor.execute(query, (uuid, secret_pin, CURRENT_TIMESTAMP))
+        self.conn.commit()
+
+    def check_for_login_entry(self, uuid):
+        existing_uuid_query = "SELECT COUNT(*) FROM login WHERE uuid = ?"
+        self.cursor.execute(existing_uuid_query, (uuid,))
+        count = self.cursor.fetchone()[0]
+        if count == 0:
+            return False
+        CURRENT_TIMESTAMP = int(time.time())
+
+        timestamp_query = "SELECT timestamp FROM login WHERE uuid = ?"
+        self.cursor.execute(timestamp_query, (uuid,))
+        OLD_TIMESTAMP = int(self.cursor.fetchone()[0])
+        time_difference = CURRENT_TIMESTAMP - OLD_TIMESTAMP
+        if time_difference > 300:
+            self.delete_login_entry(uuid)
+            return False
+        return True
+
+    def get_login_entry(self, uuid):
+        query = "SELECT secret_pin FROM login WHERE uuid = ?"
+        self.cursor.execute(query, (uuid,))
+        secret_pin = self.cursor.fetchone()[0]
+        return secret_pin
+
+    def delete_login_entry(self, uuid):
+        delete_query = "DELETE FROM login WHERE uuid = ?"
+        self.cursor.execute(delete_query, (uuid,))
+        self.conn.commit()
