@@ -1,8 +1,10 @@
 import datetime
+import math
+import secrets
 import threading
 import time
 import Logger
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, redirect, session, flash
 
 import dataBaseOperations
 import updateDBStats
@@ -20,6 +22,8 @@ mixedApi = utils.MixedUtilsApi(logger=logger)
 # Flask Setup
 app = Flask(__name__)
 logger.info('Application started')
+app.config.from_pyfile("config.py")
+app.config.from_pyfile("instance/config.py")
 
 proceedStatusUpdate = False
 
@@ -33,6 +37,86 @@ def index_route():
     :return: Rendered template for the index page (index.html)
     """
     return render_template("index.html")
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    db_handler = dataBaseOperations.DatabaseHandler("playerData")
+
+    if request.method == 'POST':
+        if request.headers.get('Content-Type') == 'application/x-www-form-urlencoded':
+            form_type = request.form['type']
+            if form_type == 'login1':
+                username = request.form['username']
+                uuid = minecraftApi.get_uuid_from_username(username)
+                if uuid is None:
+                    print('none')
+                    flash("Invalid Minecraft username")
+                    db_handler.disconnect()
+                    return redirect("/login")
+                status = db_handler.get_player_status(uuid)
+                print("Player status: " + status)
+                if status == "offline":
+                    flash('You are not logged into minecraft!')
+                    db_handler.disconnect()
+                    return redirect("/login")
+                secret_pin = secrets.SystemRandom().randrange(100000, 999999)
+                print("[DEBUG]: Secret pin: " + str(secret_pin))
+                db_handler.create_login_entry(uuid, secret_pin)
+                db_handler.disconnect()
+                db_handler = dataBaseOperations.DatabaseHandler("interface")
+                db_handler.create_login_entry(uuid, secret_pin)
+                db_handler.disconnect()
+                session["try_login"] = uuid
+                return render_template("login2.html")
+            elif form_type == "login2":
+                uuid = session.get("try_login")
+                if uuid is None:
+                    session.clear()
+                    return redirect("/login")
+                if not db_handler.check_for_login_entry(uuid):
+                    session.clear()
+                    db_handler.disconnect()
+                    print("TIMED OUT")
+                    flash("timed out")
+                    return render_template("login.html")
+                try:
+                    secret_pin_from_form = int(request.form["pin"])
+                except ValueError:
+                    flash("Please enter the correct PIN")
+                    db_handler.disconnect()
+                    return render_template("login2.html")
+                if secret_pin_from_form == int(db_handler.get_login_entry(uuid)):
+                    print("SUCCESS")
+                    session.clear()
+                    session["uuid"] = uuid
+                    session.permanent = True
+                    db_handler.delete_login_entry(uuid)
+                    db_handler.disconnect()
+                    return redirect("/login")
+                else:
+                    print(secret_pin_from_form, db_handler.get_login_entry(uuid))
+                    flash("Please enter the correct PIN")
+                    db_handler.disconnect()
+                    return render_template("login2.html")
+            else:  # Not a valid request
+                db_handler.disconnect()
+                return render_template("login.html")
+        else:  # Logout command
+            input_string = request.form['text_input']
+            print(input_string)
+            session.clear()
+            db_handler.disconnect()
+            return render_template("login.html")
+
+    session_var = session.get('uuid')
+    print("username: ", session_var)
+    if isinstance(session_var, str):
+        return render_template("dosth.html", uuid=session_var)
+    session_var = session.get('try_login')
+    if isinstance(session_var, str):
+        return render_template("login2.html")
+    return render_template('login.html')
 
 
 @app.route('/spieler')
@@ -62,11 +146,12 @@ def player_overview_route():  # Untested optimized version
         #          "minecraft:picked_up": db_handler.return_complete_column(uuid + "~minecraft:picked_up", "value"),
         #          "minecraft:used": db_handler.return_complete_column(uuid + "~minecraft:used", "value"),
         #          "minecraft:mined": db_handler.return_complete_column(uuid + "~minecraft:mined", "value")}
-        stats_tools, stats_armor, stats_killed, stats_custom, stats_blocks = minecraftApi.get_all_stats(uuid, db_handler)
+        stats_tools, stats_armor, stats_killed, stats_custom, stats_blocks = minecraftApi.get_all_stats(uuid,
+                                                                                                        db_handler)
         print("_-----------_")
         print(stats_tools)
         print("_-----------_")
-        
+
         db_handler.disconnect()
         return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status,
                                stats_tools=stats_tools, stats_armor=stats_armor, stats_killed=stats_killed,

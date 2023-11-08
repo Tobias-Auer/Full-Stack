@@ -9,7 +9,6 @@ app_directory = os.path.join(os.path.dirname(__file__), '..')
 os.chdir(app_directory)
 
 
-
 @pytest.fixture
 def client():
     """Create a test client for the Flask app."""
@@ -33,6 +32,7 @@ routes_to_test = [
     '/',
     '/spieler'
 ]
+
 
 @pytest.mark.parametrize('player', get_player_names())
 def test_player_availability(client, player):

@@ -4922,3 +4922,832 @@
 10-30-2023 13:57:17 | INFO | Application started
 10-30-2023 13:58:48 | INFO | Application started
 10-30-2023 14:31:12 | INFO | Application started
+10-31-2023 20:10:54 | INFO | Application started
+10-31-2023 20:11:03 | INFO | Application started
+10-31-2023 20:11:03 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:11:03 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:11:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:21] "GET / HTTP/1.1" 200 -
+10-31-2023 20:11:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:21] "GET /static/css/index.css HTTP/1.1" 200 -
+10-31-2023 20:11:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:21] "GET /static/css/header.css HTTP/1.1" 200 -
+10-31-2023 20:11:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:21] "GET /static/images/logo2.png HTTP/1.1" 200 -
+10-31-2023 20:11:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:21] "GET /static/images/favicon.ico HTTP/1.1" 200 -
+10-31-2023 20:11:23 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:23] "GET /spieler HTTP/1.1" 200 -
+10-31-2023 20:11:23 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:23] "[36mGET /static/css/index.css HTTP/1.1[0m" 304 -
+10-31-2023 20:11:23 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:23] "[36mGET /static/css/header.css HTTP/1.1[0m" 304 -
+10-31-2023 20:11:23 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:23] "GET /static/css/player_list.css HTTP/1.1" 200 -
+10-31-2023 20:11:23 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:23] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+10-31-2023 20:11:27 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:27] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:11:28 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:28] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+10-31-2023 20:11:33 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:33] "[31m[1mPOST /login HTTP/1.1[0m" 405 -
+10-31-2023 20:11:55 | INFO | Application started
+10-31-2023 20:11:55 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:11:55 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:11:58 | INFO | 127.0.0.1 - - [31/Oct/2023 20:11:58] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:12:00 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:00] "[31m[1mPOST /login HTTP/1.1[0m" 405 -
+10-31-2023 20:12:01 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:01] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:12:02 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:02] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:12:03 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:03] "[31m[1mPOST /login HTTP/1.1[0m" 405 -
+10-31-2023 20:12:25 | INFO | Application started
+10-31-2023 20:12:25 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:12:25 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:12:26 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:26] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:12:27 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:27] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:12:27 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:27] "GET / HTTP/1.1" 200 -
+10-31-2023 20:12:27 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:27] "[36mGET /static/css/index.css HTTP/1.1[0m" 304 -
+10-31-2023 20:12:27 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:27] "[36mGET /static/css/header.css HTTP/1.1[0m" 304 -
+10-31-2023 20:12:27 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:27] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+10-31-2023 20:12:49 | INFO | Application started
+10-31-2023 20:12:49 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:12:49 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:12:50 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:50] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:12:53 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:53] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:12:57 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:57] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:12:58 | INFO | 127.0.0.1 - - [31/Oct/2023 20:12:58] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:17:58 | INFO | Application started
+10-31-2023 20:17:59 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:17:59 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:18:04 | INFO | 127.0.0.1 - - [31/Oct/2023 20:18:04] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:18:06 | INFO | 127.0.0.1 - - [31/Oct/2023 20:18:06] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:18:08 | INFO | 127.0.0.1 - - [31/Oct/2023 20:18:08] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:18:10 | INFO | 127.0.0.1 - - [31/Oct/2023 20:18:10] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:18:14 | INFO | 127.0.0.1 - - [31/Oct/2023 20:18:14] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:18:16 | INFO | 127.0.0.1 - - [31/Oct/2023 20:18:16] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:18:45 | INFO | Application started
+10-31-2023 20:18:45 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:18:45 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:18:49 | INFO | 127.0.0.1 - - [31/Oct/2023 20:18:49] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:18:52 | INFO | 127.0.0.1 - - [31/Oct/2023 20:18:52] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:19:00 | INFO | 127.0.0.1 - - [31/Oct/2023 20:19:00] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:19:19 | INFO | Application started
+10-31-2023 20:19:19 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:19:19 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:19:19 | INFO | 127.0.0.1 - - [31/Oct/2023 20:19:19] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:19:22 | INFO | 127.0.0.1 - - [31/Oct/2023 20:19:22] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:19:33 | INFO | Application started
+10-31-2023 20:19:33 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:19:33 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:19:37 | INFO | 127.0.0.1 - - [31/Oct/2023 20:19:37] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:19:40 | INFO | 127.0.0.1 - - [31/Oct/2023 20:19:40] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:19:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:19:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:19:49 | INFO | 127.0.0.1 - - [31/Oct/2023 20:19:49] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:19:57 | INFO | 127.0.0.1 - - [31/Oct/2023 20:19:57] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:20:02 | INFO | 127.0.0.1 - - [31/Oct/2023 20:20:02] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:20:18 | INFO | 127.0.0.1 - - [31/Oct/2023 20:20:18] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:20:34 | INFO | 127.0.0.1 - - [31/Oct/2023 20:20:34] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:20:38 | INFO | Application started
+10-31-2023 20:20:38 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:20:38 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:20:44 | INFO | 127.0.0.1 - - [31/Oct/2023 20:20:44] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:20:53 | INFO | 127.0.0.1 - - [31/Oct/2023 20:20:53] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:21:02 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:02] "GET / HTTP/1.1" 200 -
+10-31-2023 20:21:03 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:03] "GET /static/css/index.css HTTP/1.1" 200 -
+10-31-2023 20:21:03 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:03] "GET /static/css/header.css HTTP/1.1" 200 -
+10-31-2023 20:21:03 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:03] "GET /static/images/logo2.png HTTP/1.1" 200 -
+10-31-2023 20:21:03 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:03] "GET /static/images/favicon.ico HTTP/1.1" 200 -
+10-31-2023 20:21:06 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:06] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:21:06 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+10-31-2023 20:21:13 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:13] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:21:15 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:15] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:21:17 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:17] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:21:19 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:19] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:21:30 | INFO | 127.0.0.1 - - [31/Oct/2023 20:21:30] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:22:41 | INFO | Application started
+10-31-2023 20:22:41 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:22:41 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:22:46 | INFO | 127.0.0.1 - - [31/Oct/2023 20:22:46] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:22:49 | INFO | 127.0.0.1 - - [31/Oct/2023 20:22:49] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:17 | INFO | Application started
+10-31-2023 20:23:17 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:23:17 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:23:19 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:19] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:20 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:20] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:28 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:28] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:34 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:34] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:23:37 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:37] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:41 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:41] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:23:43 | INFO | 127.0.0.1 - - [31/Oct/2023 20:23:43] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:24:10 | INFO | 127.0.0.1 - - [31/Oct/2023 20:24:10] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:24:18 | INFO | 127.0.0.1 - - [31/Oct/2023 20:24:18] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:24:22 | INFO | 127.0.0.1 - - [31/Oct/2023 20:24:22] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:24:42 | INFO | Application started
+10-31-2023 20:24:42 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:24:42 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:24:44 | INFO | 127.0.0.1 - - [31/Oct/2023 20:24:44] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:24:50 | INFO | 127.0.0.1 - - [31/Oct/2023 20:24:50] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:24:56 | INFO | 127.0.0.1 - - [31/Oct/2023 20:24:56] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:25:00 | INFO | 127.0.0.1 - - [31/Oct/2023 20:25:00] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:25:01 | INFO | 127.0.0.1 - - [31/Oct/2023 20:25:01] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:25:05 | INFO | 127.0.0.1 - - [31/Oct/2023 20:25:05] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:25:06 | INFO | 127.0.0.1 - - [31/Oct/2023 20:25:06] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:25:49 | INFO | Application started
+10-31-2023 20:25:49 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:25:49 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:25:57 | INFO | 127.0.0.1 - - [31/Oct/2023 20:25:57] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:01 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:01] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:26:01 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:01] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:04 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:04] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:11 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:11] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:13 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:13] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:26:13 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:13] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:16 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:16] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:26:16 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:16] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:18 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:18] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:26:18 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:18] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:21] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:26:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:21] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:22 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:22] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:23 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:23] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:23 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:23] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:24 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:24] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:26:24 | INFO | 127.0.0.1 - - [31/Oct/2023 20:26:24] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:30:43 | INFO | Application started
+10-31-2023 20:30:43 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:30:43 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:31:33 | INFO | Application started
+10-31-2023 20:31:33 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:31:33 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:31:39 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:39] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:31:41 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:41] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:31:41 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:41] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:31:44 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:44] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:31:44 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:44] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:31:50 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:50] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:31:50 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:50] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:31:53 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:53] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:31:54 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:54] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:31:56 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:56] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:31:57 | INFO | 127.0.0.1 - - [31/Oct/2023 20:31:57] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:32:06 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:06] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:32:10 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:10] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:32:15 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:15] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:32:23 | INFO | Application started
+10-31-2023 20:32:23 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:32:23 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:32:23 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:23] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:32:29 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:29] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:32:29 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:29] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:32:35 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:35] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:32:35 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:35] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:32:39 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:39] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:32:43 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:43] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:32:43 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:43] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:32:51 | INFO | 127.0.0.1 - - [31/Oct/2023 20:32:51] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:33:43 | INFO | 127.0.0.1 - - [31/Oct/2023 20:33:43] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:33:43 | INFO | 127.0.0.1 - - [31/Oct/2023 20:33:43] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:33:48 | INFO | 127.0.0.1 - - [31/Oct/2023 20:33:48] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:33:48 | INFO | 127.0.0.1 - - [31/Oct/2023 20:33:48] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:33:52 | INFO | 127.0.0.1 - - [31/Oct/2023 20:33:52] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:33:52 | INFO | 127.0.0.1 - - [31/Oct/2023 20:33:52] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:33:52 | INFO | 127.0.0.1 - - [31/Oct/2023 20:33:52] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:02 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:02] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:35:02 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:02] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:04 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:04] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:35:04 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:04] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:07 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:07] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:42 | INFO | Application started
+10-31-2023 20:35:42 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:35:42 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:35:44 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:44] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:47 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:47] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:35:47 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:47] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:48 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:48] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:35:49 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:49] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:35:50 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:50] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:54 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:54] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:35:54 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:54] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:56 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:56] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:35:57 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:57] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:35:58 | INFO | 127.0.0.1 - - [31/Oct/2023 20:35:58] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:36:06 | INFO | Application started
+10-31-2023 20:36:06 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:36:06 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:36:08 | INFO | 127.0.0.1 - - [31/Oct/2023 20:36:08] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:36:11 | INFO | 127.0.0.1 - - [31/Oct/2023 20:36:11] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:36:11 | INFO | 127.0.0.1 - - [31/Oct/2023 20:36:11] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:36:12 | INFO | 127.0.0.1 - - [31/Oct/2023 20:36:12] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:36:14 | INFO | 127.0.0.1 - - [31/Oct/2023 20:36:14] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:36:15 | INFO | 127.0.0.1 - - [31/Oct/2023 20:36:15] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:07 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:07] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:10 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:10] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:37:10 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:10] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:13 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:13] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:37:14 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:14] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:20 | INFO | Application started
+10-31-2023 20:37:20 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:37:20 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:37:22 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:22] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:24 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:24] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:37:24 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:24] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:25 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:25] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:37:25 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:25] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:30 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:30] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:30 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:30] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:34 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:37:34 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:34] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:35 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:35] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:36 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:36] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:36 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:36] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:36 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:36] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:37:37 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:37] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:37:37 | INFO | 127.0.0.1 - - [31/Oct/2023 20:37:37] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:42:30 | INFO | Application started
+10-31-2023 20:42:30 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:42:30 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:42:35 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:35] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:42:35 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:35] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:42:37 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:37] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:42:37 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:37] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:42:39 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:39] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:42:39 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:39] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:42:45 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:45] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:42:45 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:45] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:42:51 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:51] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:42:51 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:51] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:42:54 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:54] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:42:54 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:54] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:42:58 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:58] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:42:58 | INFO | 127.0.0.1 - - [31/Oct/2023 20:42:58] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:45:55 | INFO | Application started
+10-31-2023 20:45:55 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:45:55 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:45:56 | INFO | 127.0.0.1 - - [31/Oct/2023 20:45:56] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:45:59 | INFO | 127.0.0.1 - - [31/Oct/2023 20:45:59] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:45:59 | INFO | 127.0.0.1 - - [31/Oct/2023 20:45:59] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:46:12 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:12] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:46:15 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:15] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:46:15 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:15] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:46:29 | INFO | Application started
+10-31-2023 20:46:29 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:46:29 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:46:30 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:30] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:46:32 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:32] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+10-31-2023 20:46:32 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:32] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+10-31-2023 20:46:32 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:32] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+10-31-2023 20:46:32 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:32] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+10-31-2023 20:46:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:46:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:47:01 | INFO | Application started
+10-31-2023 20:47:01 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:47:01 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:47:03 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:03] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:47:03 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:03] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:47:13 | INFO | Application started
+10-31-2023 20:47:13 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:47:13 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:47:14 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:14] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:47:14 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:14] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:47:18 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:18] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:47:18 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:18] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:47:20 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:20] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:47:20 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:20] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:47:45 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:45] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:47:45 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:45] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:47:54 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:54] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:47:54 | INFO | 127.0.0.1 - - [31/Oct/2023 20:47:54] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:48:00 | INFO | 127.0.0.1 - - [31/Oct/2023 20:48:00] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:48:00 | INFO | 127.0.0.1 - - [31/Oct/2023 20:48:00] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:48:08 | INFO | 127.0.0.1 - - [31/Oct/2023 20:48:08] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:48:08 | INFO | 127.0.0.1 - - [31/Oct/2023 20:48:08] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:48:56 | INFO | 127.0.0.1 - - [31/Oct/2023 20:48:56] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:48:56 | INFO | 127.0.0.1 - - [31/Oct/2023 20:48:56] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:48:58 | INFO | 127.0.0.1 - - [31/Oct/2023 20:48:58] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:50:14 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:14] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:50:14 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:14] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:50:16 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:16] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:50:19 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:19] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:50:19 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:19] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:50:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:21] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:50:21 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:21] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:50:25 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:50:25 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:25] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:50:30 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:30] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:50:43 | INFO | 127.0.0.1 - - [31/Oct/2023 20:50:43] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:51:42 | INFO | Application started
+10-31-2023 20:51:42 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:51:42 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:51:50 | INFO | 127.0.0.1 - - [31/Oct/2023 20:51:50] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:51:50 | INFO | 127.0.0.1 - - [31/Oct/2023 20:51:50] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:51:55 | INFO | 127.0.0.1 - - [31/Oct/2023 20:51:55] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:51:55 | INFO | 127.0.0.1 - - [31/Oct/2023 20:51:55] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:51:56 | INFO | 127.0.0.1 - - [31/Oct/2023 20:51:56] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:51:56 | INFO | 127.0.0.1 - - [31/Oct/2023 20:51:56] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:51:58 | INFO | 127.0.0.1 - - [31/Oct/2023 20:51:58] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:51:58 | INFO | 127.0.0.1 - - [31/Oct/2023 20:51:58] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:52:28 | INFO | Application started
+10-31-2023 20:52:28 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 20:52:28 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 20:52:30 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:30] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:52:30 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:30] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:52:32 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:32] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:52:32 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:32] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:52:34 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:52:34 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:34] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:52:38 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:38] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:52:38 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:38] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:52:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:42] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 20:52:42 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:42] "GET /login HTTP/1.1" 200 -
+10-31-2023 20:52:44 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:44] "POST /login HTTP/1.1" 200 -
+10-31-2023 20:52:44 | INFO | 127.0.0.1 - - [31/Oct/2023 20:52:44] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:03:33 | INFO | 127.0.0.1 - - [31/Oct/2023 21:03:33] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:03:33 | INFO | 127.0.0.1 - - [31/Oct/2023 21:03:33] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:03:35 | INFO | 127.0.0.1 - - [31/Oct/2023 21:03:35] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:03:35 | INFO | 127.0.0.1 - - [31/Oct/2023 21:03:35] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:22:15 | INFO | Application started
+10-31-2023 21:22:15 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:22:15 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:22:16 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:16] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:22:16 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:16] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:22:19 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:19] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:22:19 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:19] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:22:21 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:21] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:22:21 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:21] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:22:25 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:25] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:22:55 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:55] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:22:55 | INFO | 127.0.0.1 - - [31/Oct/2023 21:22:55] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:29:45 | INFO | Application started
+10-31-2023 21:29:45 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:29:45 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:29:49 | INFO | 127.0.0.1 - - [31/Oct/2023 21:29:49] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:29:53 | INFO | 127.0.0.1 - - [31/Oct/2023 21:29:53] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+10-31-2023 21:29:53 | INFO | 127.0.0.1 - - [31/Oct/2023 21:29:53] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+10-31-2023 21:29:53 | INFO | 127.0.0.1 - - [31/Oct/2023 21:29:53] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+10-31-2023 21:29:53 | INFO | 127.0.0.1 - - [31/Oct/2023 21:29:53] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+10-31-2023 21:30:26 | INFO | Application started
+10-31-2023 21:30:26 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:30:26 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:30:30 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:30] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+10-31-2023 21:30:30 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:30] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+10-31-2023 21:30:30 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:30] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+10-31-2023 21:30:30 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:30] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+10-31-2023 21:30:31 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:31] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:30:34 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:30:34 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:34] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:30:39 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:39] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:30:43 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:43] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:30:47 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:47] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:30:47 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:47] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:30:50 | INFO | 127.0.0.1 - - [31/Oct/2023 21:30:50] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:31:07 | INFO | 127.0.0.1 - - [31/Oct/2023 21:31:07] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:31:07 | INFO | 127.0.0.1 - - [31/Oct/2023 21:31:07] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:31:11 | INFO | 127.0.0.1 - - [31/Oct/2023 21:31:11] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:31:12 | INFO | 127.0.0.1 - - [31/Oct/2023 21:31:12] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:31:12 | INFO | 127.0.0.1 - - [31/Oct/2023 21:31:12] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:32:19 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:19] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:32:21 | INFO | Application started
+10-31-2023 21:32:21 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:32:21 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:32:23 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:23] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:32:23 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:23] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:32:28 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:28] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:32:31 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:31] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:32:32 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:32] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:32:34 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:34] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:32:36 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:36] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:32:37 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:37] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:32:43 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:43] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:32:54 | INFO | 127.0.0.1 - - [31/Oct/2023 21:32:54] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:33:08 | INFO | 127.0.0.1 - - [31/Oct/2023 21:33:08] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:33:30 | INFO | Application started
+10-31-2023 21:33:30 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:33:30 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:33:34 | INFO | 127.0.0.1 - - [31/Oct/2023 21:33:34] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:33:37 | INFO | 127.0.0.1 - - [31/Oct/2023 21:33:37] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:33:42 | INFO | 127.0.0.1 - - [31/Oct/2023 21:33:42] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:33:45 | INFO | 127.0.0.1 - - [31/Oct/2023 21:33:45] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:33:51 | INFO | 127.0.0.1 - - [31/Oct/2023 21:33:51] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:34:11 | INFO | Application started
+10-31-2023 21:34:11 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:34:11 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:34:14 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:14] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+10-31-2023 21:34:14 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:14] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+10-31-2023 21:34:14 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:14] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+10-31-2023 21:34:14 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:14] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+10-31-2023 21:34:18 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:18] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:34:24 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:24] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:34:28 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:28] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:34:44 | INFO | Application started
+10-31-2023 21:34:44 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:34:44 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:34:45 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:45] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:34:49 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:49] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:34:56 | INFO | 127.0.0.1 - - [31/Oct/2023 21:34:56] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:35:27 | INFO | Application started
+10-31-2023 21:35:27 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:35:27 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:35:28 | INFO | 127.0.0.1 - - [31/Oct/2023 21:35:28] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:35:32 | INFO | 127.0.0.1 - - [31/Oct/2023 21:35:32] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:35:33 | INFO | 127.0.0.1 - - [31/Oct/2023 21:35:33] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:35:38 | INFO | 127.0.0.1 - - [31/Oct/2023 21:35:38] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:35:40 | INFO | 127.0.0.1 - - [31/Oct/2023 21:35:40] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:35:45 | INFO | 127.0.0.1 - - [31/Oct/2023 21:35:45] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:36:28 | INFO | 127.0.0.1 - - [31/Oct/2023 21:36:28] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:36:28 | INFO | 127.0.0.1 - - [31/Oct/2023 21:36:28] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:37:10 | INFO | Application started
+10-31-2023 21:37:10 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+10-31-2023 21:37:10 | INFO | [33mPress CTRL+C to quit[0m
+10-31-2023 21:37:18 | INFO | 127.0.0.1 - - [31/Oct/2023 21:37:18] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:37:19 | INFO | 127.0.0.1 - - [31/Oct/2023 21:37:19] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:37:19 | INFO | 127.0.0.1 - - [31/Oct/2023 21:37:19] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:37:23 | INFO | 127.0.0.1 - - [31/Oct/2023 21:37:23] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:37:26 | INFO | 127.0.0.1 - - [31/Oct/2023 21:37:26] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:37:28 | INFO | 127.0.0.1 - - [31/Oct/2023 21:37:28] "[32mPOST /login HTTP/1.1[0m" 302 -
+10-31-2023 21:37:28 | INFO | 127.0.0.1 - - [31/Oct/2023 21:37:28] "GET /login HTTP/1.1" 200 -
+10-31-2023 21:38:15 | INFO | 127.0.0.1 - - [31/Oct/2023 21:38:15] "POST /login HTTP/1.1" 200 -
+10-31-2023 21:38:15 | INFO | 127.0.0.1 - - [31/Oct/2023 21:38:15] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:08:22 | INFO | Application started
+11-01-2023 20:08:22 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:08:22 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:08:30 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:30] "GET / HTTP/1.1" 200 -
+11-01-2023 20:08:31 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:31] "GET /static/css/index.css HTTP/1.1" 200 -
+11-01-2023 20:08:31 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:31] "GET /static/css/header.css HTTP/1.1" 200 -
+11-01-2023 20:08:31 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:31] "GET /static/images/logo2.png HTTP/1.1" 200 -
+11-01-2023 20:08:31 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:31] "GET /static/images/favicon.ico HTTP/1.1" 200 -
+11-01-2023 20:08:35 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:35] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:08:35 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+11-01-2023 20:08:38 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:38] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:08:38 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:38] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:08:40 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:40] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+11-01-2023 20:08:40 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:40] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+11-01-2023 20:08:40 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:40] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:08:40 | INFO | 127.0.0.1 - - [01/Nov/2023 20:08:40] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+11-01-2023 20:09:07 | INFO | Application started
+11-01-2023 20:09:07 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:09:07 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:09:09 | INFO | 127.0.0.1 - - [01/Nov/2023 20:09:09] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:09:09 | INFO | 127.0.0.1 - - [01/Nov/2023 20:09:09] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:09:12 | INFO | 127.0.0.1 - - [01/Nov/2023 20:09:12] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:09:12 | INFO | 127.0.0.1 - - [01/Nov/2023 20:09:12] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:09:20 | INFO | 127.0.0.1 - - [01/Nov/2023 20:09:20] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+11-01-2023 20:09:20 | INFO | 127.0.0.1 - - [01/Nov/2023 20:09:20] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:09:20 | INFO | 127.0.0.1 - - [01/Nov/2023 20:09:20] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:09:20 | INFO | 127.0.0.1 - - [01/Nov/2023 20:09:20] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:11:37 | INFO | 127.0.0.1 - - [01/Nov/2023 20:11:37] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:11:44 | INFO | 127.0.0.1 - - [01/Nov/2023 20:11:44] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:15:05 | INFO | 127.0.0.1 - - [01/Nov/2023 20:15:05] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:15:11 | INFO | 127.0.0.1 - - [01/Nov/2023 20:15:11] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+11-01-2023 20:15:11 | INFO | 127.0.0.1 - - [01/Nov/2023 20:15:11] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:15:11 | INFO | 127.0.0.1 - - [01/Nov/2023 20:15:11] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:15:11 | INFO | 127.0.0.1 - - [01/Nov/2023 20:15:11] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:16:03 | INFO | Application started
+11-01-2023 20:16:03 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:16:03 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:16:13 | INFO | 127.0.0.1 - - [01/Nov/2023 20:16:13] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:16:22 | INFO | 127.0.0.1 - - [01/Nov/2023 20:16:22] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:16:48 | INFO | 127.0.0.1 - - [01/Nov/2023 20:16:48] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:16:56 | INFO | 127.0.0.1 - - [01/Nov/2023 20:16:56] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:17:05 | INFO | 127.0.0.1 - - [01/Nov/2023 20:17:05] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:17:19 | INFO | 127.0.0.1 - - [01/Nov/2023 20:17:19] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:21:39 | INFO | 127.0.0.1 - - [01/Nov/2023 20:21:39] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:21:41 | INFO | 127.0.0.1 - - [01/Nov/2023 20:21:41] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:22:43 | INFO | Application started
+11-01-2023 20:22:43 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:22:43 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:22:49 | INFO | 127.0.0.1 - - [01/Nov/2023 20:22:49] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:22:56 | INFO | 127.0.0.1 - - [01/Nov/2023 20:22:56] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:23:03 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:03] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:23:09 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:09] "[35m[1mGET /login HTTP/1.1[0m" 500 -
+11-01-2023 20:23:09 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:09] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:23:09 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:09] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:23:10 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:10] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:23:56 | INFO | Application started
+11-01-2023 20:23:56 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:23:56 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:23:57 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:57] "[35m[1mGET /login HTTP/1.1[0m" 500 -
+11-01-2023 20:23:57 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:57] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:23:57 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:57] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:23:57 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:57] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:23:58 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:58] "[35m[1mGET /login HTTP/1.1[0m" 500 -
+11-01-2023 20:23:59 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:59] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:23:59 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:59] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:23:59 | INFO | 127.0.0.1 - - [01/Nov/2023 20:23:59] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:24:08 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:08] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:24:12 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:12] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:24:14 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:14] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:24:26 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:26] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:24:39 | INFO | Application started
+11-01-2023 20:24:39 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:24:39 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:24:41 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:41] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:24:47 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:47] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:24:47 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:47] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:24:54 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:54] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:24:55 | INFO | 127.0.0.1 - - [01/Nov/2023 20:24:55] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:27:29 | INFO | 127.0.0.1 - - [01/Nov/2023 20:27:29] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:27:36 | INFO | 127.0.0.1 - - [01/Nov/2023 20:27:36] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:27:38 | INFO | 127.0.0.1 - - [01/Nov/2023 20:27:38] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:27:38 | INFO | 127.0.0.1 - - [01/Nov/2023 20:27:38] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:27:45 | INFO | 127.0.0.1 - - [01/Nov/2023 20:27:45] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:27:49 | INFO | 127.0.0.1 - - [01/Nov/2023 20:27:49] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:28:21 | INFO | 127.0.0.1 - - [01/Nov/2023 20:28:21] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:28:26 | INFO | 127.0.0.1 - - [01/Nov/2023 20:28:26] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+11-01-2023 20:28:27 | INFO | 127.0.0.1 - - [01/Nov/2023 20:28:27] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:28:27 | INFO | 127.0.0.1 - - [01/Nov/2023 20:28:27] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:28:27 | INFO | 127.0.0.1 - - [01/Nov/2023 20:28:27] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:30:55 | INFO | Application started
+11-01-2023 20:30:55 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:30:55 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:30:58 | INFO | 127.0.0.1 - - [01/Nov/2023 20:30:58] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:31:02 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:02] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:31:02 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:02] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:31:06 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:06] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:31:29 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:29] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:31:34 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:34] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:31:40 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:40] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:31:42 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:42] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+11-01-2023 20:31:42 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:42] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:31:42 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:42] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:31:42 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:42] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:31:51 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:51] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:31:58 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:58] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:31:58 | INFO | 127.0.0.1 - - [01/Nov/2023 20:31:58] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:32:00 | INFO | 127.0.0.1 - - [01/Nov/2023 20:32:00] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:32:02 | INFO | 127.0.0.1 - - [01/Nov/2023 20:32:02] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:32:02 | INFO | 127.0.0.1 - - [01/Nov/2023 20:32:02] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:32:06 | INFO | 127.0.0.1 - - [01/Nov/2023 20:32:06] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:37:31 | INFO | 127.0.0.1 - - [01/Nov/2023 20:37:31] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:37:34 | INFO | 127.0.0.1 - - [01/Nov/2023 20:37:34] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:37:42 | INFO | 127.0.0.1 - - [01/Nov/2023 20:37:42] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:37:53 | INFO | 127.0.0.1 - - [01/Nov/2023 20:37:53] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:39:13 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:13] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+11-01-2023 20:39:13 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:13] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:39:13 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:13] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:39:13 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:13] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:39:16 | INFO | Application started
+11-01-2023 20:39:16 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:39:16 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:39:17 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:17] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:39:20 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:20] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+11-01-2023 20:39:20 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:20] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:39:20 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:20] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:39:20 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:20] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:39:37 | INFO | Application started
+11-01-2023 20:39:37 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:39:37 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:39:39 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:39] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:39:41 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:41] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:39:45 | INFO | 127.0.0.1 - - [01/Nov/2023 20:39:45] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:40:05 | INFO | Application started
+11-01-2023 20:40:05 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:40:05 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:41:01 | INFO | 127.0.0.1 - - [01/Nov/2023 20:41:01] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:41:04 | INFO | 127.0.0.1 - - [01/Nov/2023 20:41:04] "[35m[1mGET /login HTTP/1.1[0m" 500 -
+11-01-2023 20:41:04 | INFO | 127.0.0.1 - - [01/Nov/2023 20:41:04] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+11-01-2023 20:41:04 | INFO | 127.0.0.1 - - [01/Nov/2023 20:41:04] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+11-01-2023 20:41:04 | INFO | 127.0.0.1 - - [01/Nov/2023 20:41:04] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+11-01-2023 20:42:17 | INFO | Application started
+11-01-2023 20:42:17 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:42:17 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:42:18 | INFO | 127.0.0.1 - - [01/Nov/2023 20:42:18] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:42:26 | INFO | 127.0.0.1 - - [01/Nov/2023 20:42:26] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:42:28 | INFO | 127.0.0.1 - - [01/Nov/2023 20:42:28] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:42:58 | INFO | Application started
+11-01-2023 20:42:58 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:42:58 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:43:02 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:02] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:43:04 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:04] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:43:06 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:06] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:43:07 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:07] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:43:22 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:22] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:43:27 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:27] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:43:41 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:41] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:43:42 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:42] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:43:43 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:43] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:43:58 | INFO | 127.0.0.1 - - [01/Nov/2023 20:43:58] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:44:04 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:04] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:44:07 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:07] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:44:19 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:19] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:44:40 | INFO | Application started
+11-01-2023 20:44:40 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:44:40 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:44:42 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:42] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:44:45 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:45] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:44:45 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:45] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:44:49 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:49] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:44:53 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:53] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:44:57 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:57] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:44:59 | INFO | 127.0.0.1 - - [01/Nov/2023 20:44:59] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:45:02 | INFO | 127.0.0.1 - - [01/Nov/2023 20:45:02] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:46:09 | INFO | Application started
+11-01-2023 20:46:09 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:46:09 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:46:11 | INFO | 127.0.0.1 - - [01/Nov/2023 20:46:11] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:46:16 | INFO | 127.0.0.1 - - [01/Nov/2023 20:46:16] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:46:18 | INFO | 127.0.0.1 - - [01/Nov/2023 20:46:18] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:46:18 | INFO | 127.0.0.1 - - [01/Nov/2023 20:46:18] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:46:49 | INFO | Application started
+11-01-2023 20:46:49 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:46:49 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:46:50 | INFO | 127.0.0.1 - - [01/Nov/2023 20:46:50] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:46:52 | INFO | 127.0.0.1 - - [01/Nov/2023 20:46:52] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:46:52 | INFO | 127.0.0.1 - - [01/Nov/2023 20:46:52] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:46:58 | INFO | 127.0.0.1 - - [01/Nov/2023 20:46:58] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:47:02 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:02] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:47:09 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:09] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:47:22 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:22] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:47:25 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:47:25 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:25] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:47:26 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:26] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:47:26 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:26] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:47:34 | INFO | Application started
+11-01-2023 20:47:34 | INFO | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.2.139:80
+11-01-2023 20:47:34 | INFO | [33mPress CTRL+C to quit[0m
+11-01-2023 20:47:37 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:37] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:47:37 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:37] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:47:41 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:41] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:47:51 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:51] "GET / HTTP/1.1" 200 -
+11-01-2023 20:47:51 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:51] "GET /static/css/index.css HTTP/1.1" 200 -
+11-01-2023 20:47:51 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:51] "GET /static/css/header.css HTTP/1.1" 200 -
+11-01-2023 20:47:51 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:51] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+11-01-2023 20:47:51 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:51] "GET /static/images/favicon.ico HTTP/1.1" 200 -
+11-01-2023 20:47:58 | INFO | 127.0.0.1 - - [01/Nov/2023 20:47:58] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:48:04 | INFO | 127.0.0.1 - - [01/Nov/2023 20:48:04] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:48:15 | INFO | 127.0.0.1 - - [01/Nov/2023 20:48:15] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:48:23 | INFO | 127.0.0.1 - - [01/Nov/2023 20:48:23] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:48:25 | INFO | 127.0.0.1 - - [01/Nov/2023 20:48:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 20:48:25 | INFO | 127.0.0.1 - - [01/Nov/2023 20:48:25] "GET /login HTTP/1.1" 200 -
+11-01-2023 20:48:27 | INFO | 127.0.0.1 - - [01/Nov/2023 20:48:27] "POST /login HTTP/1.1" 200 -
+11-01-2023 20:48:27 | INFO | 127.0.0.1 - - [01/Nov/2023 20:48:27] "GET /login HTTP/1.1" 200 -
+11-01-2023 21:56:04 | INFO | 127.0.0.1 - - [01/Nov/2023 21:56:04] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 21:56:04 | INFO | 127.0.0.1 - - [01/Nov/2023 21:56:04] "GET /login HTTP/1.1" 200 -
+11-01-2023 21:56:18 | INFO | 127.0.0.1 - - [01/Nov/2023 21:56:18] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 21:56:18 | INFO | 127.0.0.1 - - [01/Nov/2023 21:56:18] "GET /login HTTP/1.1" 200 -
+11-01-2023 21:56:29 | INFO | 127.0.0.1 - - [01/Nov/2023 21:56:29] "POST /login HTTP/1.1" 200 -
+11-01-2023 21:56:52 | INFO | 127.0.0.1 - - [01/Nov/2023 21:56:52] "POST /login HTTP/1.1" 200 -
+11-01-2023 21:57:11 | INFO | 127.0.0.1 - - [01/Nov/2023 21:57:11] "[32mPOST /login HTTP/1.1[0m" 302 -
+11-01-2023 21:57:11 | INFO | 127.0.0.1 - - [01/Nov/2023 21:57:11] "GET /login HTTP/1.1" 200 -
+11-01-2023 21:57:34 | INFO | 127.0.0.1 - - [01/Nov/2023 21:57:34] "GET /login HTTP/1.1" 200 -
+11-01-2023 21:57:37 | INFO | 127.0.0.1 - - [01/Nov/2023 21:57:37] "POST /login HTTP/1.1" 200 -
+11-01-2023 21:57:38 | INFO | 127.0.0.1 - - [01/Nov/2023 21:57:38] "GET /login HTTP/1.1" 200 -
+11-01-2023 21:58:17 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:17] "GET / HTTP/1.1" 200 -
+11-01-2023 21:58:18 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:18] "[36mGET /static/css/header.css HTTP/1.1[0m" 304 -
+11-01-2023 21:58:18 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:18] "[36mGET /static/css/index.css HTTP/1.1[0m" 304 -
+11-01-2023 21:58:18 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:18] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+11-01-2023 21:58:20 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:20] "GET /spieler HTTP/1.1" 200 -
+11-01-2023 21:58:20 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:20] "[36mGET /static/css/header.css HTTP/1.1[0m" 304 -
+11-01-2023 21:58:20 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:20] "[36mGET /static/css/index.css HTTP/1.1[0m" 304 -
+11-01-2023 21:58:20 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:20] "GET /static/css/player_list.css HTTP/1.1" 200 -
+11-01-2023 21:58:20 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:20] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+11-01-2023 21:58:24 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:24] "GET /spieler?player=AffenKraft99 HTTP/1.1" 200 -
+11-01-2023 21:58:25 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:25] "GET /static/css/player-info.css HTTP/1.1" 200 -
+11-01-2023 21:58:25 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:25] "[36mGET /static/css/header.css HTTP/1.1[0m" 304 -
+11-01-2023 21:58:25 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:25] "[36mGET /static/css/index.css HTTP/1.1[0m" 304 -
+11-01-2023 21:58:26 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:26] "[36mGET /static/images/logo2.png HTTP/1.1[0m" 304 -
+11-01-2023 21:58:26 | INFO | 127.0.0.1 - - [01/Nov/2023 21:58:26] "GET /api/player_info/AffenKraft99 HTTP/1.1" 200 -

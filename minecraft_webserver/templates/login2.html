@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter pin</title>
+</head>
+<body>
+    <h1>You should have received a code in Minecraft.<br>Please enter this Pin:</h1>
+    <form method="post">
+        <input type="hidden" name="type" value="login2">
+        <input type="text" name="pin" required>
+        <input type="submit" value="Submit">
+    </form>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+</body>
+</html>

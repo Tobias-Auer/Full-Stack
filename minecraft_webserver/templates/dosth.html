@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loge out or something</title>
+</head>
+<body>
+    <button id="sendButton">{{uuid}}</button>
+
+    <script>
+        document.getElementById('sendButton').addEventListener('click', function() {
+            // Hardcoded string to send
+            const hardcodedString = 'logout';
+
+            // Create a FormData object to send the string
+            const formData = new FormData();
+            formData.append('text_input', hardcodedString);
+
+            // Send a POST request to the Flask server
+            fetch('/login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Handle the response from the server
+                console.log(data);
+                window.location = "/login";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
