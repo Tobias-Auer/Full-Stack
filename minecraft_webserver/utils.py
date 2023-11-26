@@ -184,12 +184,8 @@ class DatabaseApi:
             for table in all_tables:
                 uuid = str(table[0]).split('~')[0]
                 if uuid not in unique_uuids:
-                    print("Checking regex: '%s'" % uuid)
                     if re.search(regex, uuid, re.IGNORECASE):
-                        print("Matched regex")
                         unique_uuids.append(uuid)
-                    else:
-                        print("Matched no regex")
         except Exception as e:
 
             self.logger.error(e)
