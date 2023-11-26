@@ -25,6 +25,8 @@ class DatabaseHandler:
             db_file = r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\database_webserver\data.db"
         elif db_file == "playerData":
             db_file = r"./player_data.db"
+        elif db_file == "prefix":
+            db_file = r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\database_webserver\prefixes.db"
         else:
             db_file = db_file
         self.__connect(db_file)
@@ -292,3 +294,52 @@ class DatabaseHandler:
         delete_query = "DELETE FROM login WHERE uuid = ?"
         self.cursor.execute(delete_query, (uuid,))
         self.conn.commit()
+
+    def is_entry_exists(self, uuid_str, prefix_str):
+        self.cursor.execute("SELECT * FROM main WHERE uuid=? AND prefix COLLATE NOCASE=?", (uuid_str, prefix_str))
+        return self.cursor.fetchone() is not None
+
+    def write_prefix(self, uuid, prefixName, color, password):
+        print("do write prefix")
+        return_value = "error:error_not_defined"
+        prefix = f"{color}[{prefixName}]"
+        try:
+            print("try block")
+            if self.is_entry_exists(uuid, prefix):
+                print("if block")
+                return_value = "error:existing_entry_found"
+            else:
+                print("else block")
+                self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix) VALUES (?, ?)", (uuid, prefix))
+                print("entered values successfully")
+                return_value = "success:success"
+                self.cursor.commit()
+
+        except sqlite3.IntegrityError as e:
+            print("exception")
+            print(f"Fehler beim Einfügen der Daten: {e}")
+            return_value = "error:db:" + str(e)
+
+        finally:
+            print("finally")
+            self.cursor.close()
+            return return_value
+
+    def get_pref(self, uuid):
+        try:
+
+            # Define the SQL query to check for the existence of a prefix for a given UUID
+            query = "SELECT prefix FROM main WHERE uuid = ?"
+            self.cursor.execute(query, (uuid,))
+            result = self.cursor.fetchone()
+
+            if result:
+                return [True, result[0]]
+            else:
+                return [False, ""]
+
+        except sqlite3.Error as e:
+            print(f"Error: {e}")
+            return [False, ""]
+        finally:
+            self.cursor.close()

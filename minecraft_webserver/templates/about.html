@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serverstatistiken</title>
+    
+  <link rel="stylesheet" href="./static/css/header.css" />
+  <link rel="stylesheet" href="./static/css/index.css" />
+
+  <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        background-color: #d0d0d0!important;
+        color: #333;
+        text-align: center; 
+        padding-top: 20px;
+    }
+    header {
+      text-align: left; 
+    }
+
+
+        h1 {
+            color: #004080;
+        }
+
+        .stat-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            flex: 1;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+        }
+
+        .code-details {
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        #plugins-box {
+            flex: 2; /* Breiterer Bereich für Plugins */
+        }
+
+        .plugins-list {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .plugin-item {
+            background-color: #e6f7ff; /* Hellblaue Hintergrundfarbe als Akzent */
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .plugin-item a {
+            color: #004080;
+            text-decoration: none;
+        }
+
+        .plugin-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="sticky">
+        <nav>
+          <ul>
+            <li>
+              <img id="logo" src="./static/images/logo2.png" alt="logo" height="40" />
+            </li>
+            <li>
+              <div class="dropdown">
+                <button class="dropbtn" onclick="window.location.href=`/`">
+                  Startseite
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="dropdown">
+                <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
+              </div>
+            </li>
+            <li>
+              <div class="dropdown">
+                <button class="dropbtn">▼ Prefixes</button>
+                <div class="dropdown-content">
+                  <a href="/add_pref">Erstellen</a>
+              <a href="/manage_pref">Ändern</a>
+              <a href="/join_pref">Beitreten</a>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="dropdown">
+                <button class="dropbtn" onclick="window.location.href='/report'">Spieler Report</button>
+              </div>
+            </li>
+            <!-- Code for flask application -->
+            <li>{{ loginVar | safe}}</li>
+    
+            <li>
+            </li>
+          </ul>
+        </nav>
+      </header>
+    <h1>Serverstatistiken</h1>
+
+    <div class="stat-container">
+        <!-- CPU -->
+        <div class="stat-box">
+            <h2>CPU</h2>
+            <p>Auslastung: 30%</p>
+        </div>
+
+        <!-- RAM -->
+        <div class="stat-box">
+            <h2>RAM</h2>
+            <p>Verfügbar: 8GB</p>
+        </div>
+
+        <!-- Framework -->
+        <div class="stat-box">
+            <h2>Framework</h2>
+            <p>Docker (Python Flask)</p>
+        </div>
+
+        <!-- Plugins -->
+        <div id="plugins-box" class="stat-box">
+            <h2>Plugins</h2>
+            <ul class="plugins-list">
+                <li class="plugin-item">
+                    <a href="plugin1-details.html">BetterJoinMessages - 1.1 jar</a>
+                    <span class="code-details">Zeilen Code: 1000</span>
+                </li>
+                <li class="plugin-item">
+                    <a href="plugin2-details.html">EasyBan - 1.1 jar</a>
+                    <span class="code-details">Zeilen Code: 800</span>
+                </li>
+                <!-- Weitere Plugins hier einfügen -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Weitere Statistiken hier einfügen -->
+
+</body>
+</html>

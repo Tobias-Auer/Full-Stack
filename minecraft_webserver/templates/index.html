@@ -11,6 +11,38 @@
   <link rel="stylesheet" href="./static/css/index.css" />
 
   <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+  <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #d0d0d0!important;
+        color: #333;
+        text-align: center; 
+    }
+    header {
+      text-align: left; 
+    }
+
+    h1 {
+        color: #004080;
+    }
+
+    #server-info {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 12px;
+    }
+
+    a {
+        color: #0066cc;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
 </head>
 
 <body>
@@ -36,9 +68,9 @@
           <div class="dropdown">
             <button class="dropbtn">▼ Prefixes</button>
             <div class="dropdown-content">
-              <a href="#">Erstellen</a>
-              <a href="#">Ändern</a>
-              <a href="#">Beitreten</a>
+              <a href="/add_pref">Erstellen</a>
+              <a href="/manage_pref">Ändern</a>
+              <a href="/join_pref">Beitreten</a>
             </div>
           </div>
         </li>
@@ -61,25 +93,18 @@
     <div class="text" style="color:red;font-size:72px;text-align:center;text-decoration:underline;">
       <b>STATUS: UNRELEASED</b>
     </div>
-    <br>
-    <div style="height: 20cm" class="text">
-      CONTENT
-      <br />
-      <br />
-      CONTENT
-      <br />
-    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
-      <br />
-      CONTENT
-      <br />
-      <br />
-      CONTENT
-      <br />
-    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
-      <br>
-    </div>
+    <div class="text">
+      <h1>Willkommen auf meinem Minecraft-Server!</h1>
 
-  </div>
+      <div id="server-info">
+          <p>Dieser Server ist ein Hobby Projekt von mir welches am 29.01.2023 gestartet ist.</p>
+          <p>Aktuell sind <span id="player-count">X</span> Spieler auf dem Server unterwegs.</p>
+          <p>Zusätzlich befinden sich auf dem Server verschiedene Plugins. Unteranderem dabei sind custom crafting Recipes, eigene Prefixe und auch eine Spawn Elytra.</p>
+          <p>100% der installierten Plugins sind zu 100% von mir gecodet und verzichten dabei vollständig auf Plugins von anderen Personen.</p>
+          <p>Der Server an sich ist Vanilla Gameplay, aber für Plugin Vorschläge bin ich jederzeit offen. :)</p>
+          <p>Schau auch mal auf meinem <a href="https://deine-website.de" target="_blank">Discord</a> vorbei!<br>Oder schaue dir die  <a href="/about">technischen Details</a> vom Server an!</p>
+      </div>
+    </div>
   <footer>
     <nav>
       <ul>

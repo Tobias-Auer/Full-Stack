@@ -1,10 +1,11 @@
+import ast
 import datetime
 import math
 import secrets
 import threading
 import time
 import Logger
-from flask import Flask, render_template, request, Response, redirect, session, flash
+from flask import Flask, render_template, request, Response, redirect, session, flash, jsonify
 
 import dataBaseOperations
 import updateDBStats
@@ -25,10 +26,24 @@ logger.info('Application started')
 app.config.from_pyfile("config.py")
 app.config.from_pyfile("instance/config.py")
 
+
+@app.context_processor
+def inject_loginVar():
+    uuid = session.get('uuid')
+    loginVar = "<a href=\"/login\" id=loginLink>Login</a>"
+    if isinstance(uuid, str):
+        name = minecraftApi.get_username_from_uuid(uuid)
+        loginVar = loginVar = f"<div>Willkommen {name}<br> <a href=\"/login\" id=logoutLink>Logout</a></div>"
+
+    return dict(loginVar=loginVar)
+
+
 proceedStatusUpdate = False
 
 
 # Flask Routes
+
+
 @app.route('/')
 def index_route():
     """
@@ -36,6 +51,7 @@ def index_route():
 
     :return: Rendered template for the index page (index.html)
     """
+
     return render_template("index.html")
 
 
@@ -93,7 +109,7 @@ def login():
                     session.permanent = True
                     db_handler.delete_login_entry(uuid)
                     db_handler.disconnect()
-                    return redirect("/login")
+                    return redirect("/")
                 else:
                     print(secret_pin_from_form, db_handler.get_login_entry(uuid))
                     flash("Please enter the correct PIN")
@@ -119,6 +135,11 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
 @app.route('/spieler')
 def player_overview_route():  # Untested optimized version
     """
@@ -137,20 +158,8 @@ def player_overview_route():  # Untested optimized version
         uuid = minecraftApi.get_cached_uuid_from_username(user_name)
         db_handler = dataBaseOperations.DatabaseHandler("playerData")
         status = db_handler.get_player_status(uuid)
-        # stats = {"minecraft:custom": db_handler.return_complete_column(uuid + "~minecraft:custom", "value"),
-        #          "minecraft:broken": db_handler.return_complete_column(uuid + "~minecraft:broken", "value"),
-        #          "minecraft:crafted": db_handler.return_complete_column(uuid + "~minecraft:crafted", "value"),
-        #          "minecraft:dropped": db_handler.return_complete_column(uuid + "~minecraft:dropped", "value"),
-        #          "minecraft:killed_by": db_handler.return_complete_column(uuid + "~minecraft:killed_by", "value"),
-        #          "minecraft:killed": db_handler.return_complete_column(uuid + "~minecraft:killed", "value"),
-        #          "minecraft:picked_up": db_handler.return_complete_column(uuid + "~minecraft:picked_up", "value"),
-        #          "minecraft:used": db_handler.return_complete_column(uuid + "~minecraft:used", "value"),
-        #          "minecraft:mined": db_handler.return_complete_column(uuid + "~minecraft:mined", "value")}
         stats_tools, stats_armor, stats_killed, stats_custom, stats_blocks = minecraftApi.get_all_stats(uuid,
                                                                                                         db_handler)
-        print("_-----------_")
-        print(stats_tools)
-        print("_-----------_")
 
         db_handler.disconnect()
         return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status,
@@ -192,6 +201,58 @@ def report_player_route():
     :return: The rendered report page (report.html)
     """
     return render_template("report.html")
+
+
+@app.route('/pref_api', methods=['POST'])
+def pref_api():
+    data = request.json
+    prefixName = data['playerName']
+    color = data['color']
+    password = data['password']
+    uuid = session.get("uuid")
+
+    db_handler = dataBaseOperations.DatabaseHandler("prefix")
+    if len(prefixName) > 10:
+        response_data = {'result': 'denied', "reason": "length"}
+        return jsonify(response_data)
+    if color not in ["§e", "§b", "§3", "§1", "§9", "§d", "§5", "§f", "§7", "§8", "§0"] or prefixName == "":
+        response_data = {'result': 'denied', "reason": "invalid color or name"}
+        return jsonify(response_data)
+    with open("blacklist.txt", 'r') as file:
+        blacklist = ast.literal_eval(file.readline())
+    if prefixName.lower().replace(" ", "") in blacklist:
+        response_data = {'result': 'denied', "reason": "blacklist"}
+        return jsonify(response_data)
+
+
+    result = db_handler.write_prefix(uuid, prefixName, color, password)
+    db_handler.disconnect()
+
+    response_data = {'result': result}
+    return jsonify(response_data)
+
+
+@app.route('/add_pref')
+def add_pref_path():
+    db_handler = dataBaseOperations.DatabaseHandler("prefix")
+    pref = db_handler.get_pref(session.get("uuid"))
+    db_handler.disconnect()
+    prefix = ""
+    color = ""
+    if pref[0]:
+        prefix = pref[1].split("[")[1].replace("]","")
+        color = pref[1].split("[")[0]
+    return render_template("create-prefix.html", prefix=prefix, color=color)
+
+
+@app.route('/manage_pref')
+def manage_pref_path():
+    return redirect("/add_pref")  # TODO: Delete route and link in header
+
+
+@app.route('/join_pref')
+def join_pref_path():
+    return "lol"
 
 
 @app.route('/api/status')
