@@ -204,7 +204,6 @@ class DatabaseApi:
 
         :return: None
         """
-        print("start check for status")
         db_handler = dataBaseOperations.DatabaseHandler("interface")
 
         status_list = db_handler.return_complete_column("status", "status")
@@ -219,8 +218,6 @@ class DatabaseApi:
             self.__update_player_status(player_uuid, player_status)
             db_handler.delete_key("status", "status", status_entry[0])
         db_handler.disconnect()
-
-        print("done with check for status")
 
     @staticmethod
     def __update_player_status(player_uuid, status):
