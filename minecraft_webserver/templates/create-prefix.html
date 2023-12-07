@@ -228,16 +228,17 @@
                 var color = document.getElementById("color").value;
                 var status = document.getElementById("status").value;
                 var password = document.getElementById("password").value;
+                console.log("PWD: '" + password + "'");
                 if (status === "everyone") {
                     password = ""
-                } else if (password = "") {
-                    return // TODO: Make message for user to enter a password or remove question and say leave empty to not use one
+                } else if (password === "") {
+                    console.warn("Enter a password!");
+                    return 
                 }
 
                 console.log("Spielername: " + playerName);
                 console.log("Farbe: " + color);
                 console.log("Status: " + status)
-                console.log("Passwort: " + password);
 
                 if (status === "on_request") {
                     console.log("Passwort: " + password);

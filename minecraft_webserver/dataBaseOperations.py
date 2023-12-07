@@ -300,24 +300,24 @@ class DatabaseHandler:
         self.cursor.execute("SELECT * FROM main WHERE uuid=? AND prefix COLLATE NOCASE=?", (uuid_str, prefix_str))
         return self.cursor.fetchone() is not None
 
-    def write_prefix(self, uuid, prefixName, color, password, clearMemberList=False):
-        print("do write prefix")
+    def write_prefix(self, uuid, prefixName, color, password, clearMemberList=True):
         return_value = "error:error_not_defined"
         prefix = f"{color}[{prefixName}]"
         try:
-            print("try block")
             if self.is_entry_exists(uuid, prefix):
                 print("if block")
                 return_value = "error:existing_entry_found"
             else:
-                print("else block")
-                # TODO: if the prefix is already set add an option to clear the member list.
+                # TODO: if the prefix is already set, add an option to clear the member list.
                 if clearMemberList:  # must run on first time the user defines a prefix
                     self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix, members) VALUES (?, ?, ?)",
                                         (uuid, prefix, uuid + ","))  # replaces all values including members
                 else:
                     self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix) VALUES (?, ?)",
                                         (uuid, prefix))
+
+                if password != "":
+                    self.cursor.execute("UPDATE main SET (password)=? WHERE uuid=?", (password, uuid))
                 print("entered values successfully")
                 return_value = "success:success"
                 self.conn.commit()
@@ -327,7 +327,7 @@ class DatabaseHandler:
             print(f"Fehler beim Einfügen der Daten: {e}")
             return_value = "error:db:" + str(e)
         except Exception as e:
-            return_value = "error:db:" + str(e) + "detail: " + str(traceback.format_exc())
+            return_value = "error:db:" + str(e) + " details: " + str(traceback.format_exc())
         finally:
             print("finally")
             self.cursor.close()
