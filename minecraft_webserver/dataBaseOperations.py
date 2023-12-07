@@ -1,5 +1,6 @@
 import sqlite3
 import time
+import traceback
 from datetime import datetime
 
 import utils
@@ -299,7 +300,7 @@ class DatabaseHandler:
         self.cursor.execute("SELECT * FROM main WHERE uuid=? AND prefix COLLATE NOCASE=?", (uuid_str, prefix_str))
         return self.cursor.fetchone() is not None
 
-    def write_prefix(self, uuid, prefixName, color, password):
+    def write_prefix(self, uuid, prefixName, color, password, clearMemberList=False):
         print("do write prefix")
         return_value = "error:error_not_defined"
         prefix = f"{color}[{prefixName}]"
@@ -310,16 +311,23 @@ class DatabaseHandler:
                 return_value = "error:existing_entry_found"
             else:
                 print("else block")
-                self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix) VALUES (?, ?)", (uuid, prefix))
+                # TODO: if the prefix is already set add an option to clear the member list.
+                if clearMemberList:  # must run on first time the user defines a prefix
+                    self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix, members) VALUES (?, ?, ?)",
+                                        (uuid, prefix, uuid + ","))  # replaces all values including members
+                else:
+                    self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix) VALUES (?, ?)",
+                                        (uuid, prefix))
                 print("entered values successfully")
                 return_value = "success:success"
-                self.cursor.commit()
+                self.conn.commit()
 
         except sqlite3.IntegrityError as e:
             print("exception")
             print(f"Fehler beim Einfügen der Daten: {e}")
             return_value = "error:db:" + str(e)
-
+        except Exception as e:
+            return_value = "error:db:" + str(e) + "detail: " + str(traceback.format_exc())
         finally:
             print("finally")
             self.cursor.close()
