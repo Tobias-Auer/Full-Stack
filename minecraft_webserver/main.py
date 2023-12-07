@@ -6,7 +6,7 @@ import threading
 import time
 import Logger
 from flask import Flask, render_template, request, Response, redirect, session, flash, jsonify
-
+import flaskLogin
 import dataBaseOperations
 import updateDBStats
 import utils
@@ -19,6 +19,7 @@ minecraftApi = utils.MinecraftApi(logger=logger)
 databaseApi = utils.DatabaseApi(logger=logger)
 backupApi = utils.BackupApi(logger=logger)
 mixedApi = utils.MixedUtilsApi(logger=logger)
+FL = flaskLogin.FlaskLogin(logger=logger)
 
 # Flask Setup
 app = Flask(__name__)
@@ -33,7 +34,7 @@ def inject_loginVar():
     loginVar = "<a href=\"/login\" id=loginLink>Login</a>"
     if isinstance(uuid, str):
         name = minecraftApi.get_username_from_uuid(uuid)
-        loginVar = loginVar = f"<div>Willkommen {name}<br> <a href=\"/login\" id=logoutLink>Logout</a></div>"
+        loginVar = f"<div>Willkommen {name}<br> <a href=\"/login\" id=logoutLink>Logout</a></div>"
 
     return dict(loginVar=loginVar)
 
@@ -203,6 +204,30 @@ def report_player_route():
     return render_template("report.html")
 
 
+@app.route('/add_pref')
+@FL.require_auth()
+def add_pref_path():
+    db_handler = dataBaseOperations.DatabaseHandler("prefix")
+    pref = db_handler.get_pref(session.get("uuid"))
+    db_handler.disconnect()
+    prefix = ""
+    color = ""
+    if pref[0]:
+        prefix = pref[1].split("[")[1].replace("]", "")
+        color = pref[1].split("[")[0]
+    return render_template("create-prefix.html", prefix=prefix, color=color)
+
+
+@app.route('/manage_pref')
+def manage_pref_path():
+    return redirect("/add_pref")  # TODO: Delete route and link in header
+
+
+@app.route('/join_pref')
+def join_pref_path():
+    return "lol"
+
+
 @app.route('/pref_api', methods=['POST'])
 def pref_api():
     data = request.json
@@ -224,35 +249,11 @@ def pref_api():
         response_data = {'result': 'denied', "reason": "blacklist"}
         return jsonify(response_data)
 
-
     result = db_handler.write_prefix(uuid, prefixName, color, password)
     db_handler.disconnect()
 
     response_data = {'result': result}
     return jsonify(response_data)
-
-
-@app.route('/add_pref')
-def add_pref_path():
-    db_handler = dataBaseOperations.DatabaseHandler("prefix")
-    pref = db_handler.get_pref(session.get("uuid"))
-    db_handler.disconnect()
-    prefix = ""
-    color = ""
-    if pref[0]:
-        prefix = pref[1].split("[")[1].replace("]","")
-        color = pref[1].split("[")[0]
-    return render_template("create-prefix.html", prefix=prefix, color=color)
-
-
-@app.route('/manage_pref')
-def manage_pref_path():
-    return redirect("/add_pref")  # TODO: Delete route and link in header
-
-
-@app.route('/join_pref')
-def join_pref_path():
-    return "lol"
 
 
 @app.route('/api/status')
