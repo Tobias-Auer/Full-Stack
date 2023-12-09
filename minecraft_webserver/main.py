@@ -4,8 +4,10 @@ import math
 import secrets
 import threading
 import time
+from urllib.parse import urlparse
+
 import Logger
-from flask import Flask, render_template, request, Response, redirect, session, flash, jsonify
+from flask import Flask, render_template, request, Response, redirect, session, flash, jsonify, abort, url_for
 import flaskLogin
 import dataBaseOperations
 import updateDBStats
@@ -62,12 +64,11 @@ def login():
 
     if request.method == 'POST':
         if request.headers.get('Content-Type') == 'application/x-www-form-urlencoded':
-            form_type = request.form['type']
+            form_type = request.form['type']  # form type specifies which login form was submitted
             if form_type == 'login1':
                 username = request.form['username']
                 uuid = minecraftApi.get_uuid_from_username(username)
                 if uuid is None:
-                    print('none')
                     flash("Invalid Minecraft username")
                     db_handler.disconnect()
                     return redirect("/login")
@@ -78,23 +79,21 @@ def login():
                     db_handler.disconnect()
                     return redirect("/login")
                 secret_pin = secrets.SystemRandom().randrange(100000, 999999)
-                print("[DEBUG]: Secret pin: " + str(secret_pin))
                 db_handler.create_login_entry(uuid, secret_pin)
                 db_handler.disconnect()
                 db_handler = dataBaseOperations.DatabaseHandler("interface")
                 db_handler.create_login_entry(uuid, secret_pin)
                 db_handler.disconnect()
-                session["try_login"] = uuid
+                session["try_login"] = uuid  # set session cookie for the next step in the login process
                 return render_template("login2.html")
             elif form_type == "login2":
                 uuid = session.get("try_login")
-                if uuid is None:
+                if uuid is None:  # error correction if sth is wrong
                     session.clear()
                     return redirect("/login")
-                if not db_handler.check_for_login_entry(uuid):
+                if not db_handler.check_for_login_entry(uuid):  # happens after the 5-minute timeout
                     session.clear()
                     db_handler.disconnect()
-                    print("TIMED OUT")
                     flash("timed out")
                     return render_template("login.html")
                 try:
@@ -104,13 +103,15 @@ def login():
                     db_handler.disconnect()
                     return render_template("login2.html")
                 if secret_pin_from_form == int(db_handler.get_login_entry(uuid)):
-                    print("SUCCESS")
                     session.clear()
                     session["uuid"] = uuid
                     session.permanent = True
                     db_handler.delete_login_entry(uuid)
                     db_handler.disconnect()
-                    return redirect("/")
+                    next = request.args.get('next')
+                    if not next:
+                        return redirect("/")
+                    return redirect(next)
                 else:
                     print(secret_pin_from_form, db_handler.get_login_entry(uuid))
                     flash("Please enter the correct PIN")
@@ -119,21 +120,25 @@ def login():
             else:  # Not a valid request
                 db_handler.disconnect()
                 return render_template("login.html")
-        else:  # Logout command
+        else:  # Probably Logout command
+            db_handler.disconnect()  # close connection bc it's not further needed but still open
             input_string = request.form['text_input']
-            print(input_string)
+            if input_string != "logout":
+                abort(400)
             session.clear()
-            db_handler.disconnect()
+
             return render_template("login.html")
 
-    session_var = session.get('uuid')
-    print("username: ", session_var)
-    if isinstance(session_var, str):
-        return render_template("dosth.html", uuid=session_var)
-    session_var = session.get('try_login')
-    if isinstance(session_var, str):
+    uuid = session.get('uuid')
+    print("username: ", uuid)
+    if isinstance(uuid, str):
+        return render_template("logout_confirmation.html", uuid=uuid)
+    uuid = session.get('try_login')
+    if isinstance(uuid, str):
         return render_template("login2.html")
-    return render_template('login.html')
+    if not request.args.get('next'):
+        return redirect(f'/login?next={urlparse(request.referrer).path}')
+    return render_template("login.html")
 
 
 @app.route('/about')

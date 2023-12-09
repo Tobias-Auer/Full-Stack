@@ -1,6 +1,6 @@
 import functools
 
-from flask import session, redirect, abort, url_for
+from flask import session, redirect, abort, url_for, request
 
 
 class FlaskLogin:
@@ -23,7 +23,6 @@ class FlaskLogin:
         pass  # TODO: read session cookie and verify permissions
 
     def require_auth(self, perm_lvl_required=None):
-
         def inner_decorator(f):
             @functools.wraps(f)
             def wrapped(*args, **kwargs):
@@ -35,8 +34,9 @@ class FlaskLogin:
                     function = f(*args, **kwargs)
                     return function
                 if perm_lvl_required is None:
-                    next="lol"
-                    return redirect(f"/login?next={next}")  # immediately redirect to login page if user is not logged in
+                    next = request.path
+                    return redirect(
+                        f"/login?next={next}")  # immediately redirect to login page if user is not logged in
                 return abort(403)
 
             print('decorating', f, 'with argument', perm_lvl_required)
