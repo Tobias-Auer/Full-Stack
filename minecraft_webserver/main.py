@@ -137,7 +137,10 @@ def login():
     if isinstance(uuid, str):
         return render_template("login2.html")
     if not request.args.get('next'):
-        return redirect(f'/login?next={urlparse(request.referrer).path}')
+        refer = request.referrer
+        path = "/" if not refer else urlparse(refer).path
+
+        return redirect(f'/login?next={path}')
     return render_template("login.html")
 
 
@@ -147,7 +150,7 @@ def about():
 
 
 @app.route('/spieler')
-def player_overview_route():  # Untested optimized version
+def player_overview_route():
     """
     Display the player overview or specific player information.
 
