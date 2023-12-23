@@ -1,15 +1,14 @@
 import ast
-import datetime
-import math
 import secrets
 import threading
 import time
 from urllib.parse import urlparse
 
+from flask import Flask, render_template, request, Response, redirect, session, flash, jsonify, abort
+
 import Logger
-from flask import Flask, render_template, request, Response, redirect, session, flash, jsonify, abort, url_for
-import flaskLogin
 import dataBaseOperations
+import flaskLogin
 import updateDBStats
 import utils
 
@@ -41,11 +40,10 @@ def inject_loginVar():
     return dict(loginVar=loginVar)
 
 
-proceedStatusUpdate = False
+proceedStatusUpdate = False  # multithreading lock
 
 
 # Flask Routes
-
 
 @app.route('/')
 def index_route():
@@ -108,10 +106,10 @@ def login():
                     session.permanent = True
                     db_handler.delete_login_entry(uuid)
                     db_handler.disconnect()
-                    next = request.args.get('next')
-                    if not next:
+                    next_route = request.args.get('next')
+                    if not next_route:
                         return redirect("/")
-                    return redirect(next)
+                    return redirect(next_route)
                 else:
                     print(secret_pin_from_form, db_handler.get_login_entry(uuid))
                     flash("Please enter the correct PIN")
@@ -231,9 +229,20 @@ def manage_pref_path():
     return redirect("/add_pref")  # TODO: Delete route and link in header
 
 
-@app.route('/join_pref')
+@app.route('/join_pref', methods=["GET", "POST"])
 def join_pref_path():
-    return "lol"
+    db_handler = dataBaseOperations.DatabaseHandler("prefix")
+    if request.method == 'POST' and request.headers.get('Content-Type', '') == 'application/json':
+        print(request.get_json())
+        requested_prefix = request.get_json()["prefix"]
+        prefix_check = db_handler.check_for_prefix(requested_prefix)
+        print(jsonify(requested_prefix=requested_prefix, allowed= prefix_check))
+        return jsonify(requested_prefix=requested_prefix, allowed= prefix_check)
+
+    all_available_prefixes = db_handler.get_all_pref()
+
+    db_handler.disconnect()
+    return render_template("prefixes.html", results=all_available_prefixes)
 
 
 @app.route('/pref_api', methods=['POST'])

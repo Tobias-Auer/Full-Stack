@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spieler Übersicht</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./static/css/header.css" />
+    <link rel="stylesheet" href="./static/css/index.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css"
+    />
+    <link rel="stylesheet" href="./static/css/player_list.css" />
+
+    <link
+      rel="icon"
+      type="image/vnd.microsoft.icon"
+      href="./static/images/favicon.ico"
+    />
+
+    <link rel="stylesheet" href="./static/css/popup.css" />
+  </head>
+
+  <body>
+    <header class="sticky">
+      <nav>
+        <ul>
+          <li>
+            <img
+              id="logo"
+              src="./static/images/logo2.png"
+              alt="logo"
+              height="40"
+            />
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn" onclick="window.location.href=`/`">
+                Startseite
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn" onclick="window.location.href=`/spieler`">
+                Spieler
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn current">▼ Prefixes</button>
+              <div class="dropdown-content">
+                <a href="/add_pref">Erstellen</a>
+                <a href="/manage_pref">Ändern</a>
+                <a href="/join_pref">Beitreten</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn" onclick="window.location.href='/report'">
+                Spieler Report
+              </button>
+            </div>
+          </li>
+          <!-- Code for flask application -->
+          <li>{{ loginVar | safe}}</li>
+
+          <li></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="content">
+      <!-- content here!! -->
+      <div class="container mt-5">
+        {% for result in results %}
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a
+              onclick="send_prefix(`{{result[0]}}`)"
+              class="text-decoration-none list-item-content"
+              color="{{result[0]}}"
+            >
+              <img
+                src="https://crafatar.com/avatars/{{result[1]}}?default=MHF_Steve&overlay"
+                alt="player_head"
+                class="list-item-image"
+              />
+              <div class="list-item-text">
+                {{result[0].split("[")[1]|replace("]", "") }}
+              </div>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="text"></div>
+    </div>
+
+    <div class="custom-modal" id="custom-modal">
+      <div class="modal-header">
+        <div class="title" id="modal-title">(ERROR)</div>
+        <button data-close-button class="close-button" id="custom-close-button">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-content">
+        (ERROR)
+      </div>
+    </div>
+    <div id="custom-overlay"></div>
+    <footer>
+      <nav>
+        <ul>
+          <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+          <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+          <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+          <li><a href="#">🡅</a></li>
+        </ul>
+      </nav>
+    </footer>
+
+    <script>
+      var color_dict = {
+        "§0": "#000000",
+        "§1": "#0000AA",
+        "§2": "#00AA00",
+        "§3": "#00AAAA",
+        "§4": "#AA0000",
+        "§5": "#AA00AA",
+        "§6": "#FFAA00",
+        "§7": "#AAAAAA",
+        "§8": "#555555",
+        "§9": "#5555FF",
+        "§a": "#55FF55",
+        "§b": "#55FFFF",
+        "§c": "#FF5555",
+        "§d": "#FF55FF",
+        "§e": "#FFFF55",
+      };
+      function get_color(color) {
+        return color_dict[color];
+      }
+
+      var all_elements = document.getElementsByClassName("list-item-content");
+
+      for (let i = 0; i < all_elements.length; i++) {
+        element = all_elements[i];
+        element.style.color = get_color(
+          element.getAttribute("color").split("[")[0]
+        );
+      }
+
+      function ask_for_pref(pref) {
+        const modal_body = document.getElementById("modal-content")
+            const modal_title = document.getElementById("modal-title")
+            const modal = document.getElementById("custom-modal");
+            modal_body.innerHTML = "Möchtest du wirklich deinen aktuellen Prefix <X> gegen den neuen Prefix " + pref + " eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.<br><br><br><br>[BUTTON]     [BUTTON]" ;
+            modal_title.innerHTML = "Bestätigung"
+            openModal(modal);
+      }
+
+      function send_prefix(prefix) {
+        fetch("/join_pref", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            prefix: prefix,
+          }),
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            throw new Error("Something is wrong :(\nTry again!");
+          })
+          .then((data) => {
+            console.log(data);
+            if (data["allowed"]) {
+              ask_for_pref(data["requested_prefix"])
+            }
+          })
+          .catch((error) => {
+            console.log("ERROR: " + error);
+            const modal_body = document.getElementById("modal-content")
+            const modal_title = document.getElementById("modal-title")
+            const modal = document.getElementById("custom-modal");
+            modal_body.innerHTML = "ERROR<br>"+error;
+            modal_title.innerHTML = "ERROR"
+            openModal(modal);
+          });
+      }
+
+      function openModal(modal) {
+        if (modal == null) return;
+        modal.classList.add("active");
+        const overlay = document.getElementById("custom-overlay");
+        overlay.classList.add("active");
+      }
+
+      function closeModal(modal) {
+        if (modal == null) return;
+        modal.classList.remove("active");
+        overlay.classList.remove("active");
+      }
+
+      const button = document.getElementById("custom-close-button")
+      button.addEventListener("click", () => {
+        const modal = button.closest(".custom-modal");
+        closeModal(modal);
+      });
+
+      const overlay = document.getElementById("custom-overlay");
+      overlay.addEventListener("click", () => {
+        const modals = document.querySelectorAll(".custom-modal.active");
+        modals.forEach((modal) => {
+          closeModal(modal);
+        });
+      });
+    </script>
+  </body>
+</html>
