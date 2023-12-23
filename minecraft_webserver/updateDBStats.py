@@ -76,7 +76,6 @@ class StatisticsUpdater:
         This method must be called once per player and stores general metadata but not the username.
         This is cached in the cache table
 
-        :param table_name: The name of the table
         :return: None
         """
         create_table_query = f"""
@@ -100,7 +99,7 @@ class StatisticsUpdater:
         :return: None
         """
         uuid = os.path.splitext(filename)[0].replace("-", "").split("\\")[-1]
-        with open(r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\world\stats\\"+ filename, 'r') as f:
+        with open(r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\world\stats\\" + filename, 'r') as f:
             data = json.load(f)
             # self.__update_game_specific_tables(uuid, data)
         for key, action in data["stats"].items():

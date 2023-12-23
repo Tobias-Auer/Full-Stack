@@ -10,7 +10,8 @@ USE_TEST_DB = False
 
 class DatabaseHandler:
     """
-    Class for handling various database operations except for player statistic information management (handled in "updateDBStats.py").
+    Class for handling various database operations except for player statistic information management (handled in
+    "updateDBStats.py").
     """
 
     def __init__(self, db_file):
@@ -204,11 +205,11 @@ class DatabaseHandler:
         :return: None
         """
         # Check if entry exists
-        count = self.check_for_key("cache", "UUID", uuid)
-        CURRENT_TIMESTAMP = int(time.time())
-
-        now = datetime.now()
-        CURRENT_DATE = now.strftime("%d.%m.%Y")
+        # count = self.check_for_key("cache", "UUID", uuid)
+        # CURRENT_TIMESTAMP = int(time.time())
+        #
+        # now = datetime.now()
+        # CURRENT_DATE = now.strftime("%d.%m.%Y")
         print(uuid)
         name = self.minecraftApi.get_username_from_uuid(uuid)
         print(name)
@@ -309,7 +310,7 @@ class DatabaseHandler:
                 return_value = "error:existing_entry_found"
             else:
                 # TODO: if the prefix is already set, add an option to clear the member list.
-                if clearMemberList:  # must run on first time the user defines a prefix
+                if clearMemberList:  # must run on the first time the user defines a prefix
                     self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix, members) VALUES (?, ?, ?)",
                                         (uuid, prefix, uuid + ","))  # replaces all values including members
                 else:
@@ -330,7 +331,6 @@ class DatabaseHandler:
             return_value = "error:db:" + str(e) + " details: " + str(traceback.format_exc())
         finally:
             print("finally")
-            self.cursor.close()
             return return_value
 
     def get_pref(self, uuid):
@@ -349,5 +349,30 @@ class DatabaseHandler:
         except sqlite3.Error as e:
             print(f"Error: {e}")
             return [False, ""]
-        finally:
-            self.cursor.close()
+
+    def get_all_pref(self):
+        try:
+            query = "SELECT prefix FROM main"
+            self.cursor.execute(query)
+            prefixes = self.cursor.fetchall()
+            query = "SELECT uuid FROM main"
+            self.cursor.execute(query)
+            uuids = self.cursor.fetchall()
+            result = []
+            for i in range(len(prefixes)):
+                result.append([prefixes[i][0], uuids[i][0]])
+            return result
+        except sqlite3.Error as e:
+            print(f"Error: {e}")
+            return None
+
+    def check_for_prefix(self, prefix, password=None):
+        try:
+            query = "SELECT COUNT(*) FROM main WHERE prefix = ?"
+            self.cursor.execute(query, (prefix,))
+            prefix_count = self.cursor.fetchall()[0][0]
+            print("DER PREFIX COUNT: %d" % prefix_count)
+            return True if prefix_count > 0 else False
+        except sqlite3.Error as e:
+            print(f"Error: {e}")
+            return None
