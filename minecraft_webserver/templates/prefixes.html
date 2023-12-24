@@ -161,7 +161,7 @@
         const modal_body = document.getElementById("modal-content")
             const modal_title = document.getElementById("modal-title")
             const modal = document.getElementById("custom-modal");
-            modal_body.innerHTML = "Möchtest du wirklich deinen aktuellen Prefix <X> gegen den neuen Prefix " + pref + " eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.<br><br><br><br>[BUTTON]     [BUTTON]" ;
+            modal_body.innerHTML = "Möchtest du wirklich deinen aktuellen Prefix <X> gegen den neuen Prefix " + pref + " eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.<br><br><br><br><button onclick='console.log(`nooo`)'>Abbruch</button><button onclick='console.log(`yeah`)'>Bestätigen</button>" ;
             modal_title.innerHTML = "Bestätigung"
             openModal(modal);
       }
