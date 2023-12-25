@@ -297,20 +297,20 @@ class DatabaseHandler:
         self.cursor.execute(delete_query, (uuid,))
         self.conn.commit()
 
-    def is_entry_exists(self, uuid_str, prefix_str):
-        self.cursor.execute("SELECT * FROM main WHERE uuid=? AND prefix COLLATE NOCASE=?", (uuid_str, prefix_str))
-        return self.cursor.fetchone() is not None
+    def does_entry_exists(self, uuid_str, prefix_str):
+        self.cursor.execute("SELECT COUNT(*) FROM main WHERE prefix COLLATE NOCASE=?", (prefix_str,))
+        count = self.cursor.fetchone()[0]
+        status = count > 0
+        return status
 
     def write_prefix(self, uuid, prefixName, color, password, clearMemberList=True):
         return_value = "error:error_not_defined"
         prefix = f"{color}[{prefixName}]"
         try:
-            if self.is_entry_exists(uuid, prefix):
-                print("if block")
+            if self.does_entry_exists(uuid, prefix):
                 return_value = "error:existing_entry_found"
             else:
-                # TODO: if the prefix is already set, add an option to clear the member list.
-                if clearMemberList:  # must run on the first time the user defines a prefix
+                if clearMemberList:  # must run on the first time when the user defines a prefix
                     self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix, members) VALUES (?, ?, ?)",
                                         (uuid, prefix, uuid + ","))  # replaces all values including members
                 else:
