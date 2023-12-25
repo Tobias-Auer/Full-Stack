@@ -25,6 +25,8 @@
     />
 
     <link rel="stylesheet" href="./static/css/popup.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/js-sha256"></script>
   </head>
 
   <body>
@@ -108,11 +110,16 @@
     <div class="custom-modal" id="custom-modal">
       <div class="modal-header">
         <div class="title" id="modal-title">(ERROR)</div>
-        <button data-close-button class="close-button" id="custom-close-button">&times;</button>
+        <button
+          data-close-button
+          class="close-button"
+          id="custom-close-button"
+          onclick="closeModal(this.closest(`.custom-modal`))"
+        >
+          &times;
+        </button>
       </div>
-      <div class="modal-body" id="modal-content">
-        (ERROR)
-      </div>
+      <div class="modal-body" id="modal-content">(ERROR)</div>
     </div>
     <div id="custom-overlay"></div>
     <footer>
@@ -157,23 +164,41 @@
         );
       }
 
-      function ask_for_pref(pref) {
-        const modal_body = document.getElementById("modal-content")
-            const modal_title = document.getElementById("modal-title")
-            const modal = document.getElementById("custom-modal");
-            modal_body.innerHTML = "Möchtest du wirklich deinen aktuellen Prefix <X> gegen den neuen Prefix " + pref + " eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.<br><br><br><br><button onclick='console.log(`nooo`)'>Abbruch</button><button onclick='console.log(`yeah`)'>Bestätigen</button>" ;
-            modal_title.innerHTML = "Bestätigung"
-            openModal(modal);
+      function ask_for_pref(pref, require_pwd=false) {
+        const modal_body = document.getElementById("modal-content");
+        const modal_title = document.getElementById("modal-title");
+        const modal = document.getElementById("custom-modal");
+        const input_field = "<input id='pwd'></input>"
+        modal_body.innerHTML =
+          "Möchtest du wirklich deinen aktuellen Prefix <X> gegen den neuen Prefix " +
+          pref +
+          ` eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.<br><br>`
+
+        if (require_pwd) {
+          modal_body.innerHTML+=input_field;
+          modal_body.innerHTML+=`<br><br><div class='button-container'><button onclick='closeModal(this.closest(".custom-modal"))'>Abbruch</button><button onclick='send_prefix("${pref}",true,true)'>Bestätigen</button></div>`;
+        } else {
+          modal_body.innerHTML+=`<br><br><div class='button-container'><button onclick='closeModal(this.closest(".custom-modal"))'>Abbruch</button><button onclick='send_prefix("${pref}",true)'>Bestätigen</button></div>`;
+        }
+          
+        modal_title.innerHTML = "Bestätigung";
+        openModal(modal);
       }
 
-      function send_prefix(prefix) {
+      function send_prefix(prefix, apply_mode = false, pwd=null) {
+        if (pwd) {
+          pwd=document.getElementById('pwd').value;
+        }
+        console.log("hi there");
         fetch("/join_pref", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            apply_mode: apply_mode,
             prefix: prefix,
+            pwd: pwd,
           }),
         })
           .then((res) => {
@@ -184,18 +209,28 @@
           })
           .then((data) => {
             console.log(data);
-            if (data["allowed"]) {
-              ask_for_pref(data["requested_prefix"])
+            if (!apply_mode) {
+              if (data["allowed"]) {
+                ask_for_pref(data["requested_prefix"], data["require_pwd"]);
+                return;
+              } else {
+                failure(
+                  data["requested_prefix"],
+                  "Du hast keine Berechtigung für diesen Prefix. <br><br>Wenn du dir sicher bist, das ein Fehler vorliegt, probiere es später erneut oder kontaktiere den Serverbesitzer"
+                );
+                return;
+              }
+            }
+            if (data["success"]) {
+              success(data["requested_prefix"]);
+              return;
+            } else {
+              failure(data["requested_prefix"], data["reason"]);
+              return;
             }
           })
           .catch((error) => {
-            console.log("ERROR: " + error);
-            const modal_body = document.getElementById("modal-content")
-            const modal_title = document.getElementById("modal-title")
-            const modal = document.getElementById("custom-modal");
-            modal_body.innerHTML = "ERROR<br>"+error;
-            modal_title.innerHTML = "ERROR"
-            openModal(modal);
+            failure(data["requested_prefix"], error);
           });
       }
 
@@ -212,11 +247,28 @@
         overlay.classList.remove("active");
       }
 
-      const button = document.getElementById("custom-close-button")
-      button.addEventListener("click", () => {
-        const modal = button.closest(".custom-modal");
-        closeModal(modal);
-      });
+      function success(prefix) {
+        const modal_body = document.getElementById("modal-content");
+        const modal_title = document.getElementById("modal-title");
+        const modal = document.getElementById("custom-modal");
+        modal_body.innerHTML =
+          "Du hast erfolgreich deinen Prefix geändert :) <br><br><button onclick='closeModal(this.closest(`.custom-modal`))'>OK</button>";
+        modal_title.innerHTML = "Erfolgreich :)";
+        openModal(modal);
+      }
+
+      function failure(prefix, reason) {
+        const modal_body = document.getElementById("modal-content");
+        const modal_title = document.getElementById("modal-title");
+        const modal = document.getElementById("custom-modal");
+        modal_body.innerHTML =
+          "Es it ein Fehler beim setzen folgendes Prefixes aufgetreten: " +
+          prefix +
+          "<br><br>Weitere Informationen:<br>" +
+          reason;
+        modal_title.innerHTML = "ERROR :[";
+        openModal(modal);
+      }
 
       const overlay = document.getElementById("custom-overlay");
       overlay.addEventListener("click", () => {
@@ -225,6 +277,10 @@
           closeModal(modal);
         });
       });
+      function hashPassword(password) {
+        const hashHex = sha256(password);
+        return hashHex;
+      }
     </script>
   </body>
 </html>

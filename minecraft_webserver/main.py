@@ -229,15 +229,34 @@ def manage_pref_path():
     return redirect("/add_pref")  # TODO: Delete route and link in header
 
 
+@FL.require_auth()
 @app.route('/join_pref', methods=["GET", "POST"])
 def join_pref_path():
     db_handler = dataBaseOperations.DatabaseHandler("prefix")
     if request.method == 'POST' and request.headers.get('Content-Type', '') == 'application/json':
-        print(request.get_json())
+        apply_mode = request.get_json()["apply_mode"]
         requested_prefix = request.get_json()["prefix"]
-        prefix_check = db_handler.check_for_prefix(requested_prefix)
-        print(jsonify(requested_prefix=requested_prefix, allowed= prefix_check))
-        return jsonify(requested_prefix=requested_prefix, allowed= prefix_check)
+        password = request.get_json()["pwd"]
+        changed_prefix_success = False
+        changed_prefix_error = ""
+        print(request.get_json())
+
+        prefix_check_switch, require_pwd = db_handler.check_for_prefix(requested_prefix, password, apply_mode)  # check for existence and pwd
+
+        if apply_mode:
+            if not prefix_check_switch:
+                changed_prefix_success = False
+                changed_prefix_error = "Falsches Passwort angegeben!"
+            else:
+                status = db_handler.apply_prefix(session.get('uuid'), requested_prefix)
+                changed_prefix_success = status[0]
+                if not changed_prefix_success:  # error occurred
+                    changed_prefix_error = status[1]
+
+
+
+        return jsonify(apply_mode=apply_mode, requested_prefix=requested_prefix, allowed=prefix_check_switch, require_pwd=require_pwd,
+                       success=changed_prefix_success, reason=changed_prefix_error)
 
     all_available_prefixes = db_handler.get_all_pref()
 

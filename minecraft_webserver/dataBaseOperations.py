@@ -335,7 +335,6 @@ class DatabaseHandler:
 
     def get_pref(self, uuid):
         try:
-
             # Define the SQL query to check for the existence of a prefix for a given UUID
             query = "SELECT prefix FROM main WHERE uuid = ?"
             self.cursor.execute(query, (uuid,))
@@ -366,13 +365,50 @@ class DatabaseHandler:
             print(f"Error: {e}")
             return None
 
-    def check_for_prefix(self, prefix, password=None):
+    def check_for_prefix(self, prefix, password=None, require_pwd=False):
+        require_pwd_message = False
         try:
             query = "SELECT COUNT(*) FROM main WHERE prefix = ?"
             self.cursor.execute(query, (prefix,))
-            prefix_count = self.cursor.fetchall()[0][0]
+            prefix_count = self.cursor.fetchone()[0]
             print("DER PREFIX COUNT: %d" % prefix_count)
-            return True if prefix_count > 0 else False
-        except sqlite3.Error as e:
+            query = "SELECT password FROM main WHERE prefix = ?"
+            self.cursor.execute(query, (prefix,))
+            try:
+                db_password = self.cursor.fetchone()[0]
+                print("PWD"+str(password))
+            except (Exception,):
+                db_password = None
+                print("PWD" + str(password))
+            if not require_pwd:
+                if db_password is not None:
+                    require_pwd_message = True
+            return [prefix_count > 0 and (password == db_password or not require_pwd), require_pwd_message]
+        except (Exception,) as e:
             print(f"Error: {e}")
-            return None
+            return False
+
+    def apply_prefix(self, uuid, requested_prefix):
+        print(uuid, requested_prefix)
+        try:
+            # find existing prefix
+            query = "SELECT prefix FROM main WHERE members LIKE ?"
+            self.cursor.execute(query, (f"%{uuid}%",))
+            own_prefix_name = self.cursor.fetchone()[0]
+            print(f"der bisherige prefix lautet: {own_prefix_name}")
+            if own_prefix_name == requested_prefix:
+                return [False, "this prefix is already assigned to you"]
+
+            # delete existing prefix
+            query = "UPDATE main SET members = REPLACE(members, ?, '') WHERE prefix = ?"
+            self.cursor.execute(query, (f"{uuid},", own_prefix_name))
+            self.conn.commit()
+
+            # add to new prefix
+            query = "UPDATE main SET members = members || ? WHERE prefix = ?"
+            self.cursor.execute(query, (f"{uuid},", requested_prefix))
+            self.conn.commit()
+            return [True, ]
+        except Exception as e:
+            print(f"Error: {e}")
+            return [False, str(e)]
