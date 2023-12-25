@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="./static/css/index.css" />
 
     <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/js-sha256"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -122,7 +124,7 @@
                     </li>
                     <li>
                         <div class="dropdown">
-                            <button class="dropbtn">▼ Prefixes</button>
+                            <button class="dropbtn current">▼ Prefixes</button>
                             <div class="dropdown-content current">
                                 <a href=>Erstellen</a>
                                 <a href="/manage_pref">Ändern</a>
@@ -192,9 +194,9 @@
                 </ul>
             </nav>
         </footer>
-        <script>
-            
 
+
+        <script>
             var pre_color = "{{color}}";
             var pre_prefix = "{{prefix}}"
             document.getElementById("color").value = pre_color;
@@ -233,7 +235,7 @@
                     password = ""
                 } else if (password === "") {
                     console.warn("Enter a password!");
-                    return 
+                    return
                 }
 
                 console.log("Spielername: " + playerName);
@@ -247,7 +249,7 @@
                 const data = {
                     playerName: playerName,
                     color: color,
-                    password: password
+                    password: hashPassword(password)
                 };
 
                 fetch('/pref_api', {
@@ -265,6 +267,11 @@
                     .catch(error => {
                         console.error('Error:', error);
                     });
+            }
+
+            function hashPassword(password) {
+                const hashHex = sha256(password);
+                return hashHex;
             }
         </script>
     </body>
