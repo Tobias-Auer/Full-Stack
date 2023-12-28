@@ -1,4 +1,5 @@
 import ast
+import os
 import secrets
 import threading
 import time
@@ -11,7 +12,10 @@ import dataBaseOperations
 import flaskLogin
 import updateDBStats
 import utils
+import sys
 
+if sys.platform.lower() == "win32":  # cmd color support patch
+    os.system('color')
 # Logger Setup
 logger = Logger.logger()
 
@@ -241,7 +245,8 @@ def join_pref_path():
         changed_prefix_error = ""
         print(request.get_json())
 
-        prefix_check_switch, require_pwd = db_handler.check_for_prefix(requested_prefix, password, apply_mode)  # check for existence and pwd
+        prefix_check_switch, require_pwd = db_handler.check_for_prefix(requested_prefix, password,
+                                                                       apply_mode)  # check for existence and pwd
 
         if apply_mode:
             if not prefix_check_switch:
@@ -253,9 +258,8 @@ def join_pref_path():
                 if not changed_prefix_success:  # error occurred
                     changed_prefix_error = status[1]
 
-
-
-        return jsonify(apply_mode=apply_mode, requested_prefix=requested_prefix, allowed=prefix_check_switch, require_pwd=require_pwd,
+        return jsonify(apply_mode=apply_mode, requested_prefix=requested_prefix, allowed=prefix_check_switch,
+                       require_pwd=require_pwd,
                        success=changed_prefix_success, reason=changed_prefix_error)
 
     all_available_prefixes = db_handler.get_all_pref()
@@ -270,6 +274,8 @@ def pref_api():
     prefixName = data['playerName']
     color = data['color']
     password = data['password']
+    if password == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855":  # --> ''
+        password = None
     uuid = session.get("uuid")
 
     db_handler = dataBaseOperations.DatabaseHandler("prefix")
@@ -281,7 +287,7 @@ def pref_api():
         return jsonify(response_data)
     with open("blacklist.txt", 'r') as file:
         blacklist = ast.literal_eval(file.readline())
-    if prefixName.lower().replace(" ", "") in blacklist:
+    if prefixName.lower().replace(" ", "") in blacklist or prefixName.lower().replace(" ", "").find("owner") != -1:
         response_data = {'result': 'denied', "reason": "blacklist"}
         return jsonify(response_data)
 

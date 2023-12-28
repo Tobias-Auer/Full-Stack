@@ -297,41 +297,65 @@ class DatabaseHandler:
         self.cursor.execute(delete_query, (uuid,))
         self.conn.commit()
 
-    def does_entry_exists(self, uuid_str, prefix_str):
-        self.cursor.execute("SELECT COUNT(*) FROM main WHERE prefix COLLATE NOCASE=?", (prefix_str,))
-        count = self.cursor.fetchone()[0]
-        status = count > 0
-        return status
+    def does_entry_exists(self, uuid, prefix, prefixName):
+        query = "SELECT prefix FROM main WHERE prefix like ?"
+        self.cursor.execute(query, ('%' + prefixName + '%',))
+        try:
+            already_assigned_prefix = self.cursor.fetchone()[0]
+        except Exception:
+            already_assigned_prefix = ""
+        already_there = already_assigned_prefix != ""
+        if not already_there:
+            return False
+        query = "SELECT prefix FROM main WHERE uuid=?"  # check whether the owner itself overwrites his own color
+        self.cursor.execute(query, (uuid,))
+        try:
+            prefix_from_owner = self.cursor.fetchone()[0]
+        except Exception:
+            prefix_from_owner = ""
 
-    def write_prefix(self, uuid, prefixName, color, password, clearMemberList=True):
-        return_value = "error:error_not_defined"
+        owner_itself = prefix_from_owner == already_assigned_prefix
+        if owner_itself:
+            return False
+        else:
+            already_assigned_prefix_substring = already_assigned_prefix.split("[")[1][0:-1]
+            if already_assigned_prefix_substring.lower() == prefixName.lower():
+                return True
+            return False
+
+    def write_prefix(self, uuid, prefixName, color, password):
         prefix = f"{color}[{prefixName}]"
         try:
-            if self.does_entry_exists(uuid, prefix):
-                return_value = "error:existing_entry_found"
+            if self.does_entry_exists(uuid, prefix, prefixName):
+                return "error:existing_entry_found"
             else:
-                if clearMemberList:  # must run on the first time when the user defines a prefix
-                    self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix, members) VALUES (?, ?, ?)",
-                                        (uuid, prefix, uuid + ","))  # replaces all values including members
-                else:
-                    self.cursor.execute("INSERT OR REPLACE INTO main (uuid, prefix) VALUES (?, ?)",
-                                        (uuid, prefix))
-
-                if password != "":
-                    self.cursor.execute("UPDATE main SET (password)=? WHERE uuid=?", (password, uuid))
+                # check for existing entry
+                query = "SELECT COUNT(*) FROM main WHERE uuid = ?"
+                self.cursor.execute(query, (uuid,))
+                print("DEBUG: get count")
+                try:
+                    count = self.cursor.fetchone()[0]
+                    print(f"DEBUG: count: {count}")
+                except Exception:
+                    count = 1
+                if count == 0:  # no entry found
+                    query = "INSERT INTO main (uuid, prefix, password, members) VALUES (?, ?, ?, ?)"
+                    self.cursor.execute(query, (uuid, prefix, password, uuid + ","))
+                    return "success:success"
+                # only for updating not for new entries!!!
+                self.cursor.execute("UPDATE main SET prefix=?, password=? WHERE uuid=?", (prefix, password, uuid))
                 print("entered values successfully")
-                return_value = "success:success"
                 self.conn.commit()
+                return "success:success"
 
         except sqlite3.IntegrityError as e:
             print("exception")
             print(f"Fehler beim Einfügen der Daten: {e}")
-            return_value = "error:db:" + str(e)
+            return "error:db:" + str(e) + " details: " + str(
+                traceback.format_exc())  # should be removed in future production code bc of potential security issues(?)
         except Exception as e:
-            return_value = "error:db:" + str(e) + " details: " + str(traceback.format_exc())
-        finally:
-            print("finally")
-            return return_value
+            return "error:db:" + str(e) + " details: " + str(
+                traceback.format_exc())  # should be removed in future production code bc of potential security issues(?)
 
     def get_pref(self, uuid):
         try:
@@ -376,7 +400,7 @@ class DatabaseHandler:
             self.cursor.execute(query, (prefix,))
             try:
                 db_password = self.cursor.fetchone()[0]
-                print("PWD"+str(password))
+                print("PWD" + str(password))
             except (Exception,):
                 db_password = None
                 print("PWD" + str(password))
