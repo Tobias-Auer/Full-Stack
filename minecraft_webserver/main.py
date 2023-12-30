@@ -171,11 +171,12 @@ def player_overview_route():
         status = db_handler.get_player_status(uuid)
         stats_tools, stats_armor, stats_killed, stats_custom, stats_blocks = minecraftApi.get_all_stats(uuid,
                                                                                                         db_handler)
+        banned = db_handler.get_banned_status(uuid)
 
         db_handler.disconnect()
         return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status,
                                stats_tools=stats_tools, stats_armor=stats_armor, stats_killed=stats_killed,
-                               stats_custom=stats_custom, stats_blocks=stats_blocks)
+                               stats_custom=stats_custom, stats_blocks=stats_blocks, banned=banned)
     all_users = []
     all_status = []
     combined_users_data = []
@@ -314,18 +315,20 @@ def stream_status():
         ...
     return Response(generate(), mimetype='text/event-stream')
 
+
 @app.route('/api/player_count')
 def stream_player_count():
     def generate():
         while True:
             online_count = db_handler.get_player_status(None, True)
-            print("DEBUG onlinecount: ", str(online_count))
             yield f"data: {online_count}\n\n"
             time.sleep(10)
+
     db_handler = dataBaseOperations.DatabaseHandler("playerData")
-    while not proceedStatusUpdate:  # threading lock(my best try at least, not sure if it is the correct way to do this)
+    while not proceedStatusUpdate:  # threading lock (my best try at least, not sure whether this is the correct way of doing this)
         ...
     return Response(generate(), mimetype='text/event-stream')
+
 
 @app.route('/api/player_info/<path:path>')
 def stream_player_info(path):

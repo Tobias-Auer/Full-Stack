@@ -439,3 +439,14 @@ class DatabaseHandler:
         except Exception as e:
             print(f"Error: {e}")
             return [False, str(e)]
+
+    def get_banned_status(self, uuid):
+        try:
+            query = "SELECT banned FROM cache where UUID = ?"
+            self.cursor.execute(query, (uuid,))
+            banned_status = self.cursor.fetchone()[0]
+            return bool(banned_status)
+        except (Exception,) as e:
+            print(f"Error: {e}")
+            return False
+
