@@ -171,12 +171,17 @@ def player_overview_route():
         status = db_handler.get_player_status(uuid)
         stats_tools, stats_armor, stats_killed, stats_custom, stats_blocks = minecraftApi.get_all_stats(uuid,
                                                                                                         db_handler)
+        enddate, startdate = "", ""
         banned = db_handler.get_banned_status(uuid)
+        if banned == "True":
+            startdate, enddate = db_handler.get_banned_dates(uuid)
 
         db_handler.disconnect()
         return render_template("spieler-info.html", uuid=uuid, user_name=user_name, status=status,
                                stats_tools=stats_tools, stats_armor=stats_armor, stats_killed=stats_killed,
-                               stats_custom=stats_custom, stats_blocks=stats_blocks, banned=banned)
+                               stats_custom=stats_custom, stats_blocks=stats_blocks, banned=banned, enddate=enddate,
+                               startdate=startdate)
+
     all_users = []
     all_status = []
     combined_users_data = []
