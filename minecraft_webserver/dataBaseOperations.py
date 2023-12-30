@@ -1,3 +1,4 @@
+import ast
 import sqlite3
 import time
 import traceback
@@ -445,7 +446,18 @@ class DatabaseHandler:
             query = "SELECT banned FROM cache where UUID = ?"
             self.cursor.execute(query, (uuid,))
             banned_status = self.cursor.fetchone()[0]
-            return bool(banned_status)
+            return banned_status
+        except (Exception,) as e:
+            print(f"Error: {e}")
+            return False
+
+    def get_banned_dates(self, uuid):
+        try:
+            query = "SELECT banned_details FROM cache where UUID = ?"
+            self.cursor.execute(query, (uuid,))
+            banned_details = self.cursor.fetchone()[0]
+            banned_details = ast.literal_eval(banned_details)
+            return banned_details[2], banned_details[3]
         except (Exception,) as e:
             print(f"Error: {e}")
             return False
