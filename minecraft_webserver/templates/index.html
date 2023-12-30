@@ -13,36 +13,37 @@
   <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
   <style>
     body {
-        font-family: 'Arial', sans-serif;
-        background-color: #d0d0d0!important;
-        color: #333;
-        text-align: center; 
+      font-family: 'Arial', sans-serif;
+      background-color: #d0d0d0 !important;
+      color: #333;
+      text-align: center;
     }
+
     header {
-      text-align: left; 
+      text-align: left;
     }
 
     h1 {
-        color: #004080;
+      color: #004080;
     }
 
     #server-info {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 12px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 12px;
     }
 
     a {
-        color: #0066cc;
-        text-decoration: none;
+      color: #0066cc;
+      text-decoration: none;
     }
 
     a:hover {
-        text-decoration: underline;
+      text-decoration: underline;
     }
-</style>
+  </style>
 </head>
 
 <body>
@@ -61,7 +62,7 @@
         </li>
         <li>
           <div class="dropdown">
-            <button class="dropbtn"  onclick="window.location.href=`/spieler`">Spieler</button>
+            <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
           </div>
         </li>
         <li>
@@ -96,24 +97,39 @@
       <h1>Willkommen auf meinem Minecraft-Server!</h1>
 
       <div id="server-info">
-          <p>Dieser Server ist ein Hobby Projekt von mir welches am 29.01.2023 gestartet ist.</p>
-          <p>Aktuell sind <span id="player-count">X</span> Spieler auf dem Server unterwegs.</p>
-          <p>Zusätzlich befinden sich auf dem Server verschiedene Plugins. Unteranderem dabei sind custom crafting Recipes, eigene Prefixe und auch eine Spawn Elytra.</p>
-          <p>100% der installierten Plugins sind zu 100% von mir gecodet und verzichten dabei vollständig auf Plugins von anderen Personen.</p>
-          <p>Der Server an sich ist Vanilla Gameplay, aber für Plugin Vorschläge bin ich jederzeit offen. :)</p>
-          <p>Schau auch mal auf meinem <a href="https://www.discord.gg/vJYNnsQwf8" target="_blank">Discord</a> vorbei!<br>Oder schaue dir die  <a href="/about">technischen Details</a> vom Server an!</p>
-       </div>
+        <p>Dieser Server ist ein Hobby Projekt von mir, welches am 29.01.2023 gestartet ist.</p>
+        <p>Aktuell sind <span id="player-count">X</span> Spieler auf dem Server unterwegs.</p>
+        <p>Zusätzlich befinden sich auf dem Server verschiedene Plugins. Unter anderem dabei sind custom crafting
+          Recipes, eigene Prefixe und auch eine Spawn Elytra.</p>
+        <p>100% der installierten Plugins sind zu 100% von mir gecodet und verzichten dabei vollständig auf Plugins von
+          anderen Personen.</p>
+        <p>Der Server an sich ist Vanilla Gameplay, aber für Plugin Vorschläge bin ich jederzeit offen. :)</p>
+        <p>Schau auch mal auf meinem <a href="https://www.discord.gg/vJYNnsQwf8" target="_blank">Discord</a>
+          vorbei!<br>Oder schaue dir die <a href="/about">technischen Details</a> vom Server an!</p>
+      </div>
     </div>
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
-        <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
-        <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
-        <li><a href="#">🡅</a></li>
-      </ul>
-    </nav>
-  </footer>
+    <footer>
+      <nav>
+        <ul>
+          <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+          <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+          <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+          <li><a href="#">🡅</a></li>
+        </ul>
+      </nav>
+    </footer>
+
+    <script>
+      const eventSource = new EventSource("/api/player_count");
+
+      eventSource.onmessage = (event) => {
+        console.log(event.data.replaceAll("'", '"'));
+        const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
+        console.log(parsedArray)
+        document.getElementById("player-count").innerText = parsedArray;
+      }
+
+    </script>
 </body>
 
 </html>

@@ -116,21 +116,24 @@ class DatabaseHandler:
             queryResult = ["Null", ]
         return queryResult
 
-    def get_player_status(self, player_uuid):
+    def get_player_status(self, player_uuid, return_all=False):
         """
         Retrieve the status of the specified player. Returns "offline" if no player entry is found.
 
+        :param return_all: if the flag is set, the function returns the count of all online players
         :param player_uuid: UUID of the player.
-        :return: "online"|"offline"
+        :return: "online"|"offline" or -1 in case of an error during return_all=True
         """
-        query = f"""
-            SELECT status FROM status WHERE player = ?
-        """
-        self.cursor.execute(query, (player_uuid.replace("-", ""),))
+        if not return_all:
+            query = f"SELECT status FROM status WHERE player = ?"
+            self.cursor.execute(query, (player_uuid.replace("-", ""),))
+        else:
+            query = f"SELECT COUNT(*) FROM status WHERE status = 'online'"
+            self.cursor.execute(query)
         try:
             status = self.cursor.fetchone()[0]
         except (Exception,):
-            status = "offline"
+            status = "offline" if not return_all else -1
         return str(status)
 
     # Writing

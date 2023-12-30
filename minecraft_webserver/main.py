@@ -310,10 +310,22 @@ def stream_status():
             time.sleep(2)
 
     db_handler = dataBaseOperations.DatabaseHandler("playerData")
-    while not proceedStatusUpdate:
+    while not proceedStatusUpdate:  # threading lock(my best try at least, not sure if it is the correct way to do this)
         ...
     return Response(generate(), mimetype='text/event-stream')
 
+@app.route('/api/player_count')
+def stream_player_count():
+    def generate():
+        while True:
+            online_count = db_handler.get_player_status(None, True)
+            print("DEBUG onlinecount: ", str(online_count))
+            yield f"data: {online_count}\n\n"
+            time.sleep(10)
+    db_handler = dataBaseOperations.DatabaseHandler("playerData")
+    while not proceedStatusUpdate:  # threading lock(my best try at least, not sure if it is the correct way to do this)
+        ...
+    return Response(generate(), mimetype='text/event-stream')
 
 @app.route('/api/player_info/<path:path>')
 def stream_player_info(path):
