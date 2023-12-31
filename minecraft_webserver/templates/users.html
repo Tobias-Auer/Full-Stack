@@ -1,141 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta
-            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-            name="viewport"
-    />
-    <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
     <title>Users</title>
-    <link href="./static/css/header.css" rel="stylesheet"/>
-    <link href="./static/css/index.css" rel="stylesheet"/>
-    <link
-            href="./static/images/favicon.ico"
-            rel="icon"
-            type="image/vnd.microsoft.icon"
-    />
+    <link href="./static/css/header.css" rel="stylesheet" />
+    <link href="./static/css/index.css" rel="stylesheet" />
+    <link href="./static/images/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" />
 </head>
+
 <body>
-<header class="sticky">
-    <nav>
-        <ul>
-            <li>
-                <img
-                        alt="logo"
-                        height="40"
-                        id="logo"
-                        src="./static/images/logo2.png"
-                />
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="window.location.href=`/`">
-                        Startseite
-                    </button>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="window.location.href=`/spieler`">
-                        Spieler
-                    </button>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn">▼ Prefixes</button>
-                    <div class="dropdown-content">
-                        <a href="/add_pref">Erstellen/Ändern</a>
-                        <a href="/join_pref">Beitreten</a>
+    <header class="sticky">
+        <nav>
+            <ul>
+                <li>
+                    <img alt="logo" height="40" id="logo" src="./static/images/logo2.png" />
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="window.location.href=`/`">
+                            Startseite
+                        </button>
                     </div>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="window.location.href='/report'">
-                        Spieler Report
-                    </button>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown current">
-                    <button class="dropbtn" onclick="window.location.href='/users'">
-                        Verwaltung
-                    </button>
-                </div>
-            </li>
-            <!-- Code for flask application -->
-            <li>{{ loginVar | safe}}</li>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="window.location.href=`/spieler`">
+                            Spieler
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn">▼ Prefixes</button>
+                        <div class="dropdown-content">
+                            <a href="/add_pref">Erstellen/Ändern</a>
+                            <a href="/join_pref">Beitreten</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="window.location.href='/report'">
+                            Spieler Report
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown current">
+                        <button class="dropbtn" onclick="window.location.href='/users'">
+                            Verwaltung
+                        </button>
+                    </div>
+                </li>
+                <!-- Code for flask application -->
+                <li>{{ loginVar | safe}}</li>
 
-            <li></li>
-        </ul>
-    </nav>
-</header>
-<div class="content">
-    <table>
-        <tr style="color: green">
-            <td>Username</td>
-            <td>UUID</td>
-            <td>Last seen</td>
-            <td>Rechte</td>
-            <td>Ban</td>
-        </tr>
-        {%for entry in data%}
-        <tr>
-            <td><a href="/spieler?player={{entry[1]}}">{{entry[1]}}</a></td>
-            <td>{{entry[0]}}</td>
-            <td>{{entry[4]}}</td>
-            <td>
-                <select onchange="send_access_lvl(this.value)">
-                    <option {% if entry[5] == 0 %} selected {% endif %} value="{{entry[0]}}-{{entry[5]}}-0">Adminstrator (0)</option>
-                    <option {% if entry[5] == 1 %} selected {% endif %} value="{{entry[0]}}-{{entry[5]}}-1">Organisator (1)</option>
-                    <option {% if entry[5] == 2 %} selected {% endif %} value="{{entry[0]}}-{{entry[5]}}-2">User (2)</option>
-                  </select>
-            </td>
-            <td>
-                {{entry[6]}}
-                {% if entry[6] == "True" %}
-                <button>unban</button>
-                {% else %}
-                <button>Ban</button>
-                {% endif %}
-            </td>
-            {%endfor%}
-        </tr>
-    </table>
-</div>
+                <li></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <table>
+            <tr style="color: green">
+                <td>Username</td>
+                <td>UUID</td>
+                <td>Last seen</td>
+                <td>Rechte</td>
+                <td>Ban</td>
+            </tr>
+            {%for entry in data%}
+            <tr>
+                <td><a href="/spieler?player={{entry[1]}}">{{entry[1]}}</a></td>
+                <td>{{entry[0]}}</td>
+                <td>{{entry[4]}}</td>
+                <td>
+                    <select onchange="send_access_lvl(this.value)">
+                        <option {% if entry[5]==0 %} selected {% endif %} value="{{entry[0]}}-{{entry[5]}}-0">
+                            Adminstrator (0)</option>
+                        <option {% if entry[5]==1 %} selected {% endif %} value="{{entry[0]}}-{{entry[5]}}-1">
+                            Organisator (1)</option>
+                        <option {% if entry[5]==2 %} selected {% endif %} value="{{entry[0]}}-{{entry[5]}}-2">User (2)
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    {{entry[6]}}
+                    {% if entry[6] == "True" %}
+                    <button onclick="send_ban_request('{{entry[0]}}', 'unban')">unban</button>
+                    {% else %}
+                    <button onclick="send_ban_request('{{entry[0]}}', 'ban')">Ban</button>
+                    {% endif %}
+                </td>
+                {%endfor%}
+            </tr>
+        </table>
+    </div>
 
-<script>
-    function send_access_lvl(lvl) {
-        console.log(lvl);
-        lvl = lvl.split("-");
-        uuid = lvl[0]
-        new_access_lvl = lvl[2]
-        console.info(uuid, new_access_lvl)
-        fetch("/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          uuid: uuid,
-          new_access_lvl: new_access_lvl,
-        }),
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          throw new Error("Something is wrong :(\nTry again!");
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-</script>
+    <script>
+        function send_access_lvl(lvl) {
+            console.log(lvl);
+            lvl = lvl.split("-");
+            uuid = lvl[0]
+            new_access_lvl = lvl[2]
+            console.info(uuid, new_access_lvl)
+            fetch("/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+
+                    mode: "lvl",
+                    uuid: uuid,
+                    new_access_lvl: new_access_lvl,
+                }),
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    throw new Error("Something is wrong :(\nTry again!");
+                })
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        function send_ban_request(uuid, state) {
+            fetch("/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    mode: "ban",
+                    uuid: uuid,
+                    state: state,
+                }),
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    throw new Error("Something is wrong :(\nTry again!");
+                })
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    </script>
 </body>
+
 </html>
