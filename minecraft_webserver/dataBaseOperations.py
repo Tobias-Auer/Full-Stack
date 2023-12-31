@@ -208,7 +208,35 @@ class DatabaseHandler:
         :type uuid: str
         :return: None
         """
+
+        CURRENT_TIMESTAMP = int(time.time())
+
+        now = datetime.now()
+        CURRENT_DATE = now.strftime("%d.%m.%Y")
+        name = self.minecraftApi.get_username_from_uuid(uuid)
+
         # Check if entry exists
+        query = "SELECT COUNT(*) FROM cache WHERE uuid = ?"
+        self.cursor.execute(query, (uuid, ))
+
+        try:
+            count = self.cursor.fetchone()[0]
+        except Exception:
+            count = 0
+
+        if count > 0:
+            # Update existing entry
+            self.cursor.execute(f"UPDATE cache SET name = ?, timestamp = ? WHERE UUID = ?",
+                                (name, CURRENT_TIMESTAMP, uuid))
+        else:
+            # Insert new entry
+            self.cursor.execute("INSERT INTO cache (UUID, name, timestamp, first_seen, last_seen, access_level, banned) VALUES "
+                                "(?, ?, ?, ?, ?, ?, ?)",
+                                (uuid, name, CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE, 2, "False"))
+        self.conn.commit()
+
+
+
         # count = self.check_for_key("cache", "UUID", uuid)
         # CURRENT_TIMESTAMP = int(time.time())
         #
@@ -462,3 +490,21 @@ class DatabaseHandler:
             print(f"Error: {e}")
             return False
 
+    def get_access_level(self, uuid):
+        query = "SELECT access_level FROM cache where uuid = ?"
+        try:
+            self.cursor.execute(query, (uuid,))
+            return self.cursor.fetchone()[0]
+        except (Exception, ) as e:
+            print(f"Error: {e}")
+            return 99
+
+    def change_access_level(self, uuid, new_access_level):
+        query = "UPDATE cache SET access_level = ? WHERE UUID = ?"
+        try:
+            self.cursor.execute(query, (int(new_access_level), uuid))
+            self.conn.commit()
+            return ["True", ""]
+        except (Exception, ) as e:
+            print(e)
+            return ["False", e]

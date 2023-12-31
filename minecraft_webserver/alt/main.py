@@ -1,13 +1,10 @@
-import os
-import sqlite3
+import logging
+import sys
 import threading
 import time
 
 import dataBaseOperations
 import utils
-
-import logging
-import sys
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -24,6 +21,8 @@ file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
 logger.addHandler(stdout_handler)
+
+
 def check_shutdown():
     while True:
         if dataBaseOperations.checkForKey("meta", "doAction", "shutdown"):
@@ -31,9 +30,11 @@ def check_shutdown():
             break
         time.sleep(5)
 
+
 def main():
     thread = threading.Thread(target=check_shutdown)
     thread.start()
+
 
 if __name__ == '__main__':
     logger.info('Starting')

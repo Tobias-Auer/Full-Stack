@@ -328,15 +328,20 @@ class MinecraftApi:
 
         def get_stats_tools():
             tools_broken = db_handler.return_table(f"{uuid}~minecraft:broken")
-            tools_broken = dict((key, value) for key, value in tools_broken if any(substring in key for substring in tools_substrings))
+            tools_broken = dict(
+                (key, value) for key, value in tools_broken if any(substring in key for substring in tools_substrings))
             tools_crafted = db_handler.return_table(f"{uuid}~minecraft:crafted")
-            tools_crafted = dict((key, value) for key, value in tools_crafted if any(substring in key for substring in tools_substrings))
+            tools_crafted = dict(
+                (key, value) for key, value in tools_crafted if any(substring in key for substring in tools_substrings))
             tools_dropped = db_handler.return_table(f"{uuid}~minecraft:dropped")
-            tools_dropped = dict((key, value) for key, value in tools_dropped if any(substring in key for substring in tools_substrings))
+            tools_dropped = dict(
+                (key, value) for key, value in tools_dropped if any(substring in key for substring in tools_substrings))
             tools_picked_up = db_handler.return_table(f"{uuid}~minecraft:picked_up")
-            tools_picked_up = dict((key, value) for key, value in tools_picked_up if any(substring in key for substring in tools_substrings))
+            tools_picked_up = dict((key, value) for key, value in tools_picked_up if
+                                   any(substring in key for substring in tools_substrings))
             tools_used = db_handler.return_table(f"{uuid}~minecraft:used")
-            tools_used = dict((key, value) for key, value in tools_used if any(substring in key for substring in tools_substrings))
+            tools_used = dict(
+                (key, value) for key, value in tools_used if any(substring in key for substring in tools_substrings))
 
             tools_names = list(set(
                 list(tools_broken.keys()) + list(tools_crafted.keys()) + list(tools_dropped.keys()) + list(
@@ -349,15 +354,20 @@ class MinecraftApi:
 
         def get_stats_armor():
             armor_broken = db_handler.return_table(f"{uuid}~minecraft:broken")
-            armor_broken = dict((key, value) for key, value in armor_broken if any(substring in key for substring in armor_substrings))
+            armor_broken = dict(
+                (key, value) for key, value in armor_broken if any(substring in key for substring in armor_substrings))
             armor_crafted = db_handler.return_table(f"{uuid}~minecraft:crafted")
-            armor_crafted = dict((key, value) for key, value in armor_crafted if any(substring in key for substring in armor_substrings))
+            armor_crafted = dict(
+                (key, value) for key, value in armor_crafted if any(substring in key for substring in armor_substrings))
             armor_dropped = db_handler.return_table(f"{uuid}~minecraft:dropped")
-            armor_dropped = dict((key, value) for key, value in armor_dropped if any(substring in key for substring in armor_substrings))
+            armor_dropped = dict(
+                (key, value) for key, value in armor_dropped if any(substring in key for substring in armor_substrings))
             armor_picked_up = db_handler.return_table(f"{uuid}~minecraft:picked_up")
-            armor_picked_up = dict((key, value) for key, value in armor_picked_up if any(substring in key for substring in armor_substrings))
+            armor_picked_up = dict((key, value) for key, value in armor_picked_up if
+                                   any(substring in key for substring in armor_substrings))
             armor_used = db_handler.return_table(f"{uuid}~minecraft:used")
-            armor_used = dict((key, value) for key, value in armor_used if any(substring in key for substring in armor_substrings))
+            armor_used = dict(
+                (key, value) for key, value in armor_used if any(substring in key for substring in armor_substrings))
 
             armor_names = list(set(
                 list(armor_broken.keys()) + list(armor_crafted.keys()) + list(armor_dropped.keys()) + list(

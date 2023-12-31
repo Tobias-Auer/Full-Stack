@@ -1,6 +1,6 @@
-import sqlite3
-import os
 import json
+import os
+import sqlite3
 import time
 
 import dataBaseOperations
@@ -173,7 +173,7 @@ class StatisticsUpdater:
         Update the player cache with current timestamps.
 
         :param uuid: Optional UUID of a specific player to update. If not provided, all players' caches will be checked.
-        :param OVERRIDE: Optional boolean flag to force updating even if the timestamp criteria are not met.
+        :param OVERRIDE: Optional boolean flag to force updating even if the timestamp criteria is not met.
         :return: None
         """
         CURRENT_TIMESTAMP = int(time.time())
@@ -188,7 +188,7 @@ class StatisticsUpdater:
                     db_handler.insert_or_update_cache(UUIDs[index][0])
                 else:
                     print(f"no updating needed {CURRENT_TIMESTAMP - timestamp[0]}")
-                    print("Update in: " + self.mixedApi.format_time(3600-(CURRENT_TIMESTAMP - timestamp[0])))
+                    print("Update in: " + self.mixedApi.format_time(3600 - (CURRENT_TIMESTAMP - timestamp[0])))
         else:  # Only update one player
             timestamp = db_handler.return_specific_key("cache", "timestamp", "UUID", uuid)
             if timestamp is None:
@@ -198,7 +198,7 @@ class StatisticsUpdater:
             if CURRENT_TIMESTAMP - timestamp >= 3600 or OVERRIDE:
                 db_handler.insert_or_update_cache(uuid)
             else:
-                print("Update in: " + self.mixedApi.format_time(3600-(CURRENT_TIMESTAMP - timestamp)))
+                print("Update in: " + self.mixedApi.format_time(3600 - (CURRENT_TIMESTAMP - timestamp)))
 
         db_handler.disconnect()
 

@@ -4,4 +4,3 @@
 ENVIRONMENT = "development"
 FLASK_APP = "Minecraft Website"
 FLASK_DEBUG = True
-

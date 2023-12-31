@@ -1,98 +1,101 @@
 <!DOCTYPE html>
-<html lang="en" id="top">
+<html id="top" lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spieler Übersicht</title>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Spieler Übersicht</title>
 
-  <link rel="stylesheet" href="./static/css/header.css" />
-  <link rel="stylesheet" href="./static/css/index.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css" />
-  <link rel="stylesheet" href="./static/css/player_list.css" />
+    <link href="./static/css/header.css" rel="stylesheet"/>
+    <link href="./static/css/index.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css" rel="stylesheet"/>
+    <link href="./static/css/player_list.css" rel="stylesheet"/>
 
-  <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+    <link href="./static/images/favicon.ico" rel="icon" type="image/vnd.microsoft.icon"/>
 </head>
 
 <body>
-  <header class="sticky">
+<header class="sticky">
     <nav>
-      <ul>
-        <li>
-          <img id="logo" src="./static/images/logo2.png" alt="logo" height="40" />
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href=`/`">
-              Startseite
-            </button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn current">Spieler</button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn">▼ Prefixes</button>
-            <div class="dropdown-content">
-              <a href="/add_pref">Erstellen</a>
-              <a href="/manage_pref">Ändern</a>
-              <a href="/join_pref">Beitreten</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href='/report'">
-              Spieler Report
-            </button>
-          </div>
-        </li>
-        <!-- Code for flask application -->
-        <li>{{ loginVar | safe}}</li>
+        <ul>
+            <li>
+                <img alt="logo" height="40" id="logo" src="./static/images/logo2.png"/>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href=`/`">
+                        Startseite
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn current">Spieler</button>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">▼ Prefixes</button>
+                    <div class="dropdown-content">
+                        <a href="/add_pref">Erstellen</a>
+                        <a href="/manage_pref">Ändern</a>
+                        <a href="/join_pref">Beitreten</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href='/report'">
+                        Spieler Report
+                    </button>
+                </div>
+            </li>
+            <!-- Code for flask application -->
+            <li>{{ loginVar | safe}}</li>
 
-        <li></li>
-      </ul>
+            <li></li>
+        </ul>
     </nav>
-  </header>
+</header>
 
-  <div class="content">
+<div class="content">
 
     <!-- content here!! -->
     <div class="container mt-5">
-      {{status}} {% for result in results %}
-      <ul class="list-group">
-        <li class="list-group-item">
-          <a href="/spieler?player={{result[0]}}" class="text-decoration-none list-item-content">
-            <img src="https://crafatar.com/avatars/{{result[1]}}?default=MHF_Steve&overlay" alt="player_head" class="list-item-image" />
-            <div class="list-item-text">
-              {{result[0]}}
-            </div>
-            <b id="status-text-{{loop.index-1}}" class="status-text-{{ status[loop.index-1] | safe }} status-text-right">{{ status[loop.index-1] | safe}}</b>
-          </a>
-          <a href="/report?player={{result[1]}}" class="text-decoration-none flag-icon">⚐</a>
-        </li>
-        {% endfor %}
-      </ul>
+        {{status}} {% for result in results %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a class="text-decoration-none list-item-content" href="/spieler?player={{result[0]}}">
+                    <img alt="player_head" class="list-item-image"
+                         src="https://crafatar.com/avatars/{{result[1]}}?default=MHF_Steve&overlay"/>
+                    <div class="list-item-text">
+                        {{result[0]}}
+                    </div>
+                    <b class="status-text-{{ status[loop.index-1] | safe }} status-text-right"
+                       id="status-text-{{loop.index-1}}">{{ status[loop.index-1] |
+                        safe}}</b>
+                </a>
+                <a class="text-decoration-none flag-icon" href="/report?player={{result[1]}}">⚐</a>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
     <div class="text"></div>
-  </div>
-  <footer>
+</div>
+<footer>
     <nav>
-      <ul>
-        <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
-        <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
-        <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
-        <li><a href="#">🡅</a></li>
-      </ul>
+        <ul>
+            <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+            <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+            <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+            <li><a href="#">🡅</a></li>
+        </ul>
     </nav>
-  </footer>
+</footer>
 
-  <script>
+<script>
     const eventSource = new EventSource("/api/status");
 
     eventSource.onmessage = (event) => {
@@ -115,7 +118,7 @@
         i += 1;
       }
     };
-  </script>
+</script>
 
 </body>
 

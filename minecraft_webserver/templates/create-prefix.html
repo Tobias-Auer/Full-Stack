@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Minecraft Prefix Konfigurator</title>
-    <link rel="stylesheet" href="./static/css/header.css" />
-    <link rel="stylesheet" href="./static/css/index.css" />
+    <link href="./static/css/header.css" rel="stylesheet"/>
+    <link href="./static/css/index.css" rel="stylesheet"/>
 
-    <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
-    
+    <link href="./static/images/favicon.ico" rel="icon" type="image/vnd.microsoft.icon"/>
+
     <script src="https://cdn.jsdelivr.net/npm/js-sha256"></script>
     <style>
         body {
@@ -103,174 +103,174 @@
 
 <body>
 
-    <body>
-        <header class="sticky">
-            <nav>
-                <ul>
-                    <li>
-                        <img id="logo" src="./static/images/logo2.png" alt="logo" height="40" />
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn" onclick="window.location.href=`/`">
-                                Startseite
-                            </button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn current">▼ Prefixes</button>
-                            <div class="dropdown-content current">
-                                <a href=>Erstellen</a>
-                                <a href="/manage_pref">Ändern</a>
-                                <a href="/join_pref">Beitreten</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn" onclick="window.location.href='/report'">Spieler Report</button>
-                        </div>
-                    </li>
-                    <!-- Code for flask application -->
-                    <li>{{ loginVar | safe}}</li>
-
-                    <li>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <div class="text">
-            <br><br>
-            <h1>Minecraft Prefix Konfigurator</h1>
-            <div class="config-container">
-                <form id="config-form">
-                    <label for="player-name">Prefix (max. 10 Zeichen):</label>
-                    <input type="text" id="player-name" name="player-name" maxlength="10" required>
-
-                    <label for="color">Farbe:</label>
-                    <select id="color" name="color" required>
-                        <option value="§e" style="background-color: #FFFF55;">Gelb</option>
-                        <option value="§b" style="background-color: #55FFFF;">Aqua</option>
-                        <option value="§3" style="background-color: #00AAAA;">Dunkel Aqua</option>
-                        <option value="§1" style="color:white;background-color: #0000AA;">Dunkel Blau</option>
-                        <option value="§9" style="background-color: #5555FF;">Blau</option>
-                        <option value="§d" style="background-color: #FF55FF;">Hell Lila</option>
-                        <option value="§5" style="background-color: #AA00AA;">Dunkel Lila</option>
-                        <option value="§f" style="background-color: #FFFFFF;">Weiß</option>
-                        <option value="§7" style="background-color: #AAAAAA;">Grau</option>
-                        <option value="§8" style="color:white;background-color: #555555;">Dunkel Grau</option>
-                        <option value="§0" style="color:white;background-color: #000000;">Schwarz</option>
-                    </select>
-
-                    <label for="status">Status:</label>
-                    <select id="status" name="status" onchange="togglePasswordField()" required>
-                        <option value="everyone">Jeder darf beitreten</option>
-                        <option value="on_request">Mit einem Passwort</option>
-                    </select>
-
-                    <div class="password-container" id="password-field">
-                        <label for="password">Passwort:</label>
-                        <input type="password" id="password" name="password">
-                        <span class="eye-icon" onclick="togglePasswordVisibility()">👁️‍🗨️</span>
+<body>
+<header class="sticky">
+    <nav>
+        <ul>
+            <li>
+                <img alt="logo" height="40" id="logo" src="./static/images/logo2.png"/>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href=`/`">
+                        Startseite
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn current">▼ Prefixes</button>
+                    <div class="dropdown-content current">
+                        <a href=>Erstellen</a>
+                        <a href="/manage_pref">Ändern</a>
+                        <a href="/join_pref">Beitreten</a>
                     </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href='/report'">Spieler Report</button>
+                </div>
+            </li>
+            <!-- Code for flask application -->
+            <li>{{ loginVar | safe}}</li>
 
-                    <button type="button" onclick="saveConfig()">Konfiguration speichern</button>
-                </form>
+            <li>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="text">
+    <br><br>
+    <h1>Minecraft Prefix Konfigurator</h1>
+    <div class="config-container">
+        <form id="config-form">
+            <label for="player-name">Prefix (max. 10 Zeichen):</label>
+            <input id="player-name" maxlength="10" name="player-name" required type="text">
+
+            <label for="color">Farbe:</label>
+            <select id="color" name="color" required>
+                <option style="background-color: #FFFF55;" value="§e">Gelb</option>
+                <option style="background-color: #55FFFF;" value="§b">Aqua</option>
+                <option style="background-color: #00AAAA;" value="§3">Dunkel Aqua</option>
+                <option style="color:white;background-color: #0000AA;" value="§1">Dunkel Blau</option>
+                <option style="background-color: #5555FF;" value="§9">Blau</option>
+                <option style="background-color: #FF55FF;" value="§d">Hell Lila</option>
+                <option style="background-color: #AA00AA;" value="§5">Dunkel Lila</option>
+                <option style="background-color: #FFFFFF;" value="§f">Weiß</option>
+                <option style="background-color: #AAAAAA;" value="§7">Grau</option>
+                <option style="color:white;background-color: #555555;" value="§8">Dunkel Grau</option>
+                <option style="color:white;background-color: #000000;" value="§0">Schwarz</option>
+            </select>
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" onchange="togglePasswordField()" required>
+                <option value="everyone">Jeder darf beitreten</option>
+                <option value="on_request">Mit einem Passwort</option>
+            </select>
+
+            <div class="password-container" id="password-field">
+                <label for="password">Passwort:</label>
+                <input id="password" name="password" type="password">
+                <span class="eye-icon" onclick="togglePasswordVisibility()">👁️‍🗨️</span>
             </div>
-        </div>
-        <footer>
-            <nav>
-                <ul>
-                    <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
-                    <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
-                    <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
-                    <li><a href="#">🡅</a></li>
-                </ul>
-            </nav>
-        </footer>
+
+            <button onclick="saveConfig()" type="button">Konfiguration speichern</button>
+        </form>
+    </div>
+</div>
+<footer>
+    <nav>
+        <ul>
+            <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+            <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+            <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+            <li><a href="#">🡅</a></li>
+        </ul>
+    </nav>
+</footer>
 
 
-        <script>
-            var pre_color = "{{color}}";
-            var pre_prefix = "{{prefix}}"
-            document.getElementById("color").value = pre_color;
-            document.getElementById("player-name").value = pre_prefix;
-            function togglePasswordField() {
-                var statusSelect = document.getElementById("status");
-                var passwordField = document.getElementById("password-field");
+<script>
+    var pre_color = "{{color}}";
+    var pre_prefix = "{{prefix}}"
+    document.getElementById("color").value = pre_color;
+    document.getElementById("player-name").value = pre_prefix;
+    function togglePasswordField() {
+        var statusSelect = document.getElementById("status");
+        var passwordField = document.getElementById("password-field");
 
-                if (statusSelect.value === "on_request") {
-                    passwordField.classList.add("visible");
-                } else {
-                    passwordField.classList.remove("visible");
-                }
-            }
+        if (statusSelect.value === "on_request") {
+            passwordField.classList.add("visible");
+        } else {
+            passwordField.classList.remove("visible");
+        }
+    }
 
-            function togglePasswordVisibility() {
-                var passwordInput = document.getElementById("password");
-                var eyeIcon = document.querySelector(".eye-icon");
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        var eyeIcon = document.querySelector(".eye-icon");
 
-                if (passwordInput.type === "password") {
-                    passwordInput.type = "text";
-                    eyeIcon.textContent = "👁️‍🗨️";
-                } else {
-                    passwordInput.type = "password";
-                    eyeIcon.textContent = "👁️‍🗨️";
-                }
-            }
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.textContent = "👁️‍🗨️";
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.textContent = "👁️‍🗨️";
+        }
+    }
 
-            function saveConfig() {
-                var playerName = document.getElementById("player-name").value;
-                var color = document.getElementById("color").value;
-                var status = document.getElementById("status").value;
-                var password = document.getElementById("password").value;
-                console.log("PWD: '" + password + "'");
-                if (status === "everyone") {
-                    password = ""
-                } else if (password === "") {
-                    console.warn("Enter a password!");
-                    return
-                }
+    function saveConfig() {
+        var playerName = document.getElementById("player-name").value;
+        var color = document.getElementById("color").value;
+        var status = document.getElementById("status").value;
+        var password = document.getElementById("password").value;
+        console.log("PWD: '" + password + "'");
+        if (status === "everyone") {
+            password = ""
+        } else if (password === "") {
+            console.warn("Enter a password!");
+            return
+        }
 
-                console.log("Spielername: " + playerName);
-                console.log("Farbe: " + color);
-                console.log("Status: " + status)
+        console.log("Spielername: " + playerName);
+        console.log("Farbe: " + color);
+        console.log("Status: " + status)
 
 
-                const data = {
-                    playerName: playerName,
-                    color: color,
-                    password: hashPassword(password)
-                };
+        const data = {
+            playerName: playerName,
+            color: color,
+            password: hashPassword(password)
+        };
 
-                fetch('/pref_api', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Handle the response data
-                        console.log('Response:', data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
+        fetch('/pref_api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data
+                console.log('Response:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
-            function hashPassword(password) {
-                const hashHex = sha256(password);
-                return hashHex;
-            }
-        </script>
-    </body>
+    function hashPassword(password) {
+        const hashHex = sha256(password);
+        return hashHex;
+    }
+</script>
+</body>
 
 </html>
