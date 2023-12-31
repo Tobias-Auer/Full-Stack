@@ -1,133 +1,134 @@
 <!DOCTYPE html>
-<html lang="en" id="top">
+<html id="top" lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Startseite</title>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Startseite</title>
 
-  <link rel="stylesheet" href="./static/css/header.css" />
-  <link rel="stylesheet" href="./static/css/index.css" />
+    <link href="./static/css/header.css" rel="stylesheet"/>
+    <link href="./static/css/index.css" rel="stylesheet"/>
 
-  <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #d0d0d0 !important;
-      color: #333;
-      text-align: center;
-    }
+    <link href="./static/images/favicon.ico" rel="icon" type="image/vnd.microsoft.icon"/>
+    <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #d0d0d0 !important;
+          color: #333;
+          text-align: center;
+        }
 
-    header {
-      text-align: left;
-    }
+        header {
+          text-align: left;
+        }
 
-    h1 {
-      color: #004080;
-    }
+        h1 {
+          color: #004080;
+        }
 
-    #server-info {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 12px;
-    }
+        #server-info {
+          background-color: #fff;
+          border: 1px solid #ddd;
+          padding: 20px;
+          margin-top: 20px;
+          border-radius: 12px;
+        }
 
-    a {
-      color: #0066cc;
-      text-decoration: none;
-    }
+        a {
+          color: #0066cc;
+          text-decoration: none;
+        }
 
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+        a:hover {
+          text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
-  <header class="sticky">
+<header class="sticky">
     <nav>
-      <ul>
-        <li>
-          <img id="logo" src="./static/images/logo2.png" alt="logo" height="40" />
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn current">
-              Startseite
-            </button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn">▼ Prefixes</button>
-            <div class="dropdown-content">
-              <a href="/add_pref">Erstellen</a>
-              <a href="/manage_pref">Ändern</a>
-              <a href="/join_pref">Beitreten</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href='/report'">Spieler Report</button>
-          </div>
-        </li>
-        <!-- Code for flask application -->
-        <li>{{ loginVar | safe}}</li>
+        <ul>
+            <li>
+                <img alt="logo" height="40" id="logo" src="./static/images/logo2.png"/>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn current">
+                        Startseite
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">▼ Prefixes</button>
+                    <div class="dropdown-content">
+                        <a href="/add_pref">Erstellen</a>
+                        <a href="/manage_pref">Ändern</a>
+                        <a href="/join_pref">Beitreten</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href='/report'">Spieler Report</button>
+                </div>
+            </li>
+            <!-- Code for flask application -->
+            <li>{{ loginVar | safe}}</li>
 
-        <li>
-        </li>
-      </ul>
+            <li>
+            </li>
+        </ul>
     </nav>
-  </header>
+</header>
 
-  <div class="content">
+<div class="content">
     <div class="text" style="color:red;font-size:72px;text-align:center;text-decoration:underline;">
-      <b>STATUS: UNRELEASED</b>
+        <b>STATUS: UNRELEASED</b>
     </div>
     <div class="text">
-      <h1>Willkommen auf meinem Minecraft-Server!</h1>
+        <h1>Willkommen auf meinem Minecraft-Server!</h1>
 
-      <div id="server-info">
-        <p>Dieser Server ist ein Hobby Projekt von mir, welches am 29.01.2023 gestartet ist.</p>
-        <p>Aktuell sind <span id="player-count">X</span> Spieler auf dem Server unterwegs.</p>
-        <p>Zusätzlich befinden sich auf dem Server verschiedene Plugins. Unter anderem dabei sind custom crafting
-          Recipes, eigene Prefixe und auch eine Spawn Elytra.</p>
-        <p>100% der installierten Plugins sind zu 100% von mir gecodet und verzichten dabei vollständig auf Plugins von
-          anderen Personen.</p>
-        <p>Der Server an sich ist Vanilla Gameplay, aber für Plugin Vorschläge bin ich jederzeit offen. :)</p>
-        <p>Schau auch mal auf meinem <a href="https://www.discord.gg/vJYNnsQwf8" target="_blank">Discord</a>
-          vorbei!<br>Oder schaue dir die <a href="/about">technischen Details</a> vom Server an!</p>
-      </div>
+        <div id="server-info">
+            <p>Dieser Server ist ein Hobby Projekt von mir, welches am 29.01.2023 gestartet ist.</p>
+            <p>Aktuell sind <span id="player-count">X</span> Spieler auf dem Server unterwegs.</p>
+            <p>Zusätzlich befinden sich auf dem Server verschiedene Plugins. Unter anderem dabei sind custom crafting
+                Recipes, eigene Prefixe und auch eine Spawn Elytra.</p>
+            <p>100% der installierten Plugins sind zu 100% von mir gecodet und verzichten dabei vollständig auf Plugins
+                von
+                anderen Personen.</p>
+            <p>Der Server an sich ist Vanilla Gameplay, aber für Plugin Vorschläge bin ich jederzeit offen. :)</p>
+            <p>Schau auch mal auf meinem <a href="https://www.discord.gg/vJYNnsQwf8" target="_blank">Discord</a>
+                vorbei!<br>Oder schaue dir die <a href="/about">technischen Details</a> vom Server an!</p>
+        </div>
     </div>
     <footer>
-      <nav>
-        <ul>
-          <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
-          <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
-          <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
-          <li><a href="#">🡅</a></li>
-        </ul>
-      </nav>
+        <nav>
+            <ul>
+                <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+                <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+                <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+                <li><a href="#">🡅</a></li>
+            </ul>
+        </nav>
     </footer>
 
     <script>
-      const eventSource = new EventSource("/api/player_count");
+        const eventSource = new EventSource("/api/player_count");
 
-      eventSource.onmessage = (event) => {
-        console.log(event.data.replaceAll("'", '"'));
-        const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
-        console.log(parsedArray)
-        document.getElementById("player-count").innerText = parsedArray;
-      }
+        eventSource.onmessage = (event) => {
+          console.log(event.data.replaceAll("'", '"'));
+          const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
+          console.log(parsedArray)
+          document.getElementById("player-count").innerText = parsedArray;
+        }
 
     </script>
 </body>

@@ -1,88 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./static/css/header.css" />
-    <link rel="stylesheet" href="./static/css/index.css" />
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="./static/css/header.css" rel="stylesheet"/>
+    <link href="./static/css/index.css" rel="stylesheet"/>
 
-    <link rel="icon" type="image/vnd.microsoft.icon" href="./static/images/favicon.ico" />
+    <link href="./static/images/favicon.ico" rel="icon" type="image/vnd.microsoft.icon"/>
     <title>Spieler melden</title>
 </head>
 <body>
-  <header class="sticky">
+<header class="sticky">
     <nav>
-      <ul>
-        <li>
-          <img id="logo" src="./static/images/logo2.png" alt="logo" height="40" />
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href=`/`">
-              Startseite
-            </button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn">▼ Prefixes</button>
-            <div class="dropdown-content">
-              <a href="/add_pref">Erstellen</a>
-              <a href="/manage_pref">Ändern</a>
-              <a href="/join_pref">Beitreten</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button class="dropbtn current">Spieler Report</button>
-          </div>
-        </li>
-        <!-- Code for flask application -->
-        <li>{{ loginVar | safe}}</li>
+        <ul>
+            <li>
+                <img alt="logo" height="40" id="logo" src="./static/images/logo2.png"/>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href=`/`">
+                        Startseite
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">▼ Prefixes</button>
+                    <div class="dropdown-content">
+                        <a href="/add_pref">Erstellen</a>
+                        <a href="/manage_pref">Ändern</a>
+                        <a href="/join_pref">Beitreten</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn current">Spieler Report</button>
+                </div>
+            </li>
+            <!-- Code for flask application -->
+            <li>{{ loginVar | safe}}</li>
 
-        <li>
-        </li>
-      </ul>
+            <li>
+            </li>
+        </ul>
     </nav>
-  </header>
+</header>
 
-  <div class="content">
+<div class="content">
     <!-- content here!! -->
-    <div style="height: 20cm" class="text">
-      CONTENT
-      <br />
-      <br />
-      CONTENT
-      <br />
-    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
-      <br />
-      CONTENT
-      <br />
-      <br />
-      CONTENT
-      <br />
-    <img src="https://www.iirenanstalt.de/underconstruction.jpg" alt="Under Construction!">
-      <br>
+    <div class="text" style="height: 20cm">
+        CONTENT
+        <br/>
+        <br/>
+        CONTENT
+        <br/>
+        <img alt="Under Construction!" src="https://www.iirenanstalt.de/underconstruction.jpg">
+        <br/>
+        CONTENT
+        <br/>
+        <br/>
+        CONTENT
+        <br/>
+        <img alt="Under Construction!" src="https://www.iirenanstalt.de/underconstruction.jpg">
+        <br>
     </div>
 
-  </div>
-  <footer>
+</div>
+<footer>
     <nav>
-      <ul>
-        <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
-        <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
-        <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
-        <li><a href="#">🡅</a></li>
-      </ul>
+        <ul>
+            <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+            <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+            <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+            <li><a href="#">🡅</a></li>
+        </ul>
     </nav>
-  </footer>
+</footer>
 </body>
 
 </html>

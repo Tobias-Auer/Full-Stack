@@ -1,6 +1,6 @@
 import os
-from zipfile import ZipFile
 from datetime import datetime
+from zipfile import ZipFile
 
 import dataBaseOperations
 
@@ -78,4 +78,5 @@ def doShutdownRoutine(logger):
 
 if __name__ == '__main__':
     import logging
+
     doShutdownRoutine(logging.getLogger())

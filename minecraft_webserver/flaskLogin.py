@@ -1,6 +1,8 @@
 import functools
 
-from flask import session, redirect, abort, url_for, request
+from flask import session, redirect, abort, request
+
+import dataBaseOperations
 
 
 class FlaskLogin:
@@ -12,34 +14,32 @@ class FlaskLogin:
         """
         self.logger = logger
 
-    def check_for_login(self):
+    def check_for_login(self):  # verifies that the user has an active session
         uuid = session.get("uuid")
         if isinstance(uuid, str):
             return True
         return False
-        pass  # TODO: read session cookie and verify active session
 
-    def check_for_authentication(self, perm_lvl_required):
-        pass  # TODO: read session cookie and verify permissions
+    def check_for_auth(self, requested_permission_lvl):
+        if requested_permission_lvl is None:
+            return True
+        uuid = session.get("uuid")
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        user_access_lvl = db_handler.get_access_level(uuid)
+        print(f"AUTH: user_level={user_access_lvl}--requested_level={requested_permission_lvl}")
+        return requested_permission_lvl >= user_access_lvl
 
     def require_auth(self, perm_lvl_required=None):
         def inner_decorator(f):
             @functools.wraps(f)
             def wrapped(*args, **kwargs):
-                execute_function = False
-                if perm_lvl_required is None:
-                    execute_function = self.check_for_login()
-
-                if execute_function:
-                    function = f(*args, **kwargs)
-                    return function
-                if perm_lvl_required is None:
-                    next = request.path
+                if not self.check_for_login():
                     return redirect(
-                        f"/login?next={next}")  # immediately redirect to login page if user is not logged in
+                        f"/login?next={request.path}")  # immediately redirect to the login page if the user is not logged in
+                if self.check_for_auth(perm_lvl_required):
+                    return f(*args, **kwargs)
                 return abort(403)
 
-            print('decorating', f, 'with argument', perm_lvl_required)
             return wrapped
 
         return inner_decorator

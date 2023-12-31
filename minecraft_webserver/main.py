@@ -1,6 +1,7 @@
 import ast
 import os
 import secrets
+import sys
 import threading
 import time
 from urllib.parse import urlparse
@@ -12,7 +13,6 @@ import dataBaseOperations
 import flaskLogin
 import updateDBStats
 import utils
-import sys
 
 if sys.platform.lower() == "win32":  # cmd color support patch
     os.system('color')
@@ -207,6 +207,28 @@ def player_overview_route():
     return render_template("spieler.html", results=combined_users_data, status=all_status)
 
 
+
+@app.route("/users", methods=["GET", "POST"])
+@FL.require_auth(1)
+def users_route():
+    print("hey there")
+    db_handler = dataBaseOperations.DatabaseHandler("playerData")
+    print("reuqets")
+    print(request.method)
+    if request.method == "POST" and request.headers.get('Content-Type') == 'application/json':
+        print("received POST request")
+        data = request.json
+        print(data)
+        uuid, new_access_lvl = data.get("uuid"), data.get("new_access_lvl")
+        db_handler.change_access_level(uuid, new_access_lvl)
+        db_handler.disconnect()
+        return jsonify("{success:success}")
+    user_list = db_handler.return_table("cache")
+    print(user_list)
+    db_handler.disconnect()
+    return render_template("users.html", data=user_list)
+
+
 @app.route('/report')
 def report_player_route():
     """
@@ -364,7 +386,7 @@ def stream_player_info(path):
 
 # Other main functions
 def check_db_events():
-    global proceedStatusUpdate
+    global proceedStatusUpdate, webserver_start_delay
     """
     Monitor the thread for various database events:
 
@@ -402,6 +424,7 @@ def check_db_events():
                 mixedApi.do_shutdown_routine()
                 break
             proceedStatusUpdate = False
+
 
         time.sleep(1)
         counter_2_sec += 1
