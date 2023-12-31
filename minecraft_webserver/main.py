@@ -150,6 +150,13 @@ def login():
 def about():
     return render_template('about.html')
 
+@app.route('/unban')
+def unban_route():
+    return "Machs einfach hier <a href='https://www.discord.gg/vJYNnsQwf8' target='_blank'>Discord</a>"
+
+@app.route('/report')
+def report_route():
+    return "Machs einfach hier <a href='https://www.discord.gg/vJYNnsQwf8' target='_blank'>Discord</a>"
 
 @app.route('/spieler')
 def player_overview_route():
@@ -207,11 +214,9 @@ def player_overview_route():
     return render_template("spieler.html", results=combined_users_data, status=all_status)
 
 
-
 @app.route("/users", methods=["GET", "POST"])
 @FL.require_auth(1)
 def users_route():
-    print("hey there")
     db_handler = dataBaseOperations.DatabaseHandler("playerData")
     print("reuqets")
     print(request.method)
@@ -219,8 +224,17 @@ def users_route():
         print("received POST request")
         data = request.json
         print(data)
-        uuid, new_access_lvl = data.get("uuid"), data.get("new_access_lvl")
-        db_handler.change_access_level(uuid, new_access_lvl)
+        mode = data.get('mode')
+        if mode == "lvl":
+            uuid, new_access_lvl = data.get("uuid"), data.get("new_access_lvl")
+            db_handler.change_access_level(uuid, new_access_lvl)
+        elif mode == "ban":
+            uuid, state = data.get("uuid"), data.get("state")
+            print(f"Received {state} to {uuid}")
+            if state == "ban":
+                db_handler.ban_player(uuid)
+            elif state == "unban":
+                db_handler.unban_player(uuid)
         db_handler.disconnect()
         return jsonify("{success:success}")
     user_list = db_handler.return_table("cache")
@@ -400,9 +414,15 @@ def check_db_events():
     :return: None
     """
     print("Starting the check loop")
+    # yeah, i know sth. like webhooks would be better but i don't know how to send data from a docker container to an
+    # api bc of the docker restrictions and im too stupid and lazy to figure it out thats why im doing it that way (if
+    # anyone ever read this and know how i could do that with webhooks or sth else so that my code dont have to
+    # check the db every few seconds even if there is no data in it then contact me or make a pull request. pls :) )
     counter_2_sec = 9999
+    counter10_sec = 9999
     counter_300_sec = 9999
     db_handler = dataBaseOperations.DatabaseHandler("interface")
+    db_handler_ban = dataBaseOperations.DatabaseHandler("ban_interface")
     statisticUpdater = updateDBStats.StatisticsUpdater()
     while True:
         if counter_300_sec >= 300:
@@ -413,6 +433,16 @@ def check_db_events():
                 print(filename)
                 statisticUpdater.update_game_specific_tables_from_file(filename)
                 statisticUpdater.update_player_cache(filename.split('.')[0].replace("-", ""))
+
+        if counter10_sec >= 10:
+            if db_handler_ban.check_for_key("status", "mc_server_changed_sth", "True"):
+                db_handler_ban.delete_key("status", "mc_server_changed_sth", "True")
+                toggle_ban_state = db_handler_ban.get_ban_entries()
+
+                db_handler_pd = dataBaseOperations.DatabaseHandler("playerData")
+                db_handler_pd.toggle_ban_state(toggle_ban_state, "True")
+                db_handler_pd.disconnect()
+            counter10_sec = 0
 
         if counter_2_sec >= 2:
             # Check player statuses in the database
@@ -425,9 +455,9 @@ def check_db_events():
                 break
             proceedStatusUpdate = False
 
-
         time.sleep(1)
         counter_2_sec += 1
+        counter10_sec += 1
         counter_300_sec += 1
 
 

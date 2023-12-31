@@ -1,4 +1,5 @@
 import ast
+import re
 import sqlite3
 import time
 import traceback
@@ -30,6 +31,8 @@ class DatabaseHandler:
             db_file = r"./player_data.db"
         elif db_file == "prefix":
             db_file = r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\database_webserver\prefixes.db"
+        elif db_file == "ban_interface":
+            db_file = r"C:\Users\balus\OneDrive\Desktop\mc-docker-1.20.1\database_webserver\banned.db"
         else:
             db_file = db_file
         self.__connect(db_file)
@@ -217,7 +220,7 @@ class DatabaseHandler:
 
         # Check if entry exists
         query = "SELECT COUNT(*) FROM cache WHERE uuid = ?"
-        self.cursor.execute(query, (uuid, ))
+        self.cursor.execute(query, (uuid,))
 
         try:
             count = self.cursor.fetchone()[0]
@@ -230,12 +233,11 @@ class DatabaseHandler:
                                 (name, CURRENT_TIMESTAMP, uuid))
         else:
             # Insert new entry
-            self.cursor.execute("INSERT INTO cache (UUID, name, timestamp, first_seen, last_seen, access_level, banned) VALUES "
-                                "(?, ?, ?, ?, ?, ?, ?)",
-                                (uuid, name, CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE, 2, "False"))
+            self.cursor.execute(
+                "INSERT INTO cache (UUID, name, timestamp, first_seen, last_seen, access_level, banned) VALUES "
+                "(?, ?, ?, ?, ?, ?, ?)",
+                (uuid, name, CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE, 2, "False"))
         self.conn.commit()
-
-
 
         # count = self.check_for_key("cache", "UUID", uuid)
         # CURRENT_TIMESTAMP = int(time.time())
@@ -495,7 +497,7 @@ class DatabaseHandler:
         try:
             self.cursor.execute(query, (uuid,))
             return self.cursor.fetchone()[0]
-        except (Exception, ) as e:
+        except (Exception,) as e:
             print(f"Error: {e}")
             return 99
 
@@ -505,6 +507,70 @@ class DatabaseHandler:
             self.cursor.execute(query, (int(new_access_level), uuid))
             self.conn.commit()
             return ["True", ""]
-        except (Exception, ) as e:
+        except (Exception,) as e:
             print(e)
             return ["False", e]
+
+    def get_ban_entries(self):
+        query = "SELECT uuid FROM main"
+        query2 = "SELECT admin, reason, start, end FROM main WHERE REPLACE(uuid, '-', '') = ?"
+        new_banned_uuids = []
+        try:
+            self.cursor.execute(query)
+            all_uuids = self.cursor.fetchall()
+            for i in all_uuids:
+                uuid = i[0].replace("-", "")
+
+                self.cursor.execute(query2, (uuid,))
+                result = self.cursor.fetchone()
+                new_banned_uuids.append([uuid, result])
+        except Exception as e:
+            print(e)
+        return new_banned_uuids
+
+    def toggle_ban_state(self, uuids, state, single_flag=False):  # single_flag is used when not every banned uuid is provided
+        clean_uuid_list_to_ban = []
+
+        query = "UPDATE cache SET banned = ?, banned_details = ? WHERE uuid = ?"
+        for uuid in uuids:
+            print(f"{state}ing uuid: {uuid[0]} with reasons: {uuid[1]}")
+            self.cursor.execute(query, (state, str(list(uuid[1])), uuid[0]))
+            clean_uuid_list_to_ban.append(uuid[0])
+        self.conn.commit()
+
+        if not single_flag:
+            query = "SELECT UUID FROM cache WHERE banned = 'True'"
+            self.cursor.execute(query)
+            already_banned_uuids = self.cursor.fetchall()
+            for uuid in already_banned_uuids:
+                if uuid[0] not in clean_uuid_list_to_ban:
+                    query = "UPDATE cache SET banned = 'False', banned_details = '' WHERE uuid = ?"
+                    self.cursor.execute(query, (uuid[0],))
+            self.conn.commit()
+
+    def convert_trimmed_to_full(self, trimmed_uuid):
+        # Use a regular expression to insert hyphens at the correct positions
+        full_uuid = re.sub(r'(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})', r'\1-\2-\3-\4-\5', trimmed_uuid)
+        return full_uuid
+
+    def ban_player(self, uuid, details=None):
+        if details is None:
+            details = ['4ebe5f6f-c231-4315-9d60-097c48cc6d30', 'Banned by website! More options soon!', '22-11-2023 19:27:31',
+                       '22-11-9999 00:00:00']  # good enough until the frontend is updated
+        # self.toggle_ban_state([[uuid, details]], "True", single_flag=True)  # not necessary, but maybe i should use it
+
+        db_handler = DatabaseHandler("ban_interface")
+        query = "INSERT INTO status (webserver_changed_sth) VALUES (?)"
+        uuid = self.convert_trimmed_to_full(uuid)
+        query_argument = f"add~{uuid},{details[0]},{details[1]},{details[2]},{details[3]}"
+        db_handler.cursor.execute(query, (query_argument,))
+        db_handler.disconnect()
+
+    def unban_player(self, uuid):
+        # self.toggle_ban_state([[uuid, ""]], "False", single_flag=True)  # not necessary, but maybe i should use it
+        db_handler = DatabaseHandler("ban_interface")
+        query = "INSERT INTO status (webserver_changed_sth) VALUES (?)"
+        uuid = self.convert_trimmed_to_full(uuid)
+        query_argument = f"remove~{uuid}"
+        db_handler.cursor.execute(query, (query_argument,))
+        db_handler.disconnect()
