@@ -243,7 +243,7 @@ def users_route():
     user_list = db_handler.return_table("cache")
     print(user_list)
     db_handler.disconnect()
-    return render_template("users.html", data=user_list, active_section="users")
+    return render_template("users.html", data=user_list)
 
 
 @app.route('/report')
