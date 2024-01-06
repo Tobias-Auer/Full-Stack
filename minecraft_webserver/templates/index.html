@@ -47,47 +47,7 @@
 </head>
 
 <body>
-<header class="sticky">
-    <nav>
-        <ul>
-            <li>
-                <img alt="logo" height="40" id="logo" src="./static/images/logo2.png"/>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn current">
-                        Startseite
-                    </button>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="window.location.href=`/spieler`">Spieler</button>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn">▼ Prefixes</button>
-                    <div class="dropdown-content">
-                        <a href="/add_pref">Erstellen</a>
-                        <a href="/manage_pref">Ändern</a>
-                        <a href="/join_pref">Beitreten</a>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="window.location.href='/report'">Spieler Report</button>
-                </div>
-            </li>
-            <!-- Code for flask application -->
-            <li>{{ loginVar | safe}}</li>
-
-            <li>
-            </li>
-        </ul>
-    </nav>
-</header>
+    {% include 'header.html' %}
 
 <div class="content">
     <div class="text" style="color:red;font-size:72px;text-align:center;text-decoration:underline;">

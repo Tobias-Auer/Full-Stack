@@ -31,58 +31,7 @@
 </head>
 
 <body>
-<header class="sticky">
-    <nav>
-        <ul>
-            <li>
-                <img
-                        alt="logo"
-                        height="40"
-                        id="logo"
-                        src="./static/images/logo2.png"
-                />
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="window.location.href=`/`">
-                        Startseite
-                    </button>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn current" onclick="window.location.href=`/spieler`">Spieler</button>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn">▼ Prefixes</button>
-                    <div class="dropdown-content">
-                        <a href="/add_pref">Erstellen</a>
-                        <a href="/manage_pref">Ändern</a>
-                        <a href="/join_pref">Beitreten</a>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown">
-                    <button class="dropbtn" onclick="window.location.href='/report'">
-                        Spieler Report
-                    </button>
-                </div>
-            </li>
-            <!-- Code for flask application -->
-            <li>{{ loginVar | safe}}</li>
-
-            <li></li>
-        </ul>
-    </nav>
-    <div class="banner-container sticky" id="banned-banner"
-         style="--bgcolor: rgb(255, 0, 0);--color: rgb(255,255,255);">
-        <span class="banner-content">Dieser Spieler wurde vom Servernetzwerk gebannt.<br>Gebannt von {{startdate}} bis {{enddate}}</span>
-    </div>
-
-</header>
+  {% include 'header.html' %}
 <div class="content">
 
     <h1><b class="center-v">Spieler: {{user_name}}</b></h1>
