@@ -37,11 +37,15 @@ app.config.from_pyfile("instance/config.py")
 def inject_loginVar():
     uuid = session.get('uuid')
     loginVar = "<a href=\"/login\" id=loginLink>Login</a>"
+    permission_level = 99
     if isinstance(uuid, str):
         name = minecraftApi.get_username_from_uuid(uuid)
         loginVar = f"<div>Willkommen {name}<br> <a href=\"/login\" id=logoutLink>Logout</a></div>"
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        permission_level = db_handler.get_access_level(uuid)
+        db_handler.disconnect()
 
-    return dict(loginVar=loginVar)
+    return dict(loginVar=loginVar, perm=permission_level)
 
 
 proceedStatusUpdate = False  # multithreading lock
@@ -218,7 +222,6 @@ def player_overview_route():
 @FL.require_auth(1)
 def users_route():
     db_handler = dataBaseOperations.DatabaseHandler("playerData")
-    print("reuqets")
     print(request.method)
     if request.method == "POST" and request.headers.get('Content-Type') == 'application/json':
         print("received POST request")
@@ -240,7 +243,7 @@ def users_route():
     user_list = db_handler.return_table("cache")
     print(user_list)
     db_handler.disconnect()
-    return render_template("users.html", data=user_list)
+    return render_template("users.html", data=user_list, active_section="users")
 
 
 @app.route('/report')
