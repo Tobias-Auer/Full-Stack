@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .dashboard-login-1,
+  .dashboard-login-1 * {
+    box-sizing: border-box;
+  }
+  
+  .dashboard-login-1 {
+    background: #2148c0;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .bg {
+    pointer-events: none;
+    object-fit: cover;
+    position: absolute;
+    left: -500px; /* Adjust as needed for the desired left shift */
+    top: -40px; /* Adjust as needed for the desired top shift */
+  }
+  
+.minecraft-154749-1 {
+  position: absolute;
+  top: calc(33% - 78px); /* Adjusted for the new SVG height */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center horizontally */
+}
+
+.login,
+.login * {
+  box-sizing: border-box;
+}
+.login {
+    position: relative;
+    
+    background: -webkit-linear-gradient(91.73deg, rgb(158, 9, 9) 0%, rgb(43, 255, 15) 60%);
+    -webkit-background-clip: text; /* For webkit-based browsers */
+    background-clip: text;
+    color: transparent; /* Make text transparent */
+    text-align: center;
+    font-family: "Concert One", sans-serif;
+    font-size: 96px;
+    line-height: 30px;
+    font-weight: 400;
+    display: flex;
+    padding: 1em;
+    justify-content: center; /* Center horizontally */
+    height: 100%; /* Ensure the container takes the full height */
+  }
+  
+  
