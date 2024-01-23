@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Login</title>
-  <link rel="stylesheet" href="new-login.css" />
-  <link href='https://fonts.googleapis.com/css?family=Concert One' rel='stylesheet'>
-
-</head>
-<body>
-  <div class="dashboard-login-1">
-    <svg xmlns="http://www.w3.org/2000/svg" class="bg" viewBox="0 0 1642 1083" fill="none">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Login</title>
+    <link rel="stylesheet" href="new-login.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Concert One"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body background="bg.jpg">
+    <div class="dashboard-login-1">
+      <svg style="position:fixed;"
+        xmlns="http://www.w3.org/2000/svg"
+        class="bg"
+        viewBox="0 0 1642 1083"
+        fill="none"
+      >
         <circle cx="362" cy="721" r="362" fill="#264ECA" />
         <circle cx="362" cy="721" r="286" fill="#244BC5" />
         <circle cx="362" cy="721" r="219" fill="#274FC7" />
-        <path d="M1034.5 140C898.9 152.8 806.667 52 777.5 0L1641.5 3.5V721.5H1545C1246.2 683.5 1296.5 532 1359 461C1395.5 411.167 1461.5 291.1 1433.5 209.5C1398.5 107.5 1204 124 1034.5 140Z" fill="#264ECA" />
+        <path
+          d="M1034.5 140C898.9 152.8 806.667 52 777.5 0L1641.5 3.5V721.5H1545C1246.2 683.5 1296.5 532 1359 461C1395.5 411.167 1461.5 291.1 1433.5 209.5C1398.5 107.5 1204 124 1034.5 140Z"
+          fill="#264ECA"
+        />
       </svg>
       <div class="login">LOGIN</div>
       <div class="minecraft-154749-1">
@@ -84,7 +98,60 @@
           />
         </svg>
       </div>
-      
-  </div>
-</body>
+      <div class="statement-wrapper">
+        <div class="statement">
+          Bitte logge dich auf dem Minecraftserver ein und trage deinen Username
+          in das Feld ein!
+        </div>
+      </div>
+      <div class="username-input-wrapper" id="username-input-wrapper">
+        <input
+          class="username-input"
+          placeholder="Username"
+          type="text"
+          name="username-input"
+          id="username-input"
+        />
+      </div>
+
+      <div class="password-input-wrapper" id="password-input-wrapper">
+        <input
+          class="password-input"
+          placeholder="Pin"
+          type="text"
+          name="password-input"
+          id="password-input"
+          maxlength="6"
+          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        />
+      </div>
+
+      <div class="login-btn-wrapper">
+        <button class="login-btn" id="login-btn" onclick="clicked()">
+          Weiter
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function clicked() {
+        var button = document.getElementById("login-btn");
+        if (button.innerText == "Weiter") {
+
+
+          fetch("/api/login", {
+            
+          })
+        
+          document
+            .getElementById("password-input-wrapper")
+            .classList.add("active");
+          document.getElementById("username-input").disabled = true;
+          button.innerText = "Bestätigen";
+        } else {
+          alert("done!!");
+        }
+      }
+    </script>
+  </body>
 </html>

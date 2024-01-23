@@ -1,57 +1,162 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .dashboard-login-1,
-  .dashboard-login-1 * {
-    box-sizing: border-box;
-  }
-  
-  .dashboard-login-1 {
-    background: #2148c0;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .bg {
-    pointer-events: none;
-    object-fit: cover;
-    position: absolute;
-    left: -500px; /* Adjust as needed for the desired left shift */
-    top: -40px; /* Adjust as needed for the desired top shift */
-  }
-  
-.minecraft-154749-1 {
-  position: absolute;
-  top: calc(33% - 78px); /* Adjusted for the new SVG height */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Center horizontally */
-}
-
-.login,
-.login * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
+
+.dashboard-login-1,
+.dashboard-login-1 * {
+  box-sizing: border-box;
+}
+
+.dashboard-login-1 {
+  background: #2148c0;
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.bg {
+  pointer-events: none;
+  object-fit: cover;
+  position: absolute;
+  left: -500px; /* Adjust as needed for the desired left shift */
+  top: -40px; /* Adjust as needed for the desired top shift */
+}
+
+.minecraft-154749-1 {
+  position: relative;
+  left: 45%; /* Center horizontally */
+}
+
 .login {
-    position: relative;
-    
-    background: -webkit-linear-gradient(91.73deg, rgb(158, 9, 9) 0%, rgb(43, 255, 15) 60%);
-    -webkit-background-clip: text; /* For webkit-based browsers */
-    background-clip: text;
-    color: transparent; /* Make text transparent */
-    text-align: center;
-    font-family: "Concert One", sans-serif;
-    font-size: 96px;
-    line-height: 30px;
-    font-weight: 400;
-    display: flex;
-    padding: 1em;
-    justify-content: center; /* Center horizontally */
-    height: 100%; /* Ensure the container takes the full height */
-  }
-  
-  
+  z-index: 100;
+
+  position: relative;
+
+  background: -webkit-linear-gradient(rgb(0, 255, 13) 0%, rgb(19, 177, 240));
+  -webkit-background-clip: text; /* For webkit-based browsers */
+  background-clip: text;
+
+  color: transparent; /* Make text transparent */
+  text-align: center;
+  font-family: "Concert One", sans-serif;
+  font-size: 96px;
+  line-height: 30px;
+  font-weight: 400;
+  padding: 1em;
+  justify-content: center; /* Center horizontally */
+  background-size: 100%;
+}
+
+.statement,
+.statement * {
+  box-sizing: border-box;
+}
+.statement {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Concert One", sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 400;
+  position: relative;
+  width: 455px;
+}
+
+.statement-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3em;
+}
+
+.login-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5em;
+}
+
+.login-btn {
+  background: linear-gradient(
+    180deg,
+    rgba(111, 243, 124, 1) 0%,
+    rgba(111, 211, 243, 1) 99.50000047683716%
+  );
+  border-radius: 4px;
+
+  width: 300px;
+  height: 45px;
+  position: relative;
+  box-shadow: 0px 4px 4px 0px rgba(16, 134, 230, 0.3);
+  font-family: "Concert One", sans-serif;
+  font-size: 20px;
+}
+
+.username-input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3em;
+}
+
+.username-input {
+  background: url("mc-logo-login.png") no-repeat left,
+    linear-gradient(50deg, rgb(4, 122, 67) 0%, rgb(3, 174, 253) 99.5%);
+  background-size: 30px, auto;
+  border-radius: 4px;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 1px;
+  width: 300px;
+  height: 45px;
+  position: relative;
+  font-size: xx-large;
+  font-weight: bold;
+  padding-left: 30px;
+  color: rgb(0, 0, 0);
+}
+
+.username-input:disabled {
+  color: rgb(35, 38, 54);
+}
+
+.password-input-wrapper {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 3em;
+}
+
+.password-input-wrapper.active {
+  display: flex;
+}
+
+.password-input {
+  background: url("passwort.png") no-repeat left,
+    linear-gradient(
+      50deg,
+      rgb(4, 122, 67) 0%,
+      rgb(3, 174, 253) 99.50000047683716%
+    );
+  background-size: 30px, auto;
+  border-radius: 4px;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 1px;
+  width: 300px;
+  height: 45px;
+  position: relative;
+  font-size: xx-large;
+  font-weight: bold;
+  padding-left: 30px;
+  color: rgb(0, 0, 0);
+}
+
+.dashboard-login-1,
+.dashboard-login-1 * {
+  box-sizing: border-box;
+}
