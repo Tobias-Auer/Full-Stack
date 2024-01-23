@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard Login</title>
-    <link rel="stylesheet" href="new-login.css" />
+    <link rel="stylesheet" href="./static/css/new-login.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Concert One"
       rel="stylesheet"
@@ -14,9 +14,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
   </head>
-  <body background="bg.jpg">
+  <body>
     <div class="dashboard-login-1">
-      <svg style="position:fixed;"
+      <svg
+        style="position: fixed"
         xmlns="http://www.w3.org/2000/svg"
         class="bg"
         viewBox="0 0 1642 1083"
@@ -137,20 +138,64 @@
       function clicked() {
         var button = document.getElementById("login-btn");
         if (button.innerText == "Weiter") {
-
-
-          fetch("/api/login", {
-            
-          })
-        
-          document
-            .getElementById("password-input-wrapper")
-            .classList.add("active");
-          document.getElementById("username-input").disabled = true;
-          button.innerText = "Bestätigen";
+          send_fetch(document.getElementById("username-input").value, null)
+            .then((result) => {
+              document
+                .getElementById("password-input-wrapper")
+                .classList.add("active");
+              document.getElementById("username-input").disabled = true;
+              button.innerText = "Bestätigen";
+            })
+            .catch((error) => {
+              console.error(error); // handle the error
+            });
         } else {
-          alert("done!!");
+          send_fetch(null, document.getElementById("password-input").value)
+            .then((result) => {
+              const urlParams = new URLSearchParams(window.location.search);
+              const nextParam = urlParams.get("next");
+
+              // Redirect to the URL with the "next" parameter
+              if (nextParam) {
+                window.location.href = nextParam;
+              } else {
+                // If there is no "next" parameter, you can redirect to a default URL
+                window.location.href = "/";
+              }
+            })
+            .catch((error) => {
+              console.error(error); // handle the error
+            });
         }
+      }
+
+      function send_fetch(username, pin) {
+        return new Promise((resolve, reject) => {
+          fetch("/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              pin: pin,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data["status"] == "success") {
+                resolve(true);
+              } else {
+                // trigger error event or maybe throw error
+                reject(false);
+              }
+            })
+            .catch((error) => {
+              console.log("ERROR", error);
+              reject(false);
+            });
+        });
       }
     </script>
   </body>
