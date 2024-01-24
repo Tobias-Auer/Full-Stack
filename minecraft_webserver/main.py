@@ -66,74 +66,16 @@ def index_route():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-     # db_handler = dataBaseOperations.DatabaseHandler("playerData")
+    db_handler = dataBaseOperations.DatabaseHandler("playerData")
 
-    # if request.method == 'POST':
-    #     if request.headers.get('Content-Type') == 'application/x-www-form-urlencoded':
-    #         form_type = request.form['type']  # form type specifies which login form was submitted
-    #         if form_type == 'login1':
-    #             username = request.form['username']
-    #             uuid = minecraftApi.get_uuid_from_username(username)
-    #             if uuid is None:
-    #                 flash("Invalid Minecraft username")
-    #                 db_handler.disconnect()
-    #                 return redirect("/login")
-    #             status = db_handler.get_player_status(uuid)
-    #             print("Player status: " + status)
-    #             if status == "offline":
-    #                 flash('You are not logged into minecraft!')
-    #                 db_handler.disconnect()
-    #                 return redirect("/login")
-    #             secret_pin = secrets.SystemRandom().randrange(100000, 999999)
-    #             db_handler.create_login_entry(uuid, secret_pin)
-    #             db_handler.disconnect()
-    #             db_handler = dataBaseOperations.DatabaseHandler("interface")
-    #             db_handler.create_login_entry(uuid, secret_pin)
-    #             db_handler.disconnect()
-    #             session["try_login"] = uuid  # set session cookie for the next step in the login process
-    #             return render_template("login2.html")
-    #         elif form_type == "login2":
-    #             uuid = session.get("try_login")
-    #             if uuid is None:  # error correction if sth is wrong
-    #                 session.clear()
-    #                 return redirect("/login")
-    #             if not db_handler.check_for_login_entry(uuid):  # happens after the 5-minute timeout
-    #                 session.clear()
-    #                 db_handler.disconnect()
-    #                 flash("timed out")
-    #                 return render_template("login.html")
-    #             try:
-    #                 secret_pin_from_form = int(request.form["pin"])
-    #             except ValueError:
-    #                 flash("Please enter the correct PIN")
-    #                 db_handler.disconnect()
-    #                 return render_template("login2.html")
-    #             if secret_pin_from_form == int(db_handler.get_login_entry(uuid)):
-    #                 session.clear()
-    #                 session["uuid"] = uuid
-    #                 session.permanent = True
-    #                 db_handler.delete_login_entry(uuid)
-    #                 db_handler.disconnect()
-    #                 next_route = request.args.get('next')
-    #                 if not next_route:
-    #                     return redirect("/")
-    #                 return redirect(next_route)
-    #             else:
-    #                 print(secret_pin_from_form, db_handler.get_login_entry(uuid))
-    #                 flash("Please enter the correct PIN")
-    #                 db_handler.disconnect()
-    #                 return render_template("login2.html")
-    #         else:  # Not a valid request
-    #             db_handler.disconnect()
-    #             return render_template("login.html")
-    #     else:  # Probably Logout command
-    #         db_handler.disconnect()  # close connection bc it's not further needed but still open
-    #         input_string = request.form['text_input']
-    #         if input_string != "logout":
-    #             abort(400)
-    #         session.clear()
-    #
-    #         return render_template("login.html")
+    if request.method == 'POST':
+        # Probably Logout command
+        db_handler.disconnect()  # close connection bc it's not further needed but still open
+        input_string = request.form['text_input']
+        if input_string != "logout":
+            abort(400)
+        session.clear()
+        return render_template("index.html")
 
     uuid = session.get('uuid')
     print("username: ", uuid)
@@ -141,13 +83,12 @@ def login():
         return render_template("logout_confirmation.html", uuid=uuid)
     uuid = session.get('try_login')
     if isinstance(uuid, str):
-        return render_template("login2.html")
+        return render_template("new-login.html", uuid=minecraftApi.get_cached_username_from_uuid(uuid))
     if not request.args.get('next'):
         refer = request.referrer
         path = "/" if not refer else urlparse(refer).path
-
         return redirect(f'/login?next={path}')
-    return render_template("new-login.html")
+    return render_template("new-login.html", uuid="")
 
 
 @app.route('/about')
@@ -385,6 +326,9 @@ def login_api():
     print(f"Username: '{username}', Password: '{pin}'")
 
     if not pin:
+        if pin == "":
+            return {'response': "Invalid pin", "status": "error",
+                    "info": "Please enter a valid pin!"}
         uuid = minecraftApi.get_uuid_from_username(username)
         if uuid is None:
             db_handler.disconnect()
@@ -407,11 +351,11 @@ def login_api():
         uuid = session.get("try_login")
         if uuid is None:  # error correction if sth is wrong
             session.clear()
-            return {"response": "Cookie is wrong", "status": "error-reset", "info": "Something with your cookies went wrong! Did you ate any of them?? Please try again!"}
+            return {"response": "Cookie is wrong", "status": "reset", "info": "Something with your cookies went wrong! Did you eat any of them?? Please try again!"}
         if not db_handler.check_for_login_entry(uuid):  # happens after the 5-minute timeout
             session.clear()
             db_handler.disconnect()
-            return {"response": "Timed out", "status": "error", "info": "Your pin is timed out. You only have 5 minutes to enter your pin until it gets devalidated! Please try again!"}
+            return {"response": "Timed out", "status": "reset", "info": "Your pin has timed out. You have 5 only minutes to enter your pin until it gets devalidated! Please try again!"}
         try:
             secret_pin_from_form = int(pin)
         except ValueError:

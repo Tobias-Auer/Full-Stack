@@ -1,237 +1,237 @@
 <!DOCTYPE html>
 <html id="top" lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Spieler Übersicht</title>
     <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
     />
-    <link href="./static/css/header.css" rel="stylesheet"/>
-    <link href="./static/css/index.css" rel="stylesheet"/>
+    <link href="./static/css/header.css" rel="stylesheet" />
+    <link href="./static/css/index.css" rel="stylesheet" />
 
     <link
-            href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css"
-            rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css"
+      rel="stylesheet"
     />
-    <link href="./static/css/player_list.css" rel="stylesheet"/>
+    <link href="./static/css/player_list.css" rel="stylesheet" />
 
     <link
-            href="./static/images/favicon.ico"
-            rel="icon"
-            type="image/vnd.microsoft.icon"
+      href="./static/images/favicon.ico"
+      rel="icon"
+      type="image/vnd.microsoft.icon"
     />
 
-    <link href="./static/css/popup.css" rel="stylesheet"/>
+    <link href="./static/css/popup.css" rel="stylesheet" />
 
     <script src="https://cdn.jsdelivr.net/npm/js-sha256"></script>
-</head>
+  </head>
 
-<body>
-  {% include 'header.html' %}
+  <body>
+    {% include 'header.html' %}
 
-<div class="content">
-    <!-- content here!! -->
-    <div class="container mt-5">
+    <div class="content">
+      <!-- content here!! -->
+      <div class="container mt-5">
         {% for result in results %}
         <ul class="list-group">
-            <li class="list-group-item">
-                <a
-                        class="text-decoration-none list-item-content"
-                        color="{{result[0]}}"
-                        onclick="send_prefix(`{{result[0]}}`)"
-                >
-                    <img
-                            alt="player_head"
-                            class="list-item-image"
-                            src="https://crafatar.com/avatars/{{result[1]}}?default=MHF_Steve&overlay"
-                    />
-                    <div class="list-item-text">
-                        {{result[0].split("[")[1]|replace("]", "") }}
-                    </div>
-                </a>
-            </li>
-            {% endfor %}
+          <li class="list-group-item">
+            <a
+              class="text-decoration-none list-item-content"
+              color="{{result[0]}}"
+              onclick="send_prefix(`{{result[0]}}`)"
+            >
+              <img
+                alt="player_head"
+                class="list-item-image"
+                src="https://crafatar.com/avatars/{{result[1]}}?default=MHF_Steve&overlay"
+              />
+              <div class="list-item-text">
+                {{result[0].split("[")[1]|replace("]", "") }}
+              </div>
+            </a>
+          </li>
+          {% endfor %}
         </ul>
+      </div>
+      <div class="text"></div>
     </div>
-    <div class="text"></div>
-</div>
 
-<div class="custom-modal" id="custom-modal">
-    <div class="modal-header">
+    <div class="custom-modal" id="custom-modal">
+      <div class="modal-header">
         <div class="title" id="modal-title">(ERROR)</div>
         <button
-                class="close-button"
-                data-close-button
-                id="custom-close-button"
-                onclick="closeModal(this.closest(`.custom-modal`))"
+          class="close-button"
+          data-close-button
+          id="custom-close-button"
+          onclick="closeModal(this.closest(`.custom-modal`))"
         >
-            &times;
+          &times;
         </button>
+      </div>
+      <div class="modal-body" id="modal-content">(ERROR)</div>
     </div>
-    <div class="modal-body" id="modal-content">(ERROR)</div>
-</div>
-<div id="custom-overlay"></div>
-<footer>
-    <nav>
+    <div id="custom-overlay"></div>
+    <footer>
+      <nav>
         <ul>
-            <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
-            <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
-            <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
-            <li><a href="#">🡅</a></li>
+          <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+          <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+          <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+          <li><a href="#">🡅</a></li>
         </ul>
-    </nav>
-</footer>
+      </nav>
+    </footer>
 
-<script>
-    var color_dict = {
-      "§0": "#000000",
-      "§1": "#0000AA",
-      "§2": "#00AA00",
-      "§3": "#00AAAA",
-      "§4": "#AA0000",
-      "§5": "#AA00AA",
-      "§6": "#FFAA00",
-      "§7": "#AAAAAA",
-      "§8": "#555555",
-      "§9": "#5555FF",
-      "§a": "#55FF55",
-      "§b": "#55FFFF",
-      "§c": "#FF5555",
-      "§d": "#FF55FF",
-      "§e": "#FFFF55",
-    };
-    function get_color(color) {
-      return color_dict[color];
-    }
-
-    var all_elements = document.getElementsByClassName("list-item-content");
-
-    for (let i = 0; i < all_elements.length; i++) {
-      element = all_elements[i];
-      element.style.color = get_color(
-        element.getAttribute("color").split("[")[0]
-      );
-    }
-
-    function ask_for_pref(pref, require_pwd=false) {
-      const modal_body = document.getElementById("modal-content");
-      const modal_title = document.getElementById("modal-title");
-      const modal = document.getElementById("custom-modal");
-      const input_field = "<input id='pwd'></input>"
-      modal_body.innerHTML =
-        "Möchtest du wirklich deinen aktuellen Prefix <X> gegen den neuen Prefix " +
-        pref +
-        ` eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.<br><br>`
-
-      if (require_pwd) {
-        modal_body.innerHTML+=input_field;
-        modal_body.innerHTML+=`<br><br><div class='button-container'><button onclick='closeModal(this.closest(".custom-modal"))'>Abbruch</button><button onclick='send_prefix("${pref}",true,true)'>Bestätigen</button></div>`;
-      } else {
-        modal_body.innerHTML+=`<br><br><div class='button-container'><button onclick='closeModal(this.closest(".custom-modal"))'>Abbruch</button><button onclick='send_prefix("${pref}",true)'>Bestätigen</button></div>`;
+    <script>
+      var color_dict = {
+        "§0": "#000000",
+        "§1": "#0000AA",
+        "§2": "#00AA00",
+        "§3": "#00AAAA",
+        "§4": "#AA0000",
+        "§5": "#AA00AA",
+        "§6": "#FFAA00",
+        "§7": "#AAAAAA",
+        "§8": "#555555",
+        "§9": "#5555FF",
+        "§a": "#55FF55",
+        "§b": "#55FFFF",
+        "§c": "#FF5555",
+        "§d": "#FF55FF",
+        "§e": "#FFFF55",
+      };
+      function get_color(color) {
+        return color_dict[color];
       }
 
-      modal_title.innerHTML = "Bestätigung";
-      openModal(modal);
-    }
+      var all_elements = document.getElementsByClassName("list-item-content");
 
-    function send_prefix(prefix, apply_mode = false, pwd=null) {
-      if (pwd) {
-        pwd=hashPassword(document.getElementById('pwd').value);
+      for (let i = 0; i < all_elements.length; i++) {
+        element = all_elements[i];
+        element.style.color = get_color(
+          element.getAttribute("color").split("[")[0]
+        );
       }
-      fetch("/join_pref", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          apply_mode: apply_mode,
-          prefix: prefix,
-          pwd: pwd,
-        }),
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          throw new Error("Something is wrong :(\nTry again!");
+
+      function ask_for_pref(pref, require_pwd = false) {
+        const modal_body = document.getElementById("modal-content");
+        const modal_title = document.getElementById("modal-title");
+        const modal = document.getElementById("custom-modal");
+        const input_field = "<input id='pwd'></input>";
+        modal_body.innerHTML =
+          "Möchtest du wirklich deinen aktuellen Prefix <X> gegen den neuen Prefix " +
+          pref +
+          ` eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.<br><br>`;
+
+        if (require_pwd) {
+          modal_body.innerHTML += input_field;
+          modal_body.innerHTML += `<br><br><div class='button-container'><button onclick='closeModal(this.closest(".custom-modal"))'>Abbruch</button><button onclick='send_prefix("${pref}",true,true)'>Bestätigen</button></div>`;
+        } else {
+          modal_body.innerHTML += `<br><br><div class='button-container'><button onclick='closeModal(this.closest(".custom-modal"))'>Abbruch</button><button onclick='send_prefix("${pref}",true)'>Bestätigen</button></div>`;
+        }
+
+        modal_title.innerHTML = "Bestätigung";
+        openModal(modal);
+      }
+
+      function send_prefix(prefix, apply_mode = false, pwd = null) {
+        if (pwd) {
+          pwd = hashPassword(document.getElementById("pwd").value);
+        }
+        fetch("/join_pref", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            apply_mode: apply_mode,
+            prefix: prefix,
+            pwd: pwd,
+          }),
         })
-        .then((data) => {
-          console.log(data);
-          if (!apply_mode) {
-            if (data["allowed"]) {
-              ask_for_pref(data["requested_prefix"], data["require_pwd"]);
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            throw new Error("Something is wrong :(\nTry again!");
+          })
+          .then((data) => {
+            console.log(data);
+            if (!apply_mode) {
+              if (data["allowed"]) {
+                ask_for_pref(data["requested_prefix"], data["require_pwd"]);
+                return;
+              } else {
+                failure(
+                  data["requested_prefix"],
+                  "Du hast keine Berechtigung für diesen Prefix. <br><br>Wenn du dir sicher bist, das ein Fehler vorliegt, probiere es später erneut oder kontaktiere den Serverbesitzer"
+                );
+                return;
+              }
+            }
+            if (data["success"]) {
+              success(data["requested_prefix"]);
               return;
             } else {
-              failure(
-                data["requested_prefix"],
-                "Du hast keine Berechtigung für diesen Prefix. <br><br>Wenn du dir sicher bist, das ein Fehler vorliegt, probiere es später erneut oder kontaktiere den Serverbesitzer"
-              );
+              failure(data["requested_prefix"], data["reason"]);
               return;
             }
-          }
-          if (data["success"]) {
-            success(data["requested_prefix"]);
-            return;
-          } else {
-            failure(data["requested_prefix"], data["reason"]);
-            return;
-          }
-        })
-        .catch((error) => {
-          failure(data["requested_prefix"], error);
-        });
-    }
+          })
+          .catch((error) => {
+            failure(data["requested_prefix"], error);
+          });
+      }
 
-    function openModal(modal) {
-      if (modal == null) return;
-      modal.classList.add("active");
+      function openModal(modal) {
+        if (modal == null) return;
+        modal.classList.add("active");
+        const overlay = document.getElementById("custom-overlay");
+        overlay.classList.add("active");
+      }
+
+      function closeModal(modal) {
+        if (modal == null) return;
+        modal.classList.remove("active");
+        overlay.classList.remove("active");
+      }
+
+      function success(prefix) {
+        const modal_body = document.getElementById("modal-content");
+        const modal_title = document.getElementById("modal-title");
+        const modal = document.getElementById("custom-modal");
+        modal_body.innerHTML =
+          "Du hast erfolgreich deinen Prefix geändert :) <br><br><button onclick='closeModal(this.closest(`.custom-modal`))'>OK</button>";
+        modal_title.innerHTML = "Erfolgreich :)";
+        openModal(modal);
+      }
+
+      function failure(prefix, reason) {
+        const modal_body = document.getElementById("modal-content");
+        const modal_title = document.getElementById("modal-title");
+        const modal = document.getElementById("custom-modal");
+        modal_body.innerHTML =
+          "Es it ein Fehler beim setzen folgendes Prefixes aufgetreten: " +
+          prefix +
+          "<br><br>Weitere Informationen:<br>" +
+          reason;
+        modal_title.innerHTML = "ERROR :[";
+        openModal(modal);
+      }
+
       const overlay = document.getElementById("custom-overlay");
-      overlay.classList.add("active");
-    }
-
-    function closeModal(modal) {
-      if (modal == null) return;
-      modal.classList.remove("active");
-      overlay.classList.remove("active");
-    }
-
-    function success(prefix) {
-      const modal_body = document.getElementById("modal-content");
-      const modal_title = document.getElementById("modal-title");
-      const modal = document.getElementById("custom-modal");
-      modal_body.innerHTML =
-        "Du hast erfolgreich deinen Prefix geändert :) <br><br><button onclick='closeModal(this.closest(`.custom-modal`))'>OK</button>";
-      modal_title.innerHTML = "Erfolgreich :)";
-      openModal(modal);
-    }
-
-    function failure(prefix, reason) {
-      const modal_body = document.getElementById("modal-content");
-      const modal_title = document.getElementById("modal-title");
-      const modal = document.getElementById("custom-modal");
-      modal_body.innerHTML =
-        "Es it ein Fehler beim setzen folgendes Prefixes aufgetreten: " +
-        prefix +
-        "<br><br>Weitere Informationen:<br>" +
-        reason;
-      modal_title.innerHTML = "ERROR :[";
-      openModal(modal);
-    }
-
-    const overlay = document.getElementById("custom-overlay");
-    overlay.addEventListener("click", () => {
-      const modals = document.querySelectorAll(".custom-modal.active");
-      modals.forEach((modal) => {
-        closeModal(modal);
+      overlay.addEventListener("click", () => {
+        const modals = document.querySelectorAll(".custom-modal.active");
+        modals.forEach((modal) => {
+          closeModal(modal);
+        });
       });
-    });
-    function hashPassword(password) {
-      const hashHex = sha256(password);
-      return hashHex;
-    }
-</script>
-</body>
+      function hashPassword(password) {
+        const hashHex = sha256(password);
+        return hashHex;
+      }
+    </script>
+  </body>
 </html>
