@@ -268,20 +268,20 @@ class MinecraftApi:
         :param UUID: UUID of the player.
         :return: str: The username of the requested player.
         """
-        URL = f"https://api.mojang.com/user/profile/{UUID}"
+        URL = f"https://playerdb.co/api/player/minecraft/{UUID}"
         user_name = None
         try:
             response = requests.get(URL)
             if response.status_code == 200:
                 data = response.json()
-                user_name = data.get("name")
+                user_name = data['data']['player']['username']
+
         except Exception as e:
             self.logger.error("Error in get_username_from_uuid: " + str(e))
             if self.logger is None:
                 print(e)
         finally:
-            if (user_name is
-                    None):
+            if user_name is None:
                 user_name = "error"
             return user_name
 
@@ -293,12 +293,12 @@ class MinecraftApi:
         :return: str: The UUID of the requested player.
         """
         uuid = None
-        URL = f"https://api.mojang.com/users/profiles/minecraft/{username}"
+        URL = f"https://playerdb.co/api/player/minecraft/{username}"
         try:
             response = requests.get(URL)
             if response.status_code == 200:
                 data = response.json()
-                uuid = data.get("id")
+                uuid = data['data']['player']['raw_id']
         except Exception as e:
             self.logger.error(e)
             if self.logger is None:
