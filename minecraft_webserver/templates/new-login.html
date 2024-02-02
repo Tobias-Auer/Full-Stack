@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard Login</title>
     <link rel="stylesheet" href="./static/css/new-login.css" />
-    <link rel="stylesheet" href="./static/css/popup.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Concert One"
       rel="stylesheet"
@@ -14,34 +13,18 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <script src="https://cdn.jsdelivr.net/gh/Tobias-Auer/messageBoxLib/messageBoxes.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () { // really important!
+      const modalConfig = {
+        backgroundColor: "linear-gradient(50deg,rgb(85, 161, 132) 0%,rgb(3, 174, 253) 60%,rgb(85, 161, 132) 99%)"
+      };
+      editModal(modalConfig);
+    });
+</script>
   </head>
   <body>
-    <div
-      class="custom-modal"
-      id="custom-modal"
-      style="
-        background: linear-gradient(
-          50deg,
-          rgb(85, 161, 132) 0%,
-          rgb(3, 174, 253) 60%,
-          rgb(85, 161, 132) 99%
-        );
-      "
-    >
-      <div class="modal-header">
-        <div class="title" id="modal-title" style="margin: auto">(ERROR)</div>
-        <button
-          class="close-button"
-          data-close-button
-          id="custom-close-button"
-          onclick="closeModal(this.closest(`.custom-modal`))"
-        >
-          &times;
-        </button>
-      </div>
-      <div class="modal-body" id="modal-content">(ERROR)</div>
-    </div>
-    <div id="custom-overlay"></div>
+
     <div class="dashboard-login-1">
       <svg
         style="position: fixed"
@@ -232,7 +215,7 @@
               if (data["status"] == "success") {
                 resolve(true);
               } else {
-                failure(data["response"], data["info"]);
+                messagebox_info(data["response"], data["info"], {confirmationButton: 'OK',}, {});
                 if (data["status"] == "reset") {
                   window.location.reload();
                 }
@@ -240,53 +223,13 @@
               }
             })
             .catch((error) => {
-              failure(data["response"], data["info"]);
+              messagebox_error(data["response"], data["info"], {confirmationButton: 'OK',}, {});
               console.log("ERROR", error);
               reject(false);
             });
         });
       }
 
-      function openModal(modal) {
-        if (modal == null) return;
-        modal.classList.add("active");
-        const overlay = document.getElementById("custom-overlay");
-        overlay.classList.add("active");
-      }
-
-      function closeModal(modal) {
-        if (modal == null) return;
-        modal.classList.remove("active");
-        overlay.classList.remove("active");
-      }
-
-      function success(header, detail) {
-        const modal_body = document.getElementById("modal-content");
-        const modal_title = document.getElementById("modal-title");
-        const modal = document.getElementById("custom-modal");
-        modal_body.innerHTML =
-          detail +
-          "<br><br><button onclick='closeModal(this.closest(`.custom-modal`))'>OK</button>";
-        modal_title.innerHTML = header;
-        openModal(modal);
-      }
-
-      function failure(header, detail) {
-        const modal_body = document.getElementById("modal-content");
-        const modal_title = document.getElementById("modal-title");
-        const modal = document.getElementById("custom-modal");
-        modal_body.innerHTML = detail;
-        modal_title.innerHTML = `<span style="color:red;font-weight: bold;text-align: center;">⚠ ${header} ⚠</span>`;
-        openModal(modal);
-      }
-
-      const overlay = document.getElementById("custom-overlay");
-      overlay.addEventListener("click", () => {
-        const modals = document.querySelectorAll(".custom-modal.active");
-        modals.forEach((modal) => {
-          closeModal(modal);
-        });
-      });
       // check to see whether the user already had a try_login cookie and load username
         var button = document.getElementById("login-btn");
       var uuid = "{{uuid}}";
