@@ -282,7 +282,7 @@ class MinecraftApi:
                 print(e)
         finally:
             if user_name is None:
-                user_name = "error"
+                user_name = self.get_cached_username_from_uuid(UUID)
             return user_name
 
     def get_uuid_from_username(self, username):
@@ -304,6 +304,8 @@ class MinecraftApi:
             if self.logger is None:
                 print(e)
         finally:
+            if uuid is None:
+                uuid = self.get_cached_uuid_from_username(username)
             return uuid
 
     def get_cached_uuid_from_username(self, user_name):
