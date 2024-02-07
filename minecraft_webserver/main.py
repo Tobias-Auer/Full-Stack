@@ -96,13 +96,16 @@ def login():
 def about():
     return render_template('about.html')
 
+
 @app.route('/unban')
 def unban_route():
     return "Machs einfach hier <a href='https://www.discord.gg/vJYNnsQwf8' target='_blank'>Discord</a>"
 
+
 @app.route('/report')
 def report_route():
     return "Machs einfach hier <a href='https://www.discord.gg/vJYNnsQwf8' target='_blank'>Discord</a>"
+
 
 @app.route('/spieler')
 def player_overview_route():
@@ -333,12 +336,14 @@ def login_api():
         uuid = minecraftApi.get_uuid_from_username(username)
         if uuid is None:
             db_handler.disconnect()
-            return {'response': "Invalid username", "status": "error", "info": "Given username not found in the database"}
+            return {'response': "Invalid username", "status": "error",
+                    "info": "Given username not found in the database"}
         status = db_handler.get_player_status(uuid)
         print("Player status: " + status)
         if status == "offline":
             db_handler.disconnect()
-            return {'response': "You are offline", "status": "error", "info": "Please log into the server and try again. You must be online to progress"}
+            return {'response': "You are offline", "status": "error",
+                    "info": "Please log into the server and try again. You must be online to progress"}
         secret_pin = secrets.SystemRandom().randrange(100000, 999999)
         db_handler.create_login_entry(uuid, secret_pin)
         db_handler.disconnect()
@@ -352,16 +357,19 @@ def login_api():
         uuid = session.get("try_login")
         if uuid is None:  # error correction if sth is wrong
             session.clear()
-            return {"response": "Cookie is wrong", "status": "reset", "info": "Something with your cookies went wrong! Did you eat any of them?? Please try again!"}
+            return {"response": "Cookie is wrong", "status": "reset",
+                    "info": "Something with your cookies went wrong! Did you eat any of them?? Please try again!"}
         if not db_handler.check_for_login_entry(uuid):  # happens after the 5-minute timeout
             session.clear()
             db_handler.disconnect()
-            return {"response": "Timed out", "status": "reset", "info": "Your pin has timed out. You have 5 only minutes to enter your pin until it gets devalidated! Please try again!"}
+            return {"response": "Timed out", "status": "reset",
+                    "info": "Your pin has timed out. You have 5 only minutes to enter your pin until it gets devalidated! Please try again!"}
         try:
             secret_pin_from_form = int(pin)
         except ValueError:
             db_handler.disconnect()
-            return {"response": "Pin is incorrect", "status": "error", "info": "Your pin is incorrect! Please try again!"}
+            return {"response": "Pin is incorrect", "status": "error",
+                    "info": "Your pin is incorrect! Please try again!"}
         if secret_pin_from_form == int(db_handler.get_login_entry(uuid)):
             session.clear()
             session["uuid"] = uuid
@@ -372,7 +380,8 @@ def login_api():
         else:
             print(secret_pin_from_form, db_handler.get_login_entry(uuid))
             db_handler.disconnect()
-            return {"response": "Pin is incorrect", "status": "error", "info": "Your pin is incorrect! Please try again!"}
+            return {"response": "Pin is incorrect", "status": "error",
+                    "info": "Your pin is incorrect! Please try again!"}
 
 
 @app.route('/api/player_info/<path:path>')
@@ -467,6 +476,7 @@ def check_db_events():
 
 if __name__ == '__main__':
     minecraftApi.update_blocks()
+    databaseApi.clean_db()
     thread = threading.Thread(target=check_db_events)
     thread.start()
     app.run(host="0.0.0.0", port=80, threaded=True, debug=True, use_reloader=False)

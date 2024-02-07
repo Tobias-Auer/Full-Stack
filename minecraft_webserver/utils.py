@@ -216,7 +216,7 @@ class DatabaseApi:
             player_uuid, player_status = status_entry[0].split("~")
             player_uuid.replace("-", "")
             print(f"Updating player status for player: {player_uuid} to {player_status}")
-            self.__update_player_status(player_uuid, player_status)
+            db_handler.write_player_status(player_uuid, player_status)
             db_handler.delete_key("status", "status", status_entry[0])
         db_handler.disconnect()
 
@@ -232,6 +232,19 @@ class DatabaseApi:
         db_handler = dataBaseOperations.DatabaseHandler("playerData")
         db_handler.write_player_status(player_uuid, status)
         db_handler.disconnect()
+
+    def clean_db(self):
+        db_handler = dataBaseOperations.DatabaseHandler("playerData")
+        print("----------------------------------------------------------------")
+        all_uuids = db_handler.get_player_status(None, False, True)
+        print("----------------------------------------------------------------")
+
+        for uuid in all_uuids:
+            print("CHANGING UUID: " + str(uuid))
+            db_handler.write_player_status(uuid[0], "offline")
+        db_handler.disconnect()
+
+        pass
 
 
 class MinecraftApi:
