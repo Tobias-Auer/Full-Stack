@@ -40,7 +40,8 @@ def inject_loginVar():
     permission_level = 99
     if isinstance(uuid, str):
         name = minecraftApi.get_username_from_uuid(uuid)
-        loginVar = f"<div>Willkommen {name}<br> <a href=\"/login\" id=logoutLink>Logout</a></div>"
+        loginVar = (f"<div>Willkommen {name}<br> <a id=logoutLink onclick=\"logout()\" style=\"cursor: "
+                    "pointer;\">Logout</a></div>")
         db_handler = dataBaseOperations.DatabaseHandler("playerData")
         permission_level = db_handler.get_access_level(uuid)
         db_handler.disconnect()

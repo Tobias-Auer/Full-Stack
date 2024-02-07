@@ -120,24 +120,31 @@ class DatabaseHandler:
             queryResult = ["Null", ]
         return queryResult
 
-    def get_player_status(self, player_uuid, return_all=False):
+    def get_player_status(self, player_uuid, return_count=False, return_all_uuids=False):
         """
         Retrieve the status of the specified player. Returns "offline" if no player entry is found.
 
-        :param return_all: if the flag is set, the function returns the count of all online players
+        :param return_all_uuids: if the flag is set, the function returns the uuids from all players that are online.
+        :param return_count: if the flag is set, the function returns the count of all online players.
         :param player_uuid: UUID of the player.
-        :return: "online"|"offline" or -1 in case of an error during return_all=True
+        :return: "online"|"offline" or -1 in case of an error if return_all=True is used.
         """
-        if not return_all:
-            query = f"SELECT status FROM status WHERE player = ?"
-            self.cursor.execute(query, (player_uuid.replace("-", ""),))
-        else:
-            query = f"SELECT COUNT(*) FROM status WHERE status = 'online'"
-            self.cursor.execute(query)
         try:
+            if not return_count and not return_all_uuids:
+                query = f"SELECT status FROM status WHERE player = ?"
+                self.cursor.execute(query, (player_uuid.replace("-", ""),))
+            else:
+                query = f"SELECT COUNT(*) FROM status WHERE status = 'online'"
+                self.cursor.execute(query)
+            if return_all_uuids:
+                print("get all uuids......")
+                query = f"SELECT player FROM status WHERE status = 'online'"
+                self.cursor.execute(query)
+                return self.cursor.fetchall()
+
             status = self.cursor.fetchone()[0]
         except (Exception,):
-            status = "offline" if not return_all else -1
+            status = "offline" if not return_count else -1
         return str(status)
 
     # Writing

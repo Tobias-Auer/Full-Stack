@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/gh/Tobias-Auer/messageBoxLib/messageBoxes.js" defer></script>
 <header class="sticky">
   <nav>
     <ul>
@@ -6,21 +7,31 @@
       </li>
       <li>
         <div class="dropdown">
-          <button class="dropbtn {% if request.path=='/' %} current{% endif %}" onclick="window.location.href=`/`">
+          <button
+            class="dropbtn {% if request.path=='/' %} current{% endif %}"
+            onclick="window.location.href=`/`"
+          >
             Startseite
           </button>
         </div>
       </li>
       <li>
         <div class="dropdown">
-          <button class="dropbtn {% if request.path=='/spieler' %} current{% endif %}" onclick="window.location.href=`/spieler`">
+          <button
+            class="dropbtn {% if request.path=='/spieler' %} current{% endif %}"
+            onclick="window.location.href=`/spieler`"
+          >
             Spieler
           </button>
         </div>
       </li>
       <li>
         <div class="dropdown">
-          <button class="dropbtn {% if request.path=='/add_pref' or request.path=='/join_pref' %} current{% endif %}">▼ Prefixes</button>
+          <button
+            class="dropbtn {% if request.path=='/add_pref' or request.path=='/join_pref' %} current{% endif %}"
+          >
+            ▼ Prefixes
+          </button>
           <div class="dropdown-content">
             <a href="/add_pref">Erstellen/Ändern</a>
             <a href="/join_pref">Beitreten</a>
@@ -29,7 +40,10 @@
       </li>
       <li>
         <div class="dropdown">
-          <button class="dropbtn {% if request.path=='/report' %} current{% endif %}" onclick="window.location.href='/report'">
+          <button
+            class="dropbtn {% if request.path=='/report' %} current{% endif %}"
+            onclick="window.location.href='/report'"
+          >
             Spieler Report
           </button>
         </div>
@@ -37,7 +51,10 @@
       {% if perm <= 1 %}
       <li>
         <div class="dropdown">
-          <button class="dropbtn {% if request.path=='/users' %} current{% endif %}" onclick="window.location.href='/users'">
+          <button
+            class="dropbtn {% if request.path=='/users' %} current{% endif %}"
+            onclick="window.location.href='/users'"
+          >
             Verwaltung
           </button>
         </div>
@@ -49,3 +66,33 @@
     </ul>
   </nav>
 </header>
+
+<script>
+  function logout(confirmed) {
+    if (confirmed == null) {
+      messagebox_info(
+        "Logout",
+        "Möchtest du dich wirklich ausloggen?",
+        { confirmationButton: "Ja", cancelButton: "Nein" },
+        { confirmationCallback: logout, confirmationParams: ["1"] }
+      );
+      return;
+    }
+    const formData = new FormData();
+    formData.append("text_input", "logout");
+
+    fetch("/login", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        // Handle the response from the server
+        console.log(data);
+        window.location = "/";
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+</script>
