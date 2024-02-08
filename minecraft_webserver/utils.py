@@ -216,7 +216,7 @@ class DatabaseApi:
             player_uuid, player_status = status_entry[0].split("~")
             player_uuid.replace("-", "")
             print(f"Updating player status for player: {player_uuid} to {player_status}")
-            db_handler.write_player_status(player_uuid, player_status)
+            self.__update_player_status(player_uuid, player_status)
             db_handler.delete_key("status", "status", status_entry[0])
         db_handler.disconnect()
 
