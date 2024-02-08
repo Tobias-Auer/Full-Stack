@@ -98,6 +98,8 @@ class MixedUtilsApi:
         :return: None
         """
         self.logger.info("Shutdown routine recognized")
+        databaseApi = DatabaseApi()
+        databaseApi.clean_db()
         db_handler = dataBaseOperations.DatabaseHandler("interface")
         shutdown_key_delete_status = db_handler.delete_key("meta", "doAction", "shutdown")
         if shutdown_key_delete_status:
@@ -234,6 +236,10 @@ class DatabaseApi:
         db_handler.disconnect()
 
     def clean_db(self):
+        """
+        Removes the online entry from the players that are marked as online
+        :return: 
+        """
         db_handler = dataBaseOperations.DatabaseHandler("playerData")
         print("----------------------------------------------------------------")
         all_uuids = db_handler.get_player_status(None, False, True)
@@ -244,7 +250,6 @@ class DatabaseApi:
             db_handler.write_player_status(uuid[0], "offline")
         db_handler.disconnect()
 
-        pass
 
 
 class MinecraftApi:

@@ -476,7 +476,6 @@ def check_db_events():
 
 if __name__ == '__main__':
     minecraftApi.update_blocks()
-    databaseApi.clean_db()
     thread = threading.Thread(target=check_db_events)
     thread.start()
     app.run(host="0.0.0.0", port=80, threaded=True, debug=True, use_reloader=False)
