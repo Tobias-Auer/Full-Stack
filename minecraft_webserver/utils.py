@@ -120,10 +120,7 @@ class MixedUtilsApi:
         db_handler.disconnect()
         os.system("shutdown -s")
         self.logger.info("Shutdown initiated")
-        shutdown_func = request.environ.get('werkzeug.server.shutdown')
-        if shutdown_func is None:
-            raise RuntimeError('Not running werkzeug')
-        shutdown_func()
+        
         exit()
 
     def format_time(self, seconds):
