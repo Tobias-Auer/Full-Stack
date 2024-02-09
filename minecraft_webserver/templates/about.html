@@ -8,12 +8,17 @@
     <link href="./static/css/header.css" rel="stylesheet" />
     <link href="./static/css/index.css" rel="stylesheet" />
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
       href="./static/images/favicon.ico"
       rel="icon"
       type="image/vnd.microsoft.icon"
     />
     <style>
+      .chart-container {
+        width: 400px; /* Breite des Container-Divs */
+        height: 200px; /* Höhe des Container-Divs */
+      }
       body {
         font-family: "Arial", sans-serif;
         background-color: #d0d0d0 !important;
@@ -94,17 +99,23 @@
     <br />
 
     <div class="stat-container">
-      <!-- CPU -->
       <div class="stat-box">
         <h2>Serverauslastung:</h2>
         <hr />
         <h3>CPU</h3>
         <p id="cpu_stats">Auslastung: X%</p>
+        <div class="chart-container" id="cpu">
+          <canvas id="usageChart_cpu"></canvas>
+        </div>
         <h3>RAM</h3>
         <p id="ram_stats">In Benutzung: XGB/12GB</p>
+        <div class="chart-container" id="ram">
+            <canvas id="usageChart_ram"></canvas>
+          </div>
       </div>
       <div class="stat-box" id="plugins-box">
         <h2>Plugins</h2>
+        <hr>
         <ul class="plugins-list">
           <li class="plugin-item">
             <a
@@ -117,9 +128,9 @@
           <li class="plugin-item">
             <a
               target="_blank"
-              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/BetterJoinMessages"
-              >BetterJoinMessages - 1.1 </a
-            >
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/betterJoinMessages"
+              >BetterJoinMessages - 1.1
+            </a>
             <span class="code-details">Zeilen Code: 94</span>
           </li>
           <li class="plugin-item">
@@ -187,7 +198,7 @@
         <h3>Website:</h3>
         <p><strong>Frontend:</strong> Vanilla Js, HTML5, CSS</p>
         <p><strong>Backend:</strong> Python 3.12, Flask, SQLite3</p>
-        <hr />
+        <br>
         <h3>Minecraft Server:</h3>
         <p><strong>Serversoftware: </strong>PaperMC 1.20.1 (Docker)</p>
         <p><strong>Plugins: </strong>Java (Spigot)</p>
@@ -209,11 +220,94 @@
         document.getElementById("ram_stats").innerText = `In Benutzung:  ${
           event.data.split(":")[1]
         }GB/12GB`;
+        addData(event.data.split(":")[0]/8,event.data.split(":")[1])
       };
 
       eventSource.onerror = function (event) {
         console.error("EventSource failed:", event);
       };
+    </script>
+    <script>
+      var data_cpu = {
+        labels: [],
+        datasets: [
+          {
+            label: "CPU",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 1,
+            fill: false,
+            data: [],
+          },
+        ],
+      };
+
+      var options = {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      };
+      var data_ram = {
+        labels: [],
+        datasets: [
+          {
+            label: "RAM",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+            fill: false,
+            data: [],
+          },
+        ],
+      };
+
+
+
+      // Erstellen des Diagramms
+      var ctx_cpu = document.getElementById("usageChart_cpu").getContext("2d");
+      var usageChart_cpu = new Chart(ctx_cpu, {
+        type: "line",
+        data: data_cpu,
+        options: options,
+      });
+      var ctx_ram = document.getElementById("usageChart_ram").getContext("2d");
+      var usageChart_ram = new Chart(ctx_ram, {
+        type: "line",
+        data: data_ram,
+        options: options,
+      });
+      
+      function addData(cpuUsage, ramUsage) {
+
+        
+        var timestamp = new Date().toLocaleTimeString();
+        usageChart_cpu.data.labels.push(timestamp);
+        usageChart_ram.data.labels.push(timestamp);
+        
+        usageChart_cpu.data.datasets[0].data.push(cpuUsage);
+        usageChart_ram.data.datasets[0].data.push(ramUsage);
+        usageChart_cpu.update();
+        usageChart_ram.update();
+  
+        if (usageChart_cpu.data.labels.length > maxDataPoints) {
+          usageChart_cpu.data.labels.shift();
+          usageChart_cpu.data.datasets[0].data.shift();
+        }
+
+        if (usageChart_ram.data.labels.length > maxDataPoints) {
+          usageChart_ram.data.labels.shift();
+          usageChart_ram.data.datasets[0].data.shift();
+        }
+
+        usageChart_cpu.update();
+        usageChart_ram.update();
+      }
+
+      var maxDataPoints = 50;
     </script>
   </body>
 </html>
