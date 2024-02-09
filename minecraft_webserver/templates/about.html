@@ -1,142 +1,219 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Serverstatistiken</title>
 
-    <link href="./static/css/header.css" rel="stylesheet"/>
-    <link href="./static/css/index.css" rel="stylesheet"/>
+    <link href="./static/css/header.css" rel="stylesheet" />
+    <link href="./static/css/index.css" rel="stylesheet" />
 
-    <link href="./static/images/favicon.ico" rel="icon" type="image/vnd.microsoft.icon"/>
+    <link
+      href="./static/images/favicon.ico"
+      rel="icon"
+      type="image/vnd.microsoft.icon"
+    />
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-        background-color: #d0d0d0!important;
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #d0d0d0 !important;
         color: #333;
-        text-align: center; 
+        text-align: center;
         padding-top: 20px;
-    }
-    header {
-      text-align: left; 
-    }
+      }
+      header {
+        text-align: left;
+      }
 
+      h1 {
+        color: #004080;
+      }
 
-        h1 {
-            color: #004080;
-        }
+      .stat-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
 
-        .stat-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
+      .stat-box {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
+        flex: 1;
+        max-width: 400px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+      }
 
-        .stat-box {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin: 10px;
-            border-radius: 8px;
-            flex: 1;
-            max-width: 400px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-        }
+      .stat-box:hover {
+        transform: scale(1.05);
+      }
 
-        .stat-box:hover {
-            transform: scale(1.05);
-        }
+      .code-details {
+        margin-top: 10px;
+        font-size: 0.8em;
+        color: #666;
+      }
 
-        .code-details {
-            margin-top: 10px;
-            font-size: 0.8em;
-            color: #666;
-        }
+      #plugins-box {
+        flex: 2; /* Breiterer Bereich für Plugins */
+      }
 
-        #plugins-box {
-            flex: 2; /* Breiterer Bereich für Plugins */
-        }
+      .plugins-list {
+        list-style-type: none;
+        padding: 0;
+        text-align: left;
+      }
 
-        .plugins-list {
-            list-style-type: none;
-            padding: 0;
-            text-align: left;
-        }
+      .plugin-item {
+        background-color: #e6f7ff; /* Hellblaue Hintergrundfarbe als Akzent */
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .plugin-item {
-            background-color: #e6f7ff; /* Hellblaue Hintergrundfarbe als Akzent */
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .plugin-item a {
+        color: #004080;
+        text-decoration: none;
+      }
 
-        .plugin-item a {
-            color: #004080;
-            text-decoration: none;
-        }
-
-        .plugin-item a:hover {
-            text-decoration: underline;
-        }
+      .plugin-item a:hover {
+        text-decoration: underline;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     {% include 'header.html' %}
-<h1>Serverstatistiken</h1>
-<br>
+    <h1>Serverstatistiken</h1>
+    <br />
 
-<div class="stat-container">
-    <!-- CPU -->
-    <div class="stat-box">
-        <h2>CPU</h2>
+    <div class="stat-container">
+      <!-- CPU -->
+      <div class="stat-box">
+        <h2>Serverauslastung:</h2>
+        <hr />
+        <h3>CPU</h3>
         <p id="cpu_stats">Auslastung: X%</p>
-    </div>
-
-    <!-- RAM -->
-    <div class="stat-box">
-        <h2>RAM</h2>
+        <h3>RAM</h3>
         <p id="ram_stats">In Benutzung: XGB/12GB</p>
-    </div>
-
-    <!-- Framework -->
-    <div class="stat-box">
-        <h2>Framework</h2>
-        <p>Docker (Python Flask)</p>
-    </div>
-
-    <div class="stat-box" id="plugins-box">
+      </div>
+      <div class="stat-box" id="plugins-box">
         <h2>Plugins</h2>
         <ul class="plugins-list">
-            <li class="plugin-item">
-                <a href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/betterJoinMessages">BetterJoinMessages - 1.1 jar</a>
-                <span class="code-details">Zeilen Code: 1000</span>
-            </li>
-            <li class="plugin-item">
-                <a href="plugin2-details.html">EasyBan - 1.1 jar</a>
-                <span class="code-details">Zeilen Code: 800</span>
-            </li>
-            c
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/easyNewCraftingRecipes"
+              >easyNewCraftingRecipes-1.1</a
+            >
+            <span class="code-details">Zeilen Code: 76</span>
+          </li>
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/BetterJoinMessages"
+              >BetterJoinMessages - 1.1 </a
+            >
+            <span class="code-details">Zeilen Code: 94</span>
+          </li>
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/SpawnElytra"
+              >SpawnElytra-1.1</a
+            >
+            <span class="code-details">Zeilen Code: 117</span>
+          </li>
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/EasyHeadDrop"
+              >EasyHeadDrop-1.1</a
+            >
+            <span class="code-details">Zeilen Code: 108</span>
+          </li>
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/EasyShowMessage"
+              >EasyShowMessage-1.1</a
+            >
+            <span class="code-details">Zeilen Code: 178</span>
+          </li>
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/SpawnProtection"
+              >spawnProtect-1.1</a
+            >
+            <span class="code-details">Zeilen Code: 234</span>
+          </li>
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/ServerConnector"
+              >ServerConnector-1.1</a
+            >
+            <span class="code-details">Zeilen Code: 435</span>
+          </li>
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/PermissionSystem"
+              >PermissionSystem-1.1</a
+            >
+            <span class="code-details">Zeilen Code: 454</span>
+          </li>
+          <li class="plugin-item">
+            <a
+              target="_blank"
+              href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/EasyBan"
+              >EasyBan - 1.1</a
+            >
+            <span class="code-details">Zeilen Code: 549</span>
+          </li>
         </ul>
+      </div>
+      <!-- Framework -->
+      <div class="stat-box">
+        <h2>Tech Stack</h2>
+        <hr />
+        <h3>Website:</h3>
+        <p><strong>Frontend:</strong> Vanilla Js, HTML5, CSS</p>
+        <p><strong>Backend:</strong> Python 3.12, Flask, SQLite3</p>
+        <hr />
+        <h3>Minecraft Server:</h3>
+        <p><strong>Serversoftware: </strong>PaperMC 1.20.1 (Docker)</p>
+        <p><strong>Plugins: </strong>Java (Spigot)</p>
+      </div>
+      <!-- </div>
+    <div class="stat-container"> -->
     </div>
-</div>
-<script>
-const eventSource = new EventSource('/api/hardware');
+    <script>
+      const eventSource = new EventSource("/api/hardware");
 
-eventSource.onmessage = function(event) {
-    const data = event.data;
-    console.log(data); 
-    document.getElementById("cpu_stats").innerText = `Auslastung: ${Math.round(event.data.split(":")[0]/8)}%`
-    document.getElementById("ram_stats").innerText = `In Benutzung:  ${event.data.split(":")[1]}GB/12GB`
-};
+      eventSource.onmessage = function (event) {
+        const data = event.data;
+        console.log(data);
+        document.getElementById(
+          "cpu_stats"
+        ).innerText = `Auslastung: ${Math.round(
+          event.data.split(":")[0] / 8
+        )}%`;
+        document.getElementById("ram_stats").innerText = `In Benutzung:  ${
+          event.data.split(":")[1]
+        }GB/12GB`;
+      };
 
-eventSource.onerror = function(event) {
-    console.error("EventSource failed:", event);
-};
-</script>
-</body>
+      eventSource.onerror = function (event) {
+        console.error("EventSource failed:", event);
+      };
+    </script>
+  </body>
 </html>
