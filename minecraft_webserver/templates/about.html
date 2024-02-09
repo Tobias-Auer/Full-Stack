@@ -89,21 +89,18 @@
     {% include 'header.html' %}
 <h1>Serverstatistiken</h1>
 <br>
-<h1 style="color:red;text-decoration: underline;"><b>I cannot retrieve the docker stats so this are only placeholder
-    values</b></h1>
-<br>
 
 <div class="stat-container">
     <!-- CPU -->
     <div class="stat-box">
         <h2>CPU</h2>
-        <p>Auslastung: 30%</p>
+        <p id="cpu_stats">Auslastung: X%</p>
     </div>
 
     <!-- RAM -->
     <div class="stat-box">
         <h2>RAM</h2>
-        <p>Verfügbar: 8GB</p>
+        <p id="ram_stats">In Benutzung: XGB/12GB</p>
     </div>
 
     <!-- Framework -->
@@ -112,24 +109,34 @@
         <p>Docker (Python Flask)</p>
     </div>
 
-    <!-- Plugins -->
     <div class="stat-box" id="plugins-box">
         <h2>Plugins</h2>
         <ul class="plugins-list">
             <li class="plugin-item">
-                <a href="plugin1-details.html">BetterJoinMessages - 1.1 jar</a>
+                <a href="https://github.com/Tobias-Auer/Java/tree/main/Minecraft%20plugins/betterJoinMessages">BetterJoinMessages - 1.1 jar</a>
                 <span class="code-details">Zeilen Code: 1000</span>
             </li>
             <li class="plugin-item">
                 <a href="plugin2-details.html">EasyBan - 1.1 jar</a>
                 <span class="code-details">Zeilen Code: 800</span>
             </li>
-            <!-- Weitere Plugins hier einfügen -->
+            c
         </ul>
     </div>
 </div>
+<script>
+const eventSource = new EventSource('/api/hardware');
 
-<!-- Weitere Statistiken hier einfügen -->
+eventSource.onmessage = function(event) {
+    const data = event.data;
+    console.log(data); 
+    document.getElementById("cpu_stats").innerText = `Auslastung: ${Math.round(event.data.split(":")[0]/8)}%`
+    document.getElementById("ram_stats").innerText = `In Benutzung:  ${event.data.split(":")[1]}GB/12GB`
+};
 
+eventSource.onerror = function(event) {
+    console.error("EventSource failed:", event);
+};
+</script>
 </body>
 </html>

@@ -120,7 +120,7 @@ class MixedUtilsApi:
         db_handler.disconnect()
         os.system("shutdown -s")
         self.logger.info("Shutdown initiated")
-        
+
         exit()
 
     def format_time(self, seconds):

@@ -6,6 +6,7 @@ import threading
 import time
 from urllib.parse import urlparse
 
+import docker
 from flask import Flask, render_template, request, Response, redirect, session, flash, jsonify, abort
 
 import Logger
@@ -317,6 +318,40 @@ def stream_player_count():
     while not proceedStatusUpdate:  # threading lock (my best try at least, not sure whether this is the correct way of doing this)
         ...
     return Response(generate(), mimetype='text/event-stream')
+
+
+@app.route('/api/hardware')
+def stream_hardware_stats():
+    def generate(container_name):
+        # Generator function to monitor CPU and Memory usage for a Docker container
+        client = docker.from_env()
+        container = client.containers.get(container_name)
+        while True:
+            try:
+                stats = container.stats(decode=None, stream=False)
+                memory_stats = stats["memory_stats"]
+
+                # Calculate CPU usage percentage
+                cpu_delta: int = stats['cpu_stats']['cpu_usage']['total_usage'] - stats['precpu_stats']['cpu_usage'][
+                                     'total_usage']
+                system_delta: int = stats['cpu_stats']['system_cpu_usage'] - stats['precpu_stats'][
+                    'system_cpu_usage']
+                number_of_cores: int = len(stats['cpu_stats']['cpu_usage']['percpu_usage'])
+                cpu_percent: float = (cpu_delta / system_delta) * number_of_cores * 100
+                cpu_percent = round(cpu_percent, 2)  # Round to two decimal places
+
+                # Fetch memory consumption for the container
+                memory_usage = memory_stats["usage"]
+                memory_usage_gb = memory_usage / (1024 ** 3)  # Convert bytes to gigabytes
+                memory_usage_gb = round(memory_usage_gb, 2)
+                yield f"data: {cpu_percent}:{memory_usage_gb}\n\n"
+                time.sleep(2)
+            except Exception as e:
+                print("Error:", e)
+                yield f"data: ERROR:{e}\n\n"
+
+    container_name = "mcserver1.20.1"
+    return Response(generate(container_name), mimetype='text/event-stream')
 
 
 @app.route('/api/login', methods=['POST'])
