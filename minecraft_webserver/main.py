@@ -349,6 +349,7 @@ def stream_hardware_stats():
             except Exception as e:
                 print("Error:", e)
                 yield f"data: ERROR:{e}\n\n"
+                time.sleep(10)
 
     container_name = "mcserver1.20.1"
     return Response(generate(container_name), mimetype='text/event-stream')
