@@ -1,0 +1,89 @@
+/* Reset default margin and padding */
+body, h1, h2, h3, p, ul, ol, li, table, tr, td {
+  margin: 0;
+  padding: 0;
+}
+
+/* Center align content */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
+/* Container for player info */
+.player-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Player skin placeholder */
+.player-skin-placeholder {
+  width: 400px;
+  height: 400px;
+  background-color: #ddd; /* Placeholder color */
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* Download button */
+.download-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.download-button:hover {
+  background-color: #0056b3;
+}
+
+/* Container for stats cards */
+.stats-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Individual stat card */
+.stat-card {
+  width: 200px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-7px);
+}
+
+/* Stat icon */
+.stat-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+/* Stat label */
+.stat-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Stat value */
+.stat-value {
+  font-size: 14px;
+  color: #6c757d; /* Dimmer color for values */
+}

@@ -9,6 +9,7 @@
     <link href="./static/css/header.css" rel="stylesheet" />
     <link href="./static/css/index.css" rel="stylesheet" />
     <link href="./static/css/player-info.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./static/css/minecraft.css">
 
     <link
       href="./static/images/favicon.ico"
@@ -298,7 +299,8 @@
           const itemAttributes = stats[action][itemName];
           htmlString += `
       <tr>
-          <td>${transformToTitleCase(itemName)}</td>
+          
+          <td><i class="icon-minecraft icon-minecraft-${itemName.replaceAll("_", "-").replace("minecraft:", "")}"></i>  ${transformToTitleCase(itemName)}</td>
           `;
           for (const itemAttrName in itemAttributes) {
             htmlString += `
