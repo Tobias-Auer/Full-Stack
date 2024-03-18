@@ -29,6 +29,131 @@
     <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/MineRender@1.4.6/dist/skin.min.js"></script>
 
     <link href="./static/css/banned-banner.css" rel="stylesheet" />
+
+    <style>
+      .group::after, .tabBlock-tabs::after {
+        clear: both;
+        content: "";
+        display: table;
+      }
+      
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+    
+      @media screen and (min-width: 700px) {
+        body {
+          font-size: 137.5%;
+        }
+      }
+      
+      p, ol, ul {
+        margin-bottom: 1.25rem;
+        margin-top: 0;
+      }
+      
+      ol, ul {
+        padding: 0;
+        margin-left: 1.25rem;
+      }
+      
+      .unstyledList, .tabBlock-tabs {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .tabBlock {
+        margin: 0;
+      }
+
+      .tabBlock {
+        color: #10cae2;
+        border-left: solid;
+        border-right: solid;
+        border-left-width: 4px;
+        border-right-width: 0px;
+        
+
+      }
+      
+      .tabBlock-tab {
+        line-height: 2.5rem;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        background-color: #f0fdfd;
+        border-left: solid;
+        border-top: solid;
+        border-bottom: solid;
+        border-right: solid;
+        border-left-width: 0px;
+        border-right-width: 0px;
+        border-bottom-width: 4px;
+        color: #520340;
+        border-color: #10cae2;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 600;
+        float: left;
+        padding: 10px 40px;
+        position: relative;
+        width: 20%;
+
+      }
+      .tabBlock-tab:last-of-type {
+        border-right-style: solid;
+      }
+      .tabBlock-tab::before, .tabBlock-tab::after {
+        content: "";
+        display: block;
+        height: 4px;
+        position: absolute;
+      }
+
+      .tabBlock-tab.is-active::before {
+        background-color: #10cae2;
+        left: -4px;
+        right:-4px;
+        top: -1px;
+      }
+
+      
+
+      @media screen and (min-width: 700px) {
+        .tabBlock-tab {
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+        }
+      }
+      .tabBlock-tab.is-active {
+        position: relative;
+        color: #000000;
+        font-size: 1.5em;
+        border-bottom-width: 5px;
+        border-bottom-color: #d1dfdf;
+        z-index: 100;
+        background-color: #d1dfdf;
+      }
+
+      .tabBlock-tab.is-active + .tabBlock-tab {
+        border-left-width: 4px;
+      }
+
+      .tabBlock-tab.previous-tab {
+        border-right-width: 4px;
+      }
+      .tabBlock-tab:not(is-active) {
+        border-top-width: 0px;
+      }
+      .tabBlock-tab.is-active::before {
+        background-color: #10cae2;
+      }
+      .tabBlock-tab.is-active::after {
+        background-color: #fff;
+      }
+      
+    
+    </style>
   </head>
 
   <body>
@@ -79,7 +204,7 @@
       <hr />
       <br />
       <div class="center" style="width: 1600px !important">
-        <div>
+        <!-- <div>
           <button
             class="tabButton"
             disabled
@@ -100,8 +225,16 @@
           <button class="tabButton" id="other" onclick="doTabAction('other')">
             Anderes
           </button>
-        </div>
-        <br />
+        </div> -->
+        <figure class="tabBlock">
+          <ul class="tabBlock-tabs">
+            <li onclick="doTabAction('blocks')" class="tabBlock-tab is-active">Blöcke</li>
+            <li onclick="doTabAction('tools')" class="tabBlock-tab">Tools</li>
+            <li onclick="doTabAction('armor')" class="tabBlock-tab">Armor</li>
+            <li onclick="doTabAction('mobs')" class="tabBlock-tab">Mobs</li>
+            <li onclick="doTabAction('other')" class="tabBlock-tab">Verschiedenes</li>
+          </ul>
+        </figure>
         <div
           style="
             background-color: black;
@@ -127,6 +260,8 @@
         </ul>
       </nav>
     </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
     <script>
       var skinRender = new SkinRender(
         {
@@ -217,14 +352,8 @@
       stats_blocks = JSON.parse(stats_blocks);
 
       function doTabAction(action) {
-        buttons = document.getElementsByClassName("tabButton");
-        console.log(buttons);
-        for (i = 0; i < buttons.length; i++) {
-          console.warn(buttons.item(i));
-          buttons.item(i).disabled = false;
-        }
-        clickedButton = document.getElementById(action);
-        clickedButton.disabled = true;
+
+
         if (action == "other") {
           htmlString = `
       <table class="stats_table" style=border:dotted;>
@@ -332,7 +461,88 @@
         }
         document.getElementById("blocks").disabled = true;
         doTabAction("blocks");
-      };
+      };      
     </script>
+
+    <script>
+      const div = document.querySelector('.tabBlock');
+      var TabBlock = {
+      
+        init: function() {
+          TabBlock.bindUIActions();
+          TabBlock.updatePreviousTab(); // Initially set the previous tab class
+        },
+      
+        bindUIActions: function() {
+          $('.tabBlock-tabs').on('click', '.tabBlock-tab', function() {
+            TabBlock.switchTab($(this));
+          });
+        },
+      
+        switchTab: function($tab) {
+          var $context = $tab.closest('.tabBlock');
+      
+          if (!$tab.hasClass('is-active')) {
+            $tab.siblings().removeClass('is-active');
+            $tab.addClass('is-active');
+      
+            TabBlock.updatePreviousTab($context); // Update previous tab after switching
+            TabBlock.triggerTabFunctions($context); // Check for first/last tab triggers
+          }
+        },
+      
+        updatePreviousTab: function($context) {
+          // Get the current active tab
+          var $activeTab = $context.find('.tabBlock-tab.is-active');
+      
+          // Remove 'previous-tab' class from all tabs
+          $context.find('.tabBlock-tab').removeClass('previous-tab');
+      
+          // Add 'previous-tab' class to the tab before the active one, if it exists
+          if ($activeTab.prev()) {
+            $activeTab.prev().addClass('previous-tab');
+          }
+        },
+      
+        triggerTabFunctions: function($context) {
+          var $activeTab = $context.find('.tabBlock-tab.is-active');
+      
+          // Triggers for the first tab
+          if ($activeTab.is(':first-child')) {
+            TabBlock.firstTabFunction(); // Call your specific function for the first tab
+          } else if (~$context.find('.tabBlock-tab.is-active').prev().hasClass('first-tab')) { // If active tab was previously the first tab
+            TabBlock.firstTabRemovedFunction(); // Call a function when is-active is removed from first tab
+          }
+      
+          // Triggers for the last tab
+          if ($activeTab.is(':last-child')) {
+            TabBlock.lastTabFunction(); // Call your specific function for the last tab
+          } else if (~$context.find('.tabBlock-tab.is-active').next().hasClass('last-tab')) { // If active tab was previously the last tab
+            TabBlock.lastTabRemovedFunction(); // Call a function when is-active is removed from last tab
+          }
+        },
+      
+        // Replace these with your actual functions for first and last tabs
+        
+        firstTabFunction: function() {
+          div.style.borderLeftWidth = '4px';
+        },
+        firstTabRemovedFunction: function() {
+          div.style.borderLeftWidth = '0px';
+        },
+        lastTabFunction: function() {
+          div.style.borderRightWidth = '4px';
+        },
+        lastTabRemovedFunction: function() {
+          div.style.borderRightWidth = '0px';
+        }
+      };
+      
+      TabBlock.init();
+      </script>
+      
+
+
+        
   </body>
 </html>
