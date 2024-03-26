@@ -9,7 +9,7 @@
     <link href="./static/css/header.css" rel="stylesheet" />
     <link href="./static/css/index.css" rel="stylesheet" />
     <link href="./static/css/player-info.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./static/css/minecraft.css">
+    <link rel="stylesheet" href="./static/css/minecraft.css" />
 
     <link
       href="./static/images/favicon.ico"
@@ -31,40 +31,55 @@
     <link href="./static/css/banned-banner.css" rel="stylesheet" />
 
     <style>
-      .group::after, .tabBlock-tabs::after {
+      tr:nth-child(even) {
+        background-color: rgb(36, 45, 46);
+      }
+      .group::after,
+      .tabBlock-tabs::after {
         clear: both;
         content: "";
         display: table;
       }
-      
-      *, ::before, ::after {
+
+      *,
+      ::before,
+      ::after {
         box-sizing: border-box;
       }
-    
+
       @media screen and (min-width: 700px) {
         body {
           font-size: 137.5%;
         }
       }
-      
-      p, ol, ul {
+
+      p,
+      ol,
+      ul {
         margin-bottom: 1.25rem;
         margin-top: 0;
       }
-      
-      ol, ul {
+
+      ol,
+      ul {
         padding: 0;
         margin-left: 1.25rem;
       }
-      
-      .unstyledList, .tabBlock-tabs {
+
+      .unstyledList,
+      .tabBlock-tabs {
         list-style: none;
         margin: 0;
         padding: 0;
       }
-      
+
       .tabBlock {
         margin: 0;
+      }
+
+      .firstColumn {
+        text-align: left !important;
+        padding-left: 12%;
       }
 
       .tabBlock {
@@ -73,10 +88,8 @@
         border-right: solid;
         border-left-width: 4px;
         border-right-width: 0px;
-        
-
       }
-      
+
       .tabBlock-tab {
         line-height: 2.5rem;
         border-top-left-radius: 4px;
@@ -98,12 +111,12 @@
         padding: 10px 40px;
         position: relative;
         width: 20%;
-
       }
       .tabBlock-tab:last-of-type {
         border-right-style: solid;
       }
-      .tabBlock-tab::before, .tabBlock-tab::after {
+      .tabBlock-tab::before,
+      .tabBlock-tab::after {
         content: "";
         display: block;
         height: 4px;
@@ -113,11 +126,9 @@
       .tabBlock-tab.is-active::before {
         background-color: #10cae2;
         left: -4px;
-        right:-4px;
+        right: -4px;
         top: -1px;
       }
-
-      
 
       @media screen and (min-width: 700px) {
         .tabBlock-tab {
@@ -151,15 +162,24 @@
       .tabBlock-tab.is-active::after {
         background-color: #fff;
       }
-      
-    
+
+      .current-sort {
+        background-color: #10cae2;
+      }
     </style>
   </head>
 
   <body>
     {% include 'header.html' %}
-    <div class="banner-container sticky" id="banned-banner" style="--bgcolor: rgb(255, 0, 0);--color: rgb(255,255,255);">
-      <span class="banner-content">Dieser Spieler wurde vom Servernetzwerk gebannt.<br>Gebannt von {{startdate}} bis {{enddate}}</span>
+    <div
+      class="banner-container sticky"
+      id="banned-banner"
+      style="--bgcolor: rgb(255, 0, 0); --color: rgb(255, 255, 255)"
+    >
+      <span class="banner-content"
+        >Dieser Spieler wurde vom Servernetzwerk gebannt.<br />Gebannt von
+        {{startdate}} bis {{enddate}}</span
+      >
     </div>
     <div class="content">
       <h1><b class="center-v">Spieler: {{user_name}}</b></h1>
@@ -204,35 +224,35 @@
       <hr />
       <br />
       <div class="center" style="width: 1600px !important">
-        <!-- <div>
-          <button
-            class="tabButton"
-            disabled
-            id="blocks"
-            onclick="doTabAction('blocks')"
-          >
-            Blöcke
-          </button>
-          <button class="tabButton" id="tools" onclick="doTabAction('tools')">
-            Tools
-          </button>
-          <button class="tabButton" id="armor" onclick="doTabAction('armor')">
-            Armor
-          </button>
-          <button class="tabButton" id="mobs" onclick="doTabAction('mobs')">
-            Mobs
-          </button>
-          <button class="tabButton" id="other" onclick="doTabAction('other')">
-            Anderes
-          </button>
-        </div> -->
         <figure class="tabBlock">
           <ul class="tabBlock-tabs">
-            <li onclick="doTabAction('blocks')" class="tabBlock-tab is-active">Blöcke</li>
-            <li onclick="doTabAction('tools')" class="tabBlock-tab">Tools</li>
-            <li onclick="doTabAction('armor')" class="tabBlock-tab">Armor</li>
-            <li onclick="doTabAction('mobs')" class="tabBlock-tab">Mobs</li>
-            <li onclick="doTabAction('other')" class="tabBlock-tab">Verschiedenes</li>
+            <li onclick="doTabAction('blocks')" class="tabBlock-tab is-active">
+              Blöcke
+            </li>
+            <li
+              onclick="doTabAction('tools', 'tools_name', 'sort-state-0')"
+              class="tabBlock-tab"
+            >
+              Tools
+            </li>
+            <li
+              onclick="doTabAction('armor', 'armor_name', 'sort-state-0')"
+              class="tabBlock-tab"
+            >
+              Armor
+            </li>
+            <li
+              onclick="doTabAction('mobs', 'mobs_name', 'sort-state-0')"
+              class="tabBlock-tab"
+            >
+              Mobs
+            </li>
+            <li
+              onclick="doTabAction('other', 'other_name', 'sort-state-0')"
+              class="tabBlock-tab"
+            >
+              Verschiedenes
+            </li>
           </ul>
         </figure>
         <div
@@ -261,7 +281,7 @@
       </nav>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    
+
     <script>
       var skinRender = new SkinRender(
         {
@@ -282,7 +302,6 @@
         const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
         console.log(parsedArray);
 
-        // Iteration über das Array
         i = 0;
         for (const element of parsedArray) {
           if (i == 0) {
@@ -345,18 +364,190 @@
         tools: JSON.parse(stats_tools),
         mobs: JSON.parse(stats_mobs),
       };
-      stats_tools = JSON.parse(stats_tools);
-      stats_armor = JSON.parse(stats_armor);
-      stats_mobs = JSON.parse(stats_mobs);
-      stats_custom = JSON.parse(stats_custom);
-      stats_blocks = JSON.parse(stats_blocks);
 
-      function doTabAction(action) {
+      var stats = {
+        other: JSON.parse(stats_custom),
+        blocks: JSON.parse(stats_blocks),
+        armor: JSON.parse(stats_armor),
+        tools: JSON.parse(stats_tools),
+        mobs: JSON.parse(stats_mobs),
+      };
 
+      // remove "minecraft:" from keys and sort alphabetically
+      function processObject(obj) {
+        const newObj = {};
+        Object.keys(obj).forEach((key) => {
+          const newKey = key.replace("minecraft:", "");
+          newObj[newKey] = obj[key];
+        });
+        return Object.keys(newObj)
+          .sort()
+          .reduce((acc, key) => {
+            acc[key] = newObj[key];
+            return acc;
+          }, {});
+      }
 
+      // Process each category in stats
+      stats.other = processObject(stats.other);
+      stats.blocks = processObject(stats.blocks);
+      stats.armor = processObject(stats.armor);
+      stats.tools = processObject(stats.tools);
+      stats.mobs = processObject(stats.mobs);
+
+      function sortByListIndex(
+        data,
+        index,
+        sortKeyName = false,
+        reverse = false
+      ) {
+        let sortedKeys;
+        if (sortKeyName) {
+          sortedKeys = Object.keys(data).sort((a, b) => a.localeCompare(b));
+          if (reverse) {
+            sortedKeys.reverse();
+          }
+        } else {
+          sortedKeys = Object.keys(data).sort((a, b) => {
+            const numA = data[a][index];
+            const numB = data[b][index];
+            return reverse ? numB - numA : numA - numB;
+          });
+        }
+
+        const sortedData = {};
+        sortedKeys.forEach((key) => {
+          sortedData[key] = data[key];
+        });
+        return sortedData;
+      }
+      var current_sort = "";
+      var sort_state = "";
+      var sort_state_name = "";
+
+      function changeSort(button) {
+        current_sort = button.id;
+        sort_state = button.classList.contains("sort-state-0");
+        if (sort_state) {
+          sort_state_name = "sort-state-1";
+        } else {
+          sort_state_name = "sort-state-0";
+        }
+
+        console.log("Button ID:", button.id);
+        currentTable = button.id.split("_")[0];
+        sortBy = button.id.split("_")[1];
+        if (currentTable == "blocks") {
+          switch (sortBy) {
+            case "name":
+              stats.blocks = sortByListIndex(stats.blocks, 0, true, sort_state);
+              break;
+            case "mined":
+              stats.blocks = sortByListIndex(
+                stats.blocks,
+                0,
+                false,
+                sort_state
+              );
+              break;
+            case "placed":
+              stats.blocks = sortByListIndex(
+                stats.blocks,
+                1,
+                false,
+                sort_state
+              );
+              break;
+            case "pickedUp":
+              stats.blocks = sortByListIndex(
+                stats.blocks,
+                2,
+                false,
+                sort_state
+              );
+              break;
+            case "dropped":
+              stats.blocks = sortByListIndex(
+                stats.blocks,
+                3,
+                false,
+                sort_state
+              );
+              break;
+            case "crafted":
+              stats.blocks = sortByListIndex(
+                stats.blocks,
+                4,
+                false,
+                sort_state
+              );
+              break;
+          }
+          doTabAction("blocks", current_sort, sort_state_name);
+        } else if (currentTable == "armor") {
+          switch (sortBy) {
+            case "name":
+              stats.armor = sortByListIndex(stats.armor, 0, true, sort_state);
+              break;
+            case "broken":
+              stats.armor = sortByListIndex(stats.armor, 0, false, sort_state);
+              break;
+            case "crafted":
+              stats.armor = sortByListIndex(stats.armor, 1, false, sort_state);
+              break;
+            case "dropped":
+              stats.armor = sortByListIndex(stats.armor, 2, false, sort_state);
+              break;
+            case "pickedUp":
+              stats.armor = sortByListIndex(stats.armor, 3, false, sort_state);
+              break;
+            case "used":
+              stats.armor = sortByListIndex(stats.armor, 4, false, sort_state);
+              break;
+          }
+          doTabAction("armor", current_sort, sort_state_name);
+        } else if (currentTable == "tools") {
+          switch (sortBy) {
+            case "name":
+              stats.tools = sortByListIndex(stats.tools, 0, true, sort_state);
+              break;
+            case "broken":
+              stats.tools = sortByListIndex(stats.tools, 0, false, sort_state);
+              break;
+            case "crafted":
+              stats.tools = sortByListIndex(stats.tools, 1, false, sort_state);
+              break;
+            case "dropped":
+              stats.tools = sortByListIndex(stats.tools, 2, false, sort_state);
+              break;
+            case "pickedUp":
+              stats.tools = sortByListIndex(stats.tools, 3, false, sort_state);
+              break;
+            case "used":
+              stats.tools = sortByListIndex(stats.tools, 4, false, sort_state);
+              break;
+          }
+          doTabAction("tools", current_sort, sort_state_name);
+        } else if (currentTable == "mobs") {
+          switch (sortBy) {
+            case "name":
+              stats.mobs = sortByListIndex(stats.mobs, 0, true, sort_state);
+              break;
+            case "killed":
+              stats.mobs = sortByListIndex(stats.mobs, 0, false, sort_state);
+              break;
+            case "killedBy":
+              stats.mobs = sortByListIndex(stats.mobs, 1, false, sort_state);
+              break;
+          }
+          doTabAction("mobs", current_sort, sort_state_name);
+        }
+      }
+
+      function doTabAction(action, current_sort, sort_state) {
         if (action == "other") {
           htmlString = `
-      <table class="stats_table" style=border:dotted;>
+      <table class="stats_table">
         <thead>
         <tr>
           <th>Name</th>
@@ -370,12 +561,12 @@
       <table class="stats_table" style=border:dotted;>
         <thead>
         <tr>
-          <th>Name</th>
-          <th>Mined</th>
-          <th>Placed</th>
-          <th>Picked up</th>
-          <th>Dropped</th>
-          <th>Crafted</th>
+          <th>Name <button onclick="changeSort(this)" id="blocks_name" class="sortButton">&#9660;</button></th>
+          <th>Mined <button onclick="changeSort(this)" id="blocks_mined" class="sortButton">&#9660;</button></th>
+          <th>Placed <button onclick="changeSort(this)" id="blocks_placed" class="sortButton">&#9660;</button></th>
+          <th>Picked up <button onclick="changeSort(this)" id="blocks_pickedUp" class="sortButton">&#9660;</button></th>
+          <th>Dropped <button onclick="changeSort(this)" id="blocks_dropped" class="sortButton">&#9660;</button></th>
+          <th>Crafted <button onclick="changeSort(this)" id="blocks_crafted" class="sortButton">&#9660;</button></th>
         </tr>
       </thead>
       <tbody>
@@ -385,12 +576,12 @@
       <table class="stats_table" style=border:dotted;>
         <thead>
         <tr>
-          <th>Name</th>
-          <th>Broken</th>
-          <th>Crafted</th>
-          <th>Dropped</th>
-          <th>Picked up</th>
-          <th>Used</th>
+          <th>Name <button onclick="changeSort(this)" id="armor_name" class="sortButton">&#9660;</button></th>
+          <th>Broken <button onclick="changeSort(this)" id="armor_broken" class="sortButton">&#9660;</button></th>
+          <th>Crafted <button onclick="changeSort(this)" id="armor_crafted" class="sortButton">&#9660;</button></th>
+          <th>Dropped <button onclick="changeSort(this)" id="armor_dropped" class="sortButton">&#9660;</button></th>
+          <th>Picked up <button onclick="changeSort(this)" id="armor_pickedUp" class="sortButton">&#9660;</button></th>
+          <th>Used <button onclick="changeSort(this)" id="armor_used" class="sortButton">&#9660;</button></th>
         </tr>
       </thead>
       <tbody>
@@ -400,12 +591,12 @@
       <table class="stats_table" style=border:dotted;>
         <thead>
         <tr>
-          <th>Name</th>
-          <th>Broken</th>
-          <th>Crafted</th>
-          <th>Dropped</th>
-          <th>Picked up</th>
-          <th>Used</th>
+          <th>Name <button onclick="changeSort(this)" id="tools_name" class="sortButton">&#9660;</button></th>
+          <th>Broken <button onclick="changeSort(this)" id="tools_broken" class="sortButton">&#9660;</button></th>
+          <th>Crafted <button onclick="changeSort(this)" id="tools_crafted" class="sortButton">&#9660;</button></th>
+          <th>Dropped <button onclick="changeSort(this)" id="tools_dropped" class="sortButton">&#9660;</button></th>
+          <th>Picked up <button onclick="changeSort(this)" id="tools_pickedUp" class="sortButton">&#9660;</button></th>
+          <th>Used <button onclick="changeSort(this)" id="tools_used" class="sortButton">&#9660;</button></th>
         </tr>
       </thead>
       <tbody>
@@ -415,9 +606,9 @@
       <table class="stats_table" style=border:dotted;>
         <thead>
         <tr>
-          <th>Name</th>
-          <th>Killed</th>
-          <th>Killed By</th>
+          <th>Name <button onclick="changeSort(this)" id="mobs_name" class="sortButton">&#9660;</button></th>
+          <th>Killed <button onclick="changeSort(this)" id="mobs_killed" class="sortButton">&#9660;</button></th>
+          <th>Killed By <button onclick="changeSort(this)" id="mobs_killedBy" class="sortButton">&#9660;</button></th>
         </tr>
       </thead>
       <tbody>
@@ -429,7 +620,11 @@
           htmlString += `
       <tr>
           
-          <td><i class="icon-minecraft icon-minecraft-${itemName.replaceAll("_", "-").replace("minecraft:", "")}"></i>  ${transformToTitleCase(itemName)}</td>
+          <td class="firstColumn"><i class="icon-minecraft icon-minecraft-${itemName
+            .replaceAll("_", "-")
+            .replace("minecraft:", "")}"></i>  ${transformToTitleCase(
+            itemName
+          )}</td>
           `;
           for (const itemAttrName in itemAttributes) {
             htmlString += `
@@ -442,6 +637,14 @@
       </table>`;
 
         document.getElementById("staticsContentDiv").innerHTML = htmlString;
+
+        document.getElementById(current_sort).classList.add("current-sort");
+        document.getElementById(current_sort).classList.add(sort_state);
+        if (sort_state == "sort-state-0") {
+          document.getElementById(current_sort).innerHTML = "&#9660;";
+        } else {
+          document.getElementById(current_sort).innerHTML = "&#9650";
+        }
       }
 
       function transformToTitleCase(inputString) {
@@ -459,90 +662,96 @@
           console.log("banned");
           document.getElementById("banned-banner").classList.add("active");
         }
-        document.getElementById("blocks").disabled = true;
-        doTabAction("blocks");
-      };      
+        doTabAction("blocks", "blocks_name", "sort-state-0");
+      };
     </script>
 
     <script>
-      const div = document.querySelector('.tabBlock');
+      const div = document.querySelector(".tabBlock");
       var TabBlock = {
-      
-        init: function() {
+        init: function () {
           TabBlock.bindUIActions();
           TabBlock.updatePreviousTab(); // Initially set the previous tab class
         },
-      
-        bindUIActions: function() {
-          $('.tabBlock-tabs').on('click', '.tabBlock-tab', function() {
+
+        bindUIActions: function () {
+          $(".tabBlock-tabs").on("click", ".tabBlock-tab", function () {
             TabBlock.switchTab($(this));
           });
         },
-      
-        switchTab: function($tab) {
-          var $context = $tab.closest('.tabBlock');
-      
-          if (!$tab.hasClass('is-active')) {
-            $tab.siblings().removeClass('is-active');
-            $tab.addClass('is-active');
-      
+
+        switchTab: function ($tab) {
+          var $context = $tab.closest(".tabBlock");
+
+          if (!$tab.hasClass("is-active")) {
+            $tab.siblings().removeClass("is-active");
+            $tab.addClass("is-active");
+
             TabBlock.updatePreviousTab($context); // Update previous tab after switching
             TabBlock.triggerTabFunctions($context); // Check for first/last tab triggers
           }
         },
-      
-        updatePreviousTab: function($context) {
+
+        updatePreviousTab: function ($context) {
           // Get the current active tab
-          var $activeTab = $context.find('.tabBlock-tab.is-active');
-      
+          var $activeTab = $context.find(".tabBlock-tab.is-active");
+
           // Remove 'previous-tab' class from all tabs
-          $context.find('.tabBlock-tab').removeClass('previous-tab');
-      
+          $context.find(".tabBlock-tab").removeClass("previous-tab");
+
           // Add 'previous-tab' class to the tab before the active one, if it exists
           if ($activeTab.prev()) {
-            $activeTab.prev().addClass('previous-tab');
+            $activeTab.prev().addClass("previous-tab");
           }
         },
-      
-        triggerTabFunctions: function($context) {
-          var $activeTab = $context.find('.tabBlock-tab.is-active');
-      
+
+        triggerTabFunctions: function ($context) {
+          var $activeTab = $context.find(".tabBlock-tab.is-active");
+
           // Triggers for the first tab
-          if ($activeTab.is(':first-child')) {
+          if ($activeTab.is(":first-child")) {
             TabBlock.firstTabFunction(); // Call your specific function for the first tab
-          } else if (~$context.find('.tabBlock-tab.is-active').prev().hasClass('first-tab')) { // If active tab was previously the first tab
+          } else if (
+            ~$context
+              .find(".tabBlock-tab.is-active")
+              .prev()
+              .hasClass("first-tab")
+          ) {
+            // If active tab was previously the first tab
             TabBlock.firstTabRemovedFunction(); // Call a function when is-active is removed from first tab
           }
-      
+
           // Triggers for the last tab
-          if ($activeTab.is(':last-child')) {
+          if ($activeTab.is(":last-child")) {
             TabBlock.lastTabFunction(); // Call your specific function for the last tab
-          } else if (~$context.find('.tabBlock-tab.is-active').next().hasClass('last-tab')) { // If active tab was previously the last tab
+          } else if (
+            ~$context
+              .find(".tabBlock-tab.is-active")
+              .next()
+              .hasClass("last-tab")
+          ) {
+            // If active tab was previously the last tab
             TabBlock.lastTabRemovedFunction(); // Call a function when is-active is removed from last tab
           }
         },
-      
+
         // Replace these with your actual functions for first and last tabs
-        
-        firstTabFunction: function() {
-          div.style.borderLeftWidth = '4px';
+
+        firstTabFunction: function () {
+          div.style.borderLeftWidth = "4px";
         },
-        firstTabRemovedFunction: function() {
-          div.style.borderLeftWidth = '0px';
+        firstTabRemovedFunction: function () {
+          div.style.borderLeftWidth = "0px";
         },
-        lastTabFunction: function() {
-          div.style.borderRightWidth = '4px';
+        lastTabFunction: function () {
+          div.style.borderRightWidth = "4px";
         },
-        lastTabRemovedFunction: function() {
-          div.style.borderRightWidth = '0px';
-        }
+        lastTabRemovedFunction: function () {
+          div.style.borderRightWidth = "0px";
+        },
       };
-      
+
       TabBlock.init();
-      </script>
-      
-
-
-        
+    </script>
   </body>
 </html>
