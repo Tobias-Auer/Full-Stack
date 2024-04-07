@@ -15,6 +15,11 @@ nav {
   color: white;
 }
 
+nav ul {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
 nav a {
   color: white;
   text-decoration: none;
