@@ -31,9 +31,34 @@
     <link href="./static/css/banned-banner.css" rel="stylesheet" />
 
     <style>
-      tr:nth-child(even) {
+      #staticsContentDiv {
+        border-right: 4px solid #10cae2;
+        border-left: 4px solid #10cae2;
+      }
+
+      .stats_div_outer {
+        width: 100% !important;
+        border-bottom: 4px solid #10cae2;
+      }
+
+      .stats_div_outer_outer {
+        width: 80%;
+      }
+
+      tbody tr:hover {
+        filter: brightness(80%);
+        transition: filter 0.3s ease;
+        z-index: 1;
+      }
+
+      table tr:hover td {
+        transform: scale(1.05);
+      }
+
+      .stats_div tr {
         background-color: rgb(36, 45, 46);
       }
+
       .group::after,
       .tabBlock-tabs::after {
         clear: both;
@@ -79,7 +104,8 @@
 
       .firstColumn {
         text-align: left !important;
-        padding-left: 12%;
+        padding-left: 6%;
+        width: 33%;
       }
 
       .tabBlock {
@@ -91,6 +117,7 @@
       }
 
       .tabBlock-tab {
+        text-align: center;
         line-height: 2.5rem;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
@@ -108,13 +135,15 @@
         display: inline-block;
         font-weight: 600;
         float: left;
-        padding: 10px 40px;
+        padding: 10px 0px;
         position: relative;
         width: 20%;
       }
+
       .tabBlock-tab:last-of-type {
         border-right-style: solid;
       }
+
       .tabBlock-tab::before,
       .tabBlock-tab::after {
         content: "";
@@ -124,23 +153,19 @@
       }
 
       .tabBlock-tab.is-active::before {
+        text-align: center;
         background-color: #10cae2;
         left: -4px;
         right: -4px;
         top: -1px;
       }
 
-      @media screen and (min-width: 700px) {
-        .tabBlock-tab {
-          padding-left: 2.5rem;
-          padding-right: 2.5rem;
-        }
-      }
       .tabBlock-tab.is-active {
+        text-align: center;
         position: relative;
         color: #000000;
         font-size: 1.5em;
-        border-bottom-width: 5px;
+        border-bottom-width: 4px;
         border-bottom-color: #d1dfdf;
         z-index: 100;
         background-color: #d1dfdf;
@@ -153,18 +178,26 @@
       .tabBlock-tab.previous-tab {
         border-right-width: 4px;
       }
+
       .tabBlock-tab:not(is-active) {
         border-top-width: 0px;
       }
+
       .tabBlock-tab.is-active::before {
         background-color: #10cae2;
       }
+
       .tabBlock-tab.is-active::after {
         background-color: #fff;
       }
 
       .current-sort {
         background-color: #10cae2;
+      }
+
+      .center2 {
+        display: grid;
+        place-items: center;
       }
     </style>
   </head>
@@ -223,49 +256,55 @@
       <br />
       <hr />
       <br />
-      <div class="center" style="width: 1600px !important">
-        <figure class="tabBlock">
-          <ul class="tabBlock-tabs">
-            <li onclick="doTabAction('blocks')" class="tabBlock-tab is-active">
-              Blöcke
-            </li>
-            <li
-              onclick="doTabAction('tools', 'tools_name', 'sort-state-0')"
-              class="tabBlock-tab"
-            >
-              Tools
-            </li>
-            <li
-              onclick="doTabAction('armor', 'armor_name', 'sort-state-0')"
-              class="tabBlock-tab"
-            >
-              Armor
-            </li>
-            <li
-              onclick="doTabAction('mobs', 'mobs_name', 'sort-state-0')"
-              class="tabBlock-tab"
-            >
-              Mobs
-            </li>
-            <li
-              onclick="doTabAction('other', 'other_name', 'sort-state-0')"
-              class="tabBlock-tab"
-            >
-              Verschiedenes
-            </li>
-          </ul>
-        </figure>
-        <div
-          style="
-            background-color: black;
-            color: white;
-            width: 1600px;
-            height: 600px;
-            overflow-wrap: break-word;
-            overflow: scroll;
-          "
-        >
-          <p class="stats_div" id="staticsContentDiv">Loading...</p>
+      <div class="center2">
+        <div class="stats_div_outer_outer">
+          <figure class="tabBlock">
+            <ul class="tabBlock-tabs">
+              <li
+                onclick='doTabAction("blocks", "blocks_name", "sort-state-0")'
+                class="tabBlock-tab is-active"
+              >
+                Blöcke
+              </li>
+              <li
+                onclick="doTabAction('tools', 'tools_name', 'sort-state-0')"
+                class="tabBlock-tab"
+              >
+                Tools
+              </li>
+              <li
+                onclick="doTabAction('armor', 'armor_name', 'sort-state-0')"
+                class="tabBlock-tab"
+              >
+                Armor
+              </li>
+              <li
+                onclick="doTabAction('mobs', 'mobs_name', 'sort-state-0')"
+                class="tabBlock-tab"
+              >
+                Mobs
+              </li>
+              <li
+                onclick="doTabAction('other', 'other_name', 'sort-state-0')"
+                class="tabBlock-tab"
+              >
+                Verschiedenes
+              </li>
+            </ul>
+          </figure>
+          <div
+            class="stats_div_outer"
+            style="
+              background-color: rgb(36, 45, 46);
+              color: white;
+              width: 1600px;
+              height: 600px;
+              overflow-wrap: break-word;
+              overflow-y: scroll;
+            "
+          >
+            <div class="stats_div" id="staticsContentDiv">Loading...</div>
+          </div>
         </div>
       </div>
       <br />
@@ -545,87 +584,66 @@
       }
 
       function doTabAction(action, current_sort, sort_state) {
+        htmlString = `
+        <table class="stats_table">
+          <thead>
+          <tr style="background-color: hsl(220, 10%, 15%)">
+          
+        
+        `;
         if (action == "other") {
-          htmlString = `
-      <table class="stats_table">
-        <thead>
-        <tr>
-          <th>Name</th>
+          htmlString += `
+          <th style='width: 50%'>Name</th>
           <th>Wert</th>
-        </tr>
-      </thead>
-      <tbody>
       `;
         } else if (action == "blocks") {
-          htmlString = `
-      <table class="stats_table" style=border:dotted;>
-        <thead>
-        <tr>
+          htmlString += `
           <th>Name <button onclick="changeSort(this)" id="blocks_name" class="sortButton">&#9660;</button></th>
           <th>Mined <button onclick="changeSort(this)" id="blocks_mined" class="sortButton">&#9660;</button></th>
           <th>Placed <button onclick="changeSort(this)" id="blocks_placed" class="sortButton">&#9660;</button></th>
           <th>Picked up <button onclick="changeSort(this)" id="blocks_pickedUp" class="sortButton">&#9660;</button></th>
           <th>Dropped <button onclick="changeSort(this)" id="blocks_dropped" class="sortButton">&#9660;</button></th>
           <th>Crafted <button onclick="changeSort(this)" id="blocks_crafted" class="sortButton">&#9660;</button></th>
-        </tr>
-      </thead>
-      <tbody>
       `;
         } else if (action == "armor") {
-          htmlString = `
-      <table class="stats_table" style=border:dotted;>
-        <thead>
-        <tr>
+          htmlString += `
           <th>Name <button onclick="changeSort(this)" id="armor_name" class="sortButton">&#9660;</button></th>
           <th>Broken <button onclick="changeSort(this)" id="armor_broken" class="sortButton">&#9660;</button></th>
           <th>Crafted <button onclick="changeSort(this)" id="armor_crafted" class="sortButton">&#9660;</button></th>
           <th>Dropped <button onclick="changeSort(this)" id="armor_dropped" class="sortButton">&#9660;</button></th>
           <th>Picked up <button onclick="changeSort(this)" id="armor_pickedUp" class="sortButton">&#9660;</button></th>
           <th>Used <button onclick="changeSort(this)" id="armor_used" class="sortButton">&#9660;</button></th>
-        </tr>
-      </thead>
-      <tbody>
       `;
         } else if (action == "tools") {
-          htmlString = `
-      <table class="stats_table" style=border:dotted;>
-        <thead>
-        <tr>
+          htmlString += `
           <th>Name <button onclick="changeSort(this)" id="tools_name" class="sortButton">&#9660;</button></th>
           <th>Broken <button onclick="changeSort(this)" id="tools_broken" class="sortButton">&#9660;</button></th>
           <th>Crafted <button onclick="changeSort(this)" id="tools_crafted" class="sortButton">&#9660;</button></th>
           <th>Dropped <button onclick="changeSort(this)" id="tools_dropped" class="sortButton">&#9660;</button></th>
           <th>Picked up <button onclick="changeSort(this)" id="tools_pickedUp" class="sortButton">&#9660;</button></th>
           <th>Used <button onclick="changeSort(this)" id="tools_used" class="sortButton">&#9660;</button></th>
-        </tr>
-      </thead>
-      <tbody>
       `;
         } else if (action == "mobs") {
-          htmlString = `
-      <table class="stats_table" style=border:dotted;>
-        <thead>
-        <tr>
+          htmlString += `
           <th>Name <button onclick="changeSort(this)" id="mobs_name" class="sortButton">&#9660;</button></th>
           <th>Killed <button onclick="changeSort(this)" id="mobs_killed" class="sortButton">&#9660;</button></th>
-          <th>Killed By <button onclick="changeSort(this)" id="mobs_killedBy" class="sortButton">&#9660;</button></th>
-        </tr>
-      </thead>
-      <tbody>
-      `;
+          <th>Killed By <button onclick="changeSort(this)" id="mobs_killedBy" class="sortButton">&#9660;</button></th>`;
         }
+        htmlString += `</tr>
+      </thead>
+      <tbody>`;
 
         for (const itemName in stats[action]) {
           const itemAttributes = stats[action][itemName];
           htmlString += `
-      <tr>
-          
+      <tr>  
           <td class="firstColumn"><i class="icon-minecraft icon-minecraft-${itemName
             .replaceAll("_", "-")
             .replace("minecraft:", "")}"></i>  ${transformToTitleCase(
             itemName
           )}</td>
           `;
+
           for (const itemAttrName in itemAttributes) {
             htmlString += `
           <td>${itemAttributes[itemAttrName]}</td>

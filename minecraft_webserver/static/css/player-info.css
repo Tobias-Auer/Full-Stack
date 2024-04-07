@@ -54,20 +54,22 @@
 }
 
 .stats_table table {
-    width: 98%; /* Ensure the table takes the full width of its container */
+    width: 100%; /* Ensure the table takes the full width of its container */
   }
 
 .stats_table thead {
 position: sticky;
-background-color: black;
-width: 90%;
+background-color: #2b2e30;
+color: #53ffb1;
+width: 100%;
 top: 0; /* Stick the header to the top */
+z-index: 100;
 }
 
 /* Optional styling for the table */
 table {
 border-collapse: collapse;
-width: 98%;
+width: 100%;
 }
 
 .stats_div {
@@ -80,6 +82,23 @@ width: 98%;
     padding: 8px;
     text-align: center;
   }
-/* div {
-    border: 1px solid red; /* Hier können Sie die gewünschte Farbe und Breite der Grenzen anpassen */
 
+  .sortButton {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px; /* Reduced padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px; /* Reduced font size */
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 6px; /* Slightly rounded corners */
+    transition: background-color 0.3s ease;
+  }
+  
+  .sortButton:hover {
+    filter: brightness(80%); /* Darkening filter */
+  }
+  
