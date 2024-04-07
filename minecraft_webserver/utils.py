@@ -4,7 +4,6 @@ from datetime import datetime
 from zipfile import ZipFile
 
 import requests
-from flask import request
 
 import dataBaseOperations
 
@@ -249,7 +248,6 @@ class DatabaseApi:
             print("CHANGING UUID: " + str(uuid))
             db_handler.write_player_status(uuid[0], "offline")
         db_handler.disconnect()
-
 
 
 class MinecraftApi:
