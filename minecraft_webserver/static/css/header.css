@@ -16,8 +16,8 @@ nav {
 }
 
 nav ul {
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 nav a {
@@ -43,6 +43,7 @@ html {
 }
 
 button.current {
+  font-weight: bold;
   text-decoration: underline;
   background-color: #0433aa !important;
 }
@@ -66,8 +67,8 @@ a.current2 {
 .dropbtn {
   background-color: #04aa6d;
   color: white;
-  padding: 16px;
-  font-size: 16px;
+  padding: 14px;
+  font-size: 20px;
   border: none;
 }
 
@@ -83,6 +84,7 @@ header {
 }
 
 .dropdown-content {
+  z-index:20;
   display: none;
   position: absolute;
   background-color: #f1f1f1;
@@ -148,41 +150,6 @@ img.scale {
 
 
 
-/* Input-Feld */
-#search {
-  background-color: #f2f2f2;
-  border: none;
-  border-radius: 5px;
-  padding: 12px;
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  width: 5.3rem;
-  background-image: url(/static/images/search.png),
-    linear-gradient(to right, #ff9966, #ff5e62);
-  background-position: right center, right center;
-  background-repeat: no-repeat;
-  background-size: 64px 64px, auto;
-  /* background-position: center right 0px;
-  background-repeat: no-repeat; */
-  color: #fff;
-  transition: background-image 0.5s ease;
-}
-
-/* Vordefinierter Text (Placeholder) */
-#search::placeholder {
-  color: #fff;
-  opacity: 0.8;
-}
-
-/* Focus-Zustand */
-#search:focus {
-  outline: none;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  background-color: #cc6e3e;
-  background-image: none;
-  width: 10rem;
-}
 
 header ul li:nth-last-child(-n + 2) {
   float: right;
@@ -224,6 +191,26 @@ header {
   margin-top: -16px;
 }
 .content {
-  margin-top: 100px;
+  margin-top: 130px;
 }
 
+
+.mobile-view-only {
+  display: none;
+}
+
+.menueToggle {
+  display: block !important;
+}
+
+.menueToggle li:first-child {
+  display: none !important;
+}
+
+.loginVarMain {
+  font-size: 26px;
+  div {
+    
+  margin-top: 10px;
+  }
+}

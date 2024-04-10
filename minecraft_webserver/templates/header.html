@@ -1,70 +1,109 @@
-<script src="https://cdn.jsdelivr.net/gh/Tobias-Auer/messageBoxLib/messageBoxes.js" defer></script>
+<script
+  src="https://cdn.jsdelivr.net/gh/Tobias-Auer/messageBoxLib/messageBoxes.js"
+  defer
+></script>
+<link rel="stylesheet" href="./static/css/responsiveHeader.css" />
 <header class="sticky">
-  <nav>
-    <ul>
-      <li>
-        <img alt="logo" height="40" id="logo" src="./static/images/logo2.png" />
-      </li>
-      <li>
-        <div class="dropdown">
+  <div class="container-util-wide">
+    <nav>
+      <div class="mobile-view-only">
+        <span style="width: 8%">
+          <img
+            class="header-icon-mobile"
+            alt="logo"
+            height="100px"
+            id="logo"
+            src="./static/images/logo2.png"
+          />
+        </span>
+
+        <span id="loginVar2" style="display: flex; width: 84%; justify-content: center"
+          >{{ loginVar | safe}}</span
+        >
+
+        <span style="display: flex; width: 8%; justify-content: end">
           <button
-            class="dropbtn {% if request.path=='/' %} current{% endif %}"
-            onclick="window.location.href=`/`"
+            class="menue-icon"
+            onclick='document.getElementById("nav-bar").classList.toggle("menueToggle")'
           >
-            Startseite
+            <div></div>
+            <div></div>
+            <div></div>
           </button>
-        </div>
-      </li>
-      <li>
-        <div class="dropdown">
-          <button
-            class="dropbtn {% if request.path=='/spieler' %} current{% endif %}"
-            onclick="window.location.href=`/spieler`"
-          >
-            Spieler
-          </button>
-        </div>
-      </li>
-      <li>
-        <div class="dropdown">
-          <button
-            class="dropbtn {% if request.path=='/add_pref' or request.path=='/join_pref' %} current{% endif %}"
-          >
-            ▼ Prefixes
-          </button>
-          <div class="dropdown-content">
-            <a href="/add_pref">Erstellen/Ändern</a>
-            <a href="/join_pref">Beitreten</a>
+        </span>
+      </div>
+      <ul id="nav-bar">
+        <li>
+          <img
+          class="normal-icon"
+            alt="logo"
+            height="80px"
+            id="logo"
+            src="./static/images/logo2.png"
+          />
+        </li>
+        <li>
+          <div class="dropdown">
+            <button
+              class="dropbtn {% if request.path=='/' %} current{% endif %}"
+              onclick="window.location.href=`/`"
+            >
+              Startseite
+            </button>
           </div>
-        </div>
-      </li>
-      <li>
-        <div class="dropdown">
-          <button
-            class="dropbtn {% if request.path=='/report' %} current{% endif %}"
-            onclick="window.location.href='/report'"
-          >
-            Spieler Report
-          </button>
-        </div>
-      </li>
-      {% if perm <= 1 %}
-      <li>
-        <div class="dropdown">
-          <button
-            class="dropbtn {% if request.path=='/users' %} current{% endif %}"
-            onclick="window.location.href='/users'"
-          >
-            Verwaltung
-          </button>
-        </div>
-      </li>
-      {% endif %}
-      <!-- Code for flask application -->
-      <li>{{ loginVar | safe}}</li>
-      <li></li>
-    </ul>
-  </nav>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button
+              class="dropbtn {% if request.path=='/spieler' %} current{% endif %}"
+              onclick="window.location.href=`/spieler`"
+            >
+              Spieler
+            </button>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button
+              class="dropbtn {% if request.path=='/add_pref' or request.path=='/join_pref' %} current{% endif %}"
+            >
+              ▼ Prefixes
+            </button>
+            <div class="dropdown-content">
+              <a href="/add_pref">Erstellen/Ändern</a>
+              <a href="/join_pref">Beitreten</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown">
+            <button
+              class="dropbtn {% if request.path=='/report' %} current{% endif %}"
+              onclick="window.location.href='/report'"
+            >
+              Spieler Report
+            </button>
+          </div>
+        </li>
+        {% if perm <= 1 %}
+        <li>
+          <div class="dropdown">
+            <button
+              class="dropbtn {% if request.path=='/users' %} current{% endif %}"
+              onclick="window.location.href='/users'"
+            >
+              Verwaltung
+            </button>
+          </div>
+        </li>
+        {% endif %}
+        <!-- Code for flask application -->
+        <span class="loginVarMain"><li >{{ loginVar | safe}}</li></span>
+        
+        <li></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <script>
