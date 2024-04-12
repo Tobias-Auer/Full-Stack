@@ -146,16 +146,16 @@ class MixedUtilsApi:
         setMinutes, setSeconds = True, True
         if days > 0:
             time_parts.append(f"{days} Tag{'e' if days > 1 else ''}")
-            setSeconds, setMinutes = False
+            setSeconds, setMinutes = False, False
         if hours > 0:
-            time_parts.append(f"{hours} Stunde{'n' if hours > 1 else ''}")
+            time_parts.append(f"{hours} Std.")
             setMinutes = False
         if minutes > 0 and setMinutes:
-            time_parts.append(f"{minutes} Minute{'n' if minutes > 1 else ''}")
+            time_parts.append(f"{minutes} Min.")
         if seconds > 0 and setSeconds:
-            time_parts.append(f"{seconds} Sekunde{'n' if seconds > 1 else ''}")
+            time_parts.append(f"{seconds} Sec.")
 
-        return ', '.join(time_parts)
+        return ' '.join(time_parts)
 
 
 class DatabaseApi:
