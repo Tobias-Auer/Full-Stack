@@ -39,15 +39,16 @@ def inject_loginVar():
     uuid = session.get('uuid')
     loginVar = "<a href=\"/login\" id=loginLink>Login</a>"
     permission_level = 99
+    name=""
     if isinstance(uuid, str):
         name = minecraftApi.get_username_from_uuid(uuid)
-        loginVar = (f"<div>Willkommen {name}<br> <a id=logoutLink onclick=\"logout()\" style=\"cursor: "
-                    "pointer;\">Logout</a></div>")
+        loginVar = (f"{name}<br> <a id=logoutLink onclick=\"logout()\" style=\"cursor: "
+                    "pointer;font-size:20px;\">Logout</a>")
         db_handler = dataBaseOperations.DatabaseHandler("playerData")
         permission_level = db_handler.get_access_level(uuid)
         db_handler.disconnect()
 
-    return dict(loginVar=loginVar, perm=permission_level)
+    return dict(loginVar=loginVar, perm=permission_level, uuid_profile=uuid, name=name)
 
 
 proceedStatusUpdate = False  # multithreading lock
