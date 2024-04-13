@@ -6,56 +6,10 @@
   padding-right: 0;
 }
 
-@media (max-width: 1531px) {
-  .container-util-wide {
-    .normal-icon{
-      height: 70px;
-    }
-    .dropbtn {
-      font-size: 17px !important;
-    }
-    .loginVarMain {
-      font-size: 20px !important;
-    }
-  }.content {
-    margin-top: 110px;
-  }
-}
 
-/* lg */
-@media (max-width: 1131px) {
-  .container-util-wide {
-    .normal-icon{
-      height: 60px;
-    }
-    .dropbtn {
-      font-size: 15px !important;
-    }
-    .loginVarMain {
-      font-size: 18px !important;
-      div {
-        margin-top: 13px;
-        }
-    }
-    
-  }
-}
-
-/* md */
-@media (max-width: 912px) {
-  .container-util-wide {
-    .dropbtn {
-      font-size: 12px !important;
-    }
-    .header-icon {
-      margin-top: 15px;
-      height: 50px;
-    }
-  }
-}
 
 /* xs */
-@media (max-width: 850px) {
+@media (max-width: 750px) {
   .container-util-wide {
     nav {
       font-size: 28px !important;

@@ -1,7 +1,7 @@
 :root {
   --primary: #53ffb1;
   --secondary: #2435fd;
-  --accent: #10cae2;
+  --accent: #FF7A38;
 }
 #mySkinContainer {
   width: 400px;
@@ -10,13 +10,7 @@
   justify-content: center;
   align-items: center;
 }
-#downloadButton {
-  display: flex;
-  justify-content: flex-end;
-  align-items: end;
-  align-self: flex-end;
-  margin-left: auto;
-}
+
 /* .column {
     width: 50%;
     padding-left: 20px;
@@ -167,8 +161,25 @@ td {
   bottom: 40px;
   text-align: center;
 }
+
+.topDiv {
+  position: relative;
+  bottom: 70px;
+  text-align: center;
+} 
+
+
+
 .bottomDiv p {
   text-transform: capitalize;
+}
+
+.downloadButton {
+  position: relative;
+  bottom: 420px;
+  left: 170px;
+  text-align: center;
+  cursor: pointer;
 }
 
 .bottomDiv p span {
@@ -209,3 +220,15 @@ td {
   }
 }
 
+.status-online {
+  color: green;
+}
+
+.status-offline {
+  color: red;
+}
+
+.status {
+  text-transform: capitalize;
+  font-size: 25px;
+}

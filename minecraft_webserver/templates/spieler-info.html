@@ -35,7 +35,7 @@
       :root {
         --primary: #53ffb1;
         --secondary: #2435fd;
-        --accent: #10cae2;
+        --accent: #FF7A38;
       }
 
       #staticsContentDiv {
@@ -115,7 +115,7 @@
         line-height: 2.5rem;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
-        background-color: #f0fdfd;
+        background-color: #e1e8e8;
         border-left: solid;
         border-top: solid;
         border-bottom: solid;
@@ -123,7 +123,7 @@
         border-left-width: 0px;
         border-right-width: 0px;
         border-bottom-width: 4px;
-        color: var(--secondary);
+        color: black;
         border-color: var(--accent);
         cursor: pointer;
         display: inline-block;
@@ -157,7 +157,7 @@
       .tabBlock-tab.is-active {
         text-align: center;
         position: relative;
-        color: #000000;
+        color: var(--secondary);
         font-size: 1.5em;
         border-bottom-width: 4px;
         border-bottom-color: #d1dfdf;
@@ -186,7 +186,7 @@
       }
 
       .current-sort {
-        color: #10c8e0;
+        color: var(--accent);
       }
 
       .center2 {
@@ -221,45 +221,83 @@
         <div class="container">
           <div title="Das erste mal gesehen" class="item item-2">
             <div class="box bottomLeft">
-              <img width="50%" src="./static/images/003-calendar-1.png" alt="" />
+              <img width="50%" src="./static/images/b003-calendar-1.png" alt="" />
               <p id="3"></p>
             </div>
           </div>
           <div title="Gesamtspielzeit" class="item item-1">
             <div class="box topLeft">
-              <img width="50%" src="./static/images/005-wall-clock.png" alt="" />
+              <img width="50%" src="./static/images/b005-wall-clock.png" alt="" />
               <p id="6">Loading</p>
             </div>
           </div>
           <div class="item item-3">
             <div id="mySkinContainer"></div>
+            <div class="topDiv">
+              <p id="4" style="display: none;"><span>Loading</span></p>
+            </div>
             <div class="bottomDiv">
               <p id="1"><span>Loading</span></p>
             </div>
-            <div id="downloadButton">
-              <!-- <button
+            <div class="downloadButton">
+              <button
                 onclick='forceDownload("https://crafatar.com/skins/{{uuid}}", "Skin-{{user_name}}.png");'
-                style="width: 400px"
+                style="width: 40px;height:40px"
               >
-                Download
-              </button> -->
+              <svg fill="#000000" height="100%" width="100%" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 29.978 29.978" xml:space="preserve">
+                <g>
+                  <path d="M25.462,19.105v6.848H4.515v-6.848H0.489v8.861c0,1.111,0.9,2.012,2.016,2.012h24.967c1.115,0,2.016-0.9,2.016-2.012   v-8.861H25.462z"/>
+                  <path d="M14.62,18.426l-5.764-6.965c0,0-0.877-0.828,0.074-0.828s3.248,0,3.248,0s0-0.557,0-1.416c0-2.449,0-6.906,0-8.723   c0,0-0.129-0.494,0.615-0.494c0.75,0,4.035,0,4.572,0c0.536,0,0.524,0.416,0.524,0.416c0,1.762,0,6.373,0,8.742   c0,0.768,0,1.266,0,1.266s1.842,0,2.998,0c1.154,0,0.285,0.867,0.285,0.867s-4.904,6.51-5.588,7.193   C15.092,18.979,14.62,18.426,14.62,18.426z"/>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                  <g>
+                  </g>
+                </g>
+                </svg>
+              </button>
             </div>
           </div>
           <div title="Gesamtanzahl Tode" class="item item-4">
             <div class="box topRight">
-              <img width="50%" src="./static/images/007-grave-1.png" alt="" />
+              <img width="50%" src="./static/images/b007-grave-1.png" alt="" />
               <p id="2">Loading</p>
             </div>
           </div>
           <div title="Zeit seit letzem Tod" class="item item-5">
             <div class="box bottomRight">
-              <img width="50%" src="./static/images/006-grave.png" alt="" />
+              <img width="50%" src="./static/images/b006-grave.png" alt="" />
               <p id="5">Loading</p>
             </div>
           </div>
         </div>
       </div>
-      <p id="4" style="display: none">Loading</p>
+      <!-- <p id="4" style="display: none">Loading</p> -->
 
       <br />
       <br />
@@ -349,15 +387,19 @@
         console.warn(event.data);
         const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
         console.log(parsedArray);
-
         i = 0;
-        for (const element of parsedArray) {
+        for (var element of parsedArray) {
           if (i == 0) {
-            i += 1;
+            i += 1; 
             continue;
           }
-          document.getElementById("" + i).innerHTML =
-            i === 1 ? "<span>" + element + "</span>" : element;
+          if (i==1) {
+            element = `<span class="status status-${element}">` + element + "</span>"
+              
+          }
+          document.getElementById("" + i).innerHTML = element;
+          
+          
 
           i += 1;
         }
