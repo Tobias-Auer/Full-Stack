@@ -1,13 +1,12 @@
 .container {
     display: grid;
-    grid-template-rows: 200px 200px 200px;
-    grid-template-columns: 1fr 1.5fr 1fr;
+    grid-template-rows: repeat(2, fit-content);
+    grid-template-columns: 1fr 1fr 1fr;
   
     justify-content: center;
     grid-template-areas:
       "stat1 image stat3"
-      "stat2 image stat4"
-      "empty1 stat5 empty2";
+      "stat2 image stat4";
   }
   
   .item-1 {
@@ -28,9 +27,6 @@
   
   .item-5 {
     grid-area: stat4;
-  }
-  .item-6 {
-    grid-area: stat5;
   }
   
   .container-util {
@@ -76,14 +72,13 @@
     }
     .container {
       grid-template-columns: 1fr;
-      grid-template-rows: 300px repeat(5, 100px);
+      grid-template-rows: 300px repeat(4, 100px);
       grid-template-areas:
         "image"
         "stat3"
         "stat2"
         "stat1"
-        "stat4"
-        "stat5";
+        "stat4";
     }
   }
   

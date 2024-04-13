@@ -32,14 +32,20 @@
     <link href="./static/css/banned-banner.css" rel="stylesheet" />
 
     <style>
+      :root {
+        --primary: #53ffb1;
+        --secondary: #2435fd;
+        --accent: #10cae2;
+      }
+
       #staticsContentDiv {
-        border-right: 4px solid #10cae2;
-        border-left: 4px solid #10cae2;
+        border-right: 4px solid var(--accent);
+        border-left: 4px solid var(--accent);
       }
 
       .stats_div_outer {
         width: 100% !important;
-        border-bottom: 4px solid #10cae2;
+        border-bottom: 4px solid var(--accent);
       }
 
       .stats_div_outer_outer {
@@ -79,19 +85,6 @@
         }
       }
 
-      p,
-      ol,
-      ul {
-        margin-bottom: 1.25rem;
-        margin-top: 0;
-      }
-
-      ol,
-      ul {
-        padding: 0;
-        margin-left: 1.25rem;
-      }
-
       .unstyledList,
       .tabBlock-tabs {
         list-style: none;
@@ -110,7 +103,7 @@
       }
 
       .tabBlock {
-        color: #10cae2;
+        color: var(--accent);
         border-left: solid;
         border-right: solid;
         border-left-width: 4px;
@@ -130,8 +123,8 @@
         border-left-width: 0px;
         border-right-width: 0px;
         border-bottom-width: 4px;
-        color: #520340;
-        border-color: #10cae2;
+        color: var(--secondary);
+        border-color: var(--accent);
         cursor: pointer;
         display: inline-block;
         font-weight: 600;
@@ -155,7 +148,7 @@
 
       .tabBlock-tab.is-active::before {
         text-align: center;
-        background-color: #10cae2;
+        background-color: var(--accent);
         left: -4px;
         right: -4px;
         top: -1px;
@@ -185,7 +178,7 @@
       }
 
       .tabBlock-tab.is-active::before {
-        background-color: #10cae2;
+        background-color: var(--accent);
       }
 
       .tabBlock-tab.is-active::after {
@@ -193,7 +186,7 @@
       }
 
       .current-sort {
-        background-color: #10cae2;
+        color: #10c8e0;
       }
 
       .center2 {
@@ -216,53 +209,58 @@
       >
     </div>
     <div class="content">
-      <h1><b class="center">Spieler: {{user_name}}</b></h1>
+      <h1>
+        <b
+          class="center player-name"
+          style="width: fit-content; margin-bottom: 50px"
+          >{{user_name}}</b
+        >
+      </h1>
       <br />
       <div class="container-util">
         <div class="container">
-      <div class="item item-1">Text 1</div>
-      <div class="item item-2">Text 2</div>
-      <div class="item item-3">Image</div>
-      <div class="item item-4">Text 3</div>
-      <div class="item item-5">Text 4</div>
-      <div class="item item-6">Text 5</div>
-    </div>
-    </div>
-      <!-- <div class="row center-v">
-        <div class="column center-v" style="display: block !important">
-          <div id="mySkinContainer"></div>
-          <div id="downloadButton">
-            <button
-              onclick='forceDownload("https://crafatar.com/skins/{{uuid}}", "Skin-{{user_name}}.png");'
-              style="width: 400px"
-            >
-              Download
-            </button>
+          <div title="Das erste mal gesehen" class="item item-2">
+            <div class="box bottomLeft">
+              <img width="50%" src="./static/images/003-calendar-1.png" alt="" />
+              <p id="3"></p>
+            </div>
+          </div>
+          <div title="Gesamtspielzeit" class="item item-1">
+            <div class="box topLeft">
+              <img width="50%" src="./static/images/005-wall-clock.png" alt="" />
+              <p id="6">Loading</p>
+            </div>
+          </div>
+          <div class="item item-3">
+            <div id="mySkinContainer"></div>
+            <div class="bottomDiv">
+              <p id="1"><span>Loading</span></p>
+            </div>
+            <div id="downloadButton">
+              <!-- <button
+                onclick='forceDownload("https://crafatar.com/skins/{{uuid}}", "Skin-{{user_name}}.png");'
+                style="width: 400px"
+              >
+                Download
+              </button> -->
+            </div>
+          </div>
+          <div title="Gesamtanzahl Tode" class="item item-4">
+            <div class="box topRight">
+              <img width="50%" src="./static/images/007-grave-1.png" alt="" />
+              <p id="2">Loading</p>
+            </div>
+          </div>
+          <div title="Zeit seit letzem Tod" class="item item-5">
+            <div class="box bottomRight">
+              <img width="50%" src="./static/images/006-grave.png" alt="" />
+              <p id="5">Loading</p>
+            </div>
           </div>
         </div>
-        <div class="column text">
-          <table>
-            <tr>
-              <td>
-                <p>Status:</p>
-                <p>Tode:</p>
-                <p>Zeit seit letztdem Tod:</p>
-                <p>Spielzeit:</p>
-                <p>Zuletzt gesehen:</p>
-                <p>Beigetreten am:</p>
-              </td>
-              <td>
-                <p id="1">{{status}}</p>
-                <p id="2">Loading</p>
-                <p id="5">Loading</p>
-                <p id="6">Loading</p>
-                <p id="4">Loading</p>
-                <p id="3">Loading</p>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div> -->
+      </div>
+      <p id="4" style="display: none">Loading</p>
+
       <br />
       <br />
       <hr />
@@ -311,7 +309,7 @@
               width: 1600px;
               height: 600px;
               overflow-wrap: break-word;
-              overflow-y: scroll;
+              overflow-x: hidden;
             "
           >
             <div class="stats_div" id="staticsContentDiv">Loading...</div>
@@ -358,8 +356,9 @@
             i += 1;
             continue;
           }
-          console.log(i + ": " + element);
-          document.getElementById("" + i).innerText = element;
+          document.getElementById("" + i).innerHTML =
+            i === 1 ? "<span>" + element + "</span>" : element;
+
           i += 1;
         }
       };

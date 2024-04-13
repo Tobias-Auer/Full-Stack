@@ -17,7 +17,9 @@
           />
         </span>
 
-        <span id="loginVar2" style="display: flex; width: 84%; justify-content: center"
+        <span
+          id="loginVar2"
+          style="display: flex; width: 84%; justify-content: center"
           >{{ loginVar | safe}}</span
         >
 
@@ -32,76 +34,88 @@
           </button>
         </span>
       </div>
-      <ul id="nav-bar">
-        <li>
-          <img
+      <div class="mainHeader">
+        <img
           class="normal-icon"
-            alt="logo"
-            height="80px"
-            id="logo"
-            src="./static/images/logo2.png"
-          />
-        </li>
-        <li>
-          <div class="dropdown">
-            <button
-              class="dropbtn {% if request.path=='/' %} current{% endif %}"
-              onclick="window.location.href=`/`"
-            >
-              Startseite
-            </button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button
-              class="dropbtn {% if request.path=='/spieler' %} current{% endif %}"
-              onclick="window.location.href=`/spieler`"
-            >
-              Spieler
-            </button>
-          </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button
-              class="dropbtn {% if request.path=='/add_pref' or request.path=='/join_pref' %} current{% endif %}"
-            >
-              ▼ Prefixes
-            </button>
-            <div class="dropdown-content">
-              <a href="/add_pref">Erstellen/Ändern</a>
-              <a href="/join_pref">Beitreten</a>
+          alt="logo"
+          height="60px"
+          id="logo"
+          src="./static/images/logo2.png"
+        />
+        <ul id="nav-bar">
+          <li>
+            <div class="dropdown">
+              <button
+                class="dropbtn {% if request.path=='/' %} current{% endif %}"
+                onclick="window.location.href=`/`"
+              >
+                Startseite
+              </button>
             </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button
+                class="dropbtn {% if request.path=='/spieler' %} current{% endif %}"
+                onclick="window.location.href=`/spieler`"
+              >
+                Spieler
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button
+                class="dropbtn {% if request.path=='/add_pref' or request.path=='/join_pref' %} current{% endif %}"
+              >
+                ▼ Prefixes
+              </button>
+              <div class="dropdown-content">
+                <a href="/add_pref">Erstellen/Ändern</a>
+                <a href="/join_pref">Beitreten</a>
+              </div>
+            </div>
+          </li>
+          <!-- <li>
+            <div class="dropdown">
+              <button
+                class="dropbtn {% if request.path=='/report' %} current{% endif %}"
+                onclick="window.location.href='/report'"
+              >
+                Spieler Report
+              </button>
+            </div>
+          </li> -->
+          {% if perm <= 1 %}
+          <li>
+            <div class="dropdown">
+              <button
+                class="dropbtn {% if request.path=='/users' %} current{% endif %}"
+                onclick="window.location.href='/users'"
+              >
+                Verwaltung
+              </button>
+            </div>
+          </li>
+          {% endif %}
+
+          <li></li>
+        </ul>
+        <div class="login-group dropdown">
+          {% if name != "" %}
+          <button class="dropbtn">
+              <img alt="" class="profile-image" src="https://crafatar.com/avatars/{{uuid_profile}}?default=MHF_Steve&overlay"/>
+          </button>
+          <div class="dropdown-content">
+              <a style="font-size: 25px;padding-top:8px;padding-bottom:8px;" href="/spieler?player={{name}}">Statistiken</a>
+              <a style="color: red;padding-top:6px;padding-bottom:6px;" onclick="logout()">Logout</a>
           </div>
-        </li>
-        <li>
-          <div class="dropdown">
-            <button
-              class="dropbtn {% if request.path=='/report' %} current{% endif %}"
-              onclick="window.location.href='/report'"
-            >
-              Spieler Report
-            </button>
-          </div>
-        </li>
-        {% if perm <= 1 %}
-        <li>
-          <div class="dropdown">
-            <button
-              class="dropbtn {% if request.path=='/users' %} current{% endif %}"
-              onclick="window.location.href='/users'"
-            >
-              Verwaltung
-            </button>
-          </div>
-        </li>
-        {% endif %}
-        <!-- Code for flask application -->
-        <span class="loginVarMain"><li >{{ loginVar | safe}}</li></span>
-        
-        <li></li>
-      </ul>
+          {% else %}
+          {{ loginVar | safe }}
+          {% endif %}
+      </div>
+      
+      </div>
     </nav>
   </div>
 </header>
