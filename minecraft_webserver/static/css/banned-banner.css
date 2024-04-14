@@ -4,6 +4,7 @@
 }
 
 .banner-container {
+    z-index: 200;
     width: 100%;
     display: none;
     padding: 0px;

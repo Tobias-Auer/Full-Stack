@@ -76,7 +76,6 @@ a.current2 {
   font-size: 20px !important;
   border: none;
   cursor: pointer;
-  margin-right: 0 10px !important;
   line-height: 30px !important;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   
@@ -137,6 +136,7 @@ img {
 html,
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 .text {
   margin: 32px;
@@ -181,6 +181,7 @@ img.scale {
 }
 header {
   margin-top: -16px;
+  width: 100vw !important;
 }
 .content {
   margin-top: 130px;

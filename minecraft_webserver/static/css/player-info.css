@@ -95,7 +95,7 @@ td {
   filter: brightness(80%); /* Darkening filter */
 }
 
-.container {
+.container{
   display: grid;
   grid-template-rows: repeat(2, fit-content);
   grid-template-columns: 1fr 1fr 1fr;
@@ -106,8 +106,8 @@ td {
   grid-template-areas:
     "stat1 image stat3"
     "stat2 image stat4";
-}
 
+}
 .item-1 {
   grid-area: stat1;
   justify-self: end;
@@ -230,5 +230,4 @@ td {
 
 .status {
   text-transform: capitalize;
-  font-size: 25px;
 }

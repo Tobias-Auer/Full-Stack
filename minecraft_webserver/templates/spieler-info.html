@@ -10,7 +10,7 @@
     <link href="./static/css/index.css" rel="stylesheet" />
     <link href="./static/css/player-info.css" rel="stylesheet" />
     <link rel="stylesheet" href="./static/css/minecraft.css" />
-    <link rel="stylesheet" href="./static/css/responive-player-info.css" />
+    <link rel="stylesheet" href="./static/css/responsive-player-info.css" />
 
     <link
       href="./static/images/favicon.ico"
@@ -48,9 +48,6 @@
         border-bottom: 4px solid var(--accent);
       }
 
-      .stats_div_outer_outer {
-        width: 80%;
-      }
 
       tbody tr:hover {
         filter: brightness(80%);
@@ -210,10 +207,10 @@
     </div>
     <div class="content">
       <h1>
-        <b
+        <strong
           class="center player-name"
           style="width: fit-content; margin-bottom: 50px"
-          >{{user_name}}</b
+          >{{user_name}}</strong
         >
       </h1>
       <br />
@@ -296,7 +293,7 @@
             </div>
           </div>
         </div>
-      </div>
+      
       <!-- <p id="4" style="display: none">Loading</p> -->
 
       <br />
@@ -335,7 +332,7 @@
                 onclick="doTabAction('other', 'other_name', 'sort-state-0')"
                 class="tabBlock-tab"
               >
-                Verschiedenes
+                Mehr
               </li>
             </ul>
           </figure>
@@ -353,7 +350,7 @@
             <div class="stats_div" id="staticsContentDiv">Loading...</div>
           </div>
         </div>
-      </div>
+      </div></div>
       <br />
     </div>
     <footer>
