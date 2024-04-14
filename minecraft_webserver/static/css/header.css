@@ -195,9 +195,6 @@ header {
   display: block !important;
 }
 
-.menueToggle li:first-child {
-  display: none !important;
-}
 
 .loginVarMain {
   font-size: 26px;
@@ -253,6 +250,8 @@ header {
 
 #nav-bar {
   width: fit-content;
+  align-items: center;
+  display: flex;
 }
 
 

@@ -20,7 +20,7 @@
         <span
           id="loginVar2"
           style="display: flex; width: 84%; justify-content: center"
-          >{{ loginVar | safe}}</span
+          >survival0.duckdns.org</span
         >
 
         <span style="display: flex; width: 8%; justify-content: end">
@@ -42,7 +42,15 @@
           id="logo"
           src="./static/images/logo2.png"
         />
-        <ul id="nav-bar">
+        <ul id="nav-bar"><li class="mobile-view-only logout2">
+            {% if name != "" %}
+            <a
+              style="color: red; padding-top: 6px; padding-bottom: 6px"
+              onclick="logout()"
+              >Logout</a
+            >
+          {% else %} {{ loginVar | safe }} {% endif %}
+          </li>
           <li>
             <div class="dropdown">
               <button
@@ -76,16 +84,6 @@
               </div>
             </div>
           </li>
-          <!-- <li>
-            <div class="dropdown">
-              <button
-                class="dropbtn {% if request.path=='/report' %} current{% endif %}"
-                onclick="window.location.href='/report'"
-              >
-                Spieler Report
-              </button>
-            </div>
-          </li> -->
           {% if perm <= 1 %}
           <li>
             <div class="dropdown">
@@ -99,22 +97,32 @@
           </li>
           {% endif %}
 
-          <li></li>
         </ul>
+        
+
         <div class="login-group dropdown">
           {% if name != "" %}
           <button class="dropbtn">
-              <img alt="" class="profile-image" src="https://crafatar.com/avatars/{{uuid_profile}}?default=MHF_Steve&overlay"/>
+            <img
+              alt=""
+              class="profile-image"
+              src="https://crafatar.com/avatars/{{uuid_profile}}?default=MHF_Steve&overlay"
+            />
           </button>
           <div class="dropdown-content">
-              <a style="font-size: 25px;padding-top:8px;padding-bottom:8px;" href="/spieler?player={{name}}">Statistiken</a>
-              <a style="color: red;padding-top:6px;padding-bottom:6px;" onclick="logout()">Logout</a>
+            <a
+              style="font-size: 25px; padding-top: 8px; padding-bottom: 8px"
+              href="/spieler?player={{name}}"
+              >Statistiken</a
+            >
+            <a
+              style="color: red; padding-top: 6px; padding-bottom: 6px"
+              onclick="logout()"
+              >Logout</a
+            >
           </div>
-          {% else %}
-          {{ loginVar | safe }}
-          {% endif %}
-      </div>
-      
+          {% else %} {{ loginVar | safe }} {% endif %}
+        </div>
       </div>
     </nav>
   </div>
