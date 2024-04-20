@@ -39,7 +39,7 @@ def inject_loginVar():
     uuid = session.get('uuid')
     loginVar = "<a href=\"/login\" id=loginLink>Login</a>"
     permission_level = 99
-    name=""
+    name = ""
     if isinstance(uuid, str):
         name = minecraftApi.get_username_from_uuid(uuid)
         loginVar = (f"{name}<br> <a id=logoutLink onclick=\"logout()\" style=\"cursor: "
@@ -159,9 +159,6 @@ def player_overview_route():
         all_status.append(status)
         combined_users_data.append([user_name, uuid])
 
-    print(all_users)
-    print(all_uuids)
-
     return render_template("spieler.html", results=combined_users_data, status=all_status)
 
 
@@ -188,9 +185,32 @@ def users_route():
         db_handler.disconnect()
         return jsonify("{success:success}")
     user_list = db_handler.return_table("cache")
-    print(user_list)
+    all_data = []
+
+    for element in user_list:
+        status = db_handler.get_player_status(element[0])
+        all_data.append(list(element) + [status])
+
+    all_users = []
+    all_status = []
+    combined_users_data = []
+    all_uuids = databaseApi.get_all_uuids_from_db()
+
+    for uuid in all_uuids:
+        user_name = minecraftApi.get_cached_username_from_uuid(uuid)
+        if user_name is None:
+            print(f"No username found for UUID: {uuid}")
+            continue  # Skip processing if no username found
+
+        all_users.append(user_name)
+        status = db_handler.get_player_status(uuid)
+        print(f"Status from user: {user_name} with UUID: {uuid} is: {status}")
+        all_status.append(status)
+        combined_users_data.append([user_name, uuid])
+
     db_handler.disconnect()
-    return render_template("users.html", data=user_list)
+
+    return render_template("adminpanel.html", results=combined_users_data, status=all_status, data=all_data)
 
 
 @app.route('/report')
@@ -306,6 +326,22 @@ def stream_status():
         ...
     return Response(generate(), mimetype='text/event-stream')
 
+@app.route('/api/status2')
+def stream_status2():
+    def generate():
+        while True:
+            user_list = db_handler.return_table("cache")
+            data = []
+            for uuid in user_list:
+                data.append(db_handler.get_player_status(uuid[0]))
+            yield f"data: {data}\n\n"
+            time.sleep(2)
+
+    db_handler = dataBaseOperations.DatabaseHandler("playerData")
+    while not proceedStatusUpdate:  # threading lock(my best try at least, not sure if it is the correct way to do this)
+        ...
+    return Response(generate(), mimetype='text/event-stream')
+
 
 @app.route('/api/player_count')
 def stream_player_count():
@@ -334,7 +370,7 @@ def stream_hardware_stats():
 
                 # Calculate CPU usage percentage
                 cpu_delta: int = stats['cpu_stats']['cpu_usage']['total_usage'] - stats['precpu_stats']['cpu_usage'][
-                                     'total_usage']
+                    'total_usage']
                 system_delta: int = stats['cpu_stats']['system_cpu_usage'] - stats['precpu_stats'][
                     'system_cpu_usage']
                 number_of_cores: int = len(stats['cpu_stats']['cpu_usage']['percpu_usage'])

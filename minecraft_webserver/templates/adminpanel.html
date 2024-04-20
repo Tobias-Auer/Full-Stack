@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html id="top" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Spieler Übersicht</title>
+
+    <link href="./static/css/header.css" rel="stylesheet" />
+    <link href="./static/css/index.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./static/css/adminpanel.css" rel="stylesheet" />
+
+    <link href="./static/images/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" />
+</head>
+
+<body>
+    {% include 'header.html' %}
+
+    <div class="content">
+        <div class="container mt-5">
+            
+            <ul class="list-group">{% for result in data %}
+                <li class="list-group-item" {% if result[6] == "True" %}style="background-color: rgb(230, 102, 102);"{% endif %}>
+                    <a class="text-decoration-none list-item-content"
+                        style="justify-content: space-between;color:black;">
+
+                        <img alt="player_head" class="list-item-image"
+                            src="https://crafatar.com/avatars/{{result[0]}}?default=MHF_Steve&overlay" />
+
+                        <select style="width: 153px;" onchange="send_access_lvl(this.value)">
+                            <option {% if result[5]==0 %} selected {% endif %} value="{{result[0]}}-{{result[5]}}-0">
+                                Adminstrator (0)
+                            </option>
+                            <option {% if result[5]==1 %} selected {% endif %} value="{{result[0]}}-{{result[5]}}-1">
+                                Organisator (1)
+                            </option>
+                            <option {% if result[5]==2 %} selected {% endif %} value="{{result[0]}}-{{result[5]}}-2">User
+                                (2)</option>
+                        </select>
+
+
+                        <div style="cursor: pointer;justify-self:center" onclick="window.location.href = '/spieler?player={{result[1]}}'" title="{{result[0]}}" class="list-item-text">{{result[1]}}</div>
+                        
+                        <div  style="justify-self:center" title="{{result[0]}}" style="font-size: 18px;">{{result[0][0:8]}}...</div>
+
+
+                        {% if result[6] == "True" %}
+                        <button class="banBtn" onclick="send_ban_request('{{result[0]}}', 'unban')">
+                            unban
+                        </button>
+                        {% else %}
+                        <button class="banBtn" onclick="send_ban_request('{{result[0]}}', 'ban')">
+                            Ban
+                        </button>
+                        {% endif %}
+                        <b class="status-text-{{ result[8] | safe }} status-text-right"
+                            id="status-text-{{loop.index-1}}">{{ result[8] | safe}}</b>
+
+
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="text"></div>
+    </div>
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="/verschiedenes/impressum.html">Impressum</a></li>
+                <li><a href="/verschiedenes/datenschutz.html">Datenschutz</a></li>
+                <li><a href="/verschiedenes/kontakt.html">Kontakt</a></li>
+                <li><a href="#">🡅</a></li>
+            </ul>
+        </nav>
+    </footer>
+    <script>
+        function send_access_lvl(lvl) {
+          console.log(lvl);
+          lvl = lvl.split("-");
+          uuid = lvl[0];
+          new_access_lvl = lvl[2];
+          console.info(uuid, new_access_lvl);
+          fetch("/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              mode: "lvl",
+              uuid: uuid,
+              new_access_lvl: new_access_lvl,
+            }),
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              }
+              throw new Error("Something is wrong :(\nTry again!");
+            })
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+  
+        function send_ban_request(uuid, state) {
+          fetch("/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              mode: "ban",
+              uuid: uuid,
+              state: state,
+            }),
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              }
+              throw new Error("Something is wrong :(\nTry again!");
+            })
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+      </script>
+    <script>
+        const eventSource = new EventSource("/api/status2");
+
+        eventSource.onmessage = (event) => {
+            console.log(event.data.replaceAll("'", '"'));
+            const parsedArray = JSON.parse(event.data.replaceAll("'", '"'));
+            console.log(parsedArray);
+            // Iteration über das Array
+            i = 0;
+            for (const element of parsedArray) {
+                console.log(i + ": " + element);
+                if (element == "offline") {
+                    document
+                        .getElementById("status-text-" + i)
+                        .classList.remove("status-text-online");
+                    document
+                        .getElementById("status-text-" + i)
+                        .classList.add("status-text-offline");
+                } else {
+                    document
+                        .getElementById("status-text-" + i)
+                        .classList.remove("status-text-offline");
+                    document
+                        .getElementById("status-text-" + i)
+                        .classList.add("status-text-online");
+                }
+                document.getElementById("status-text-" + i).innerText = element;
+                i += 1;
+            }
+        };
+    </script>
+</body>
+
+</html>

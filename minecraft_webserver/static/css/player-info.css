@@ -161,12 +161,15 @@ td {
   bottom: 40px;
   text-align: center;
 }
+ .higher {
+  bottom: 57px !important;
+}
 
-.topDiv {
+/* .topDiv {
   position: relative;
   bottom: 70px;
   text-align: center;
-} 
+}  */
 
 
 
@@ -230,4 +233,7 @@ td {
 
 .status {
   text-transform: capitalize;
+}
+.stats_div_outer_outer {
+  width: 100%;
 }

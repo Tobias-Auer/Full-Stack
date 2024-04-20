@@ -233,7 +233,7 @@
             <div class="topDiv">
               <p id="4" style="display: none;"><span>Loading</span></p>
             </div>
-            <div class="bottomDiv">
+            <div class="bottomDiv" id="bottomDiv">
               <p id="1"><span>Loading</span></p>
             </div>
             <div class="downloadButton">
@@ -391,7 +391,13 @@
             continue;
           }
           if (i==1) {
+            if (element == "offline") {
+              document.getElementById("bottomDiv").classList.add("higher");
+              element = `<span style='margin-top: -20px;' class="status status-${element}">` + element + "<br><abc style='color:black;font-size:20px'>" + parsedArray[4] + "</abc></span>"
+            } else {
             element = `<span class="status status-${element}">` + element + "</span>"
+            document.getElementById("bottomDiv").classList.remove("higher");
+            }
               
           }
           document.getElementById("" + i).innerHTML = element;

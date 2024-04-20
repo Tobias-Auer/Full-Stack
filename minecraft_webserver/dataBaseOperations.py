@@ -5,6 +5,8 @@ import time
 import traceback
 from datetime import datetime
 
+import pytz
+
 import utils
 
 USE_TEST_DB = False
@@ -562,9 +564,11 @@ class DatabaseHandler:
 
     def ban_player(self, uuid, details=None):
         if details is None:
-            details = ['4ebe5f6f-c231-4315-9d60-097c48cc6d30', 'Banned by website! More options soon!', '22-11-2023 19:27:31',
-                       '22-11-9999 00:00:00']  # good enough until the frontend is updated
-        # self.toggle_ban_state([[uuid, details]], "True", single_flag=True)  # not necessary, but maybe i should use it
+            berlin_tz = pytz.timezone('Europe/Berlin')
+            current_time_berlin = datetime.now(berlin_tz)
+            details = ['4ebe5f6f-c231-4315-9d60-097c48cc6d30', 'Perma-Banned by an admin!\n\nAdditional context: -4983749', current_time_berlin.strftime("%d-%m-%Y %H:%M:%S"),
+                       '22-11-9999 00:00:00']  # good enough until the frontend is updated (what won't happen soon i guess (20/04/24))
+        self.toggle_ban_state([[uuid, details]], "True", single_flag=True)  # not necessary, but maybe i should use it
 
         db_handler = DatabaseHandler("ban_interface")
         query = "INSERT INTO status (webserver_changed_sth) VALUES (?)"
@@ -574,7 +578,7 @@ class DatabaseHandler:
         db_handler.disconnect()
 
     def unban_player(self, uuid):
-        # self.toggle_ban_state([[uuid, ""]], "False", single_flag=True)  # not necessary, but maybe i should use it
+        self.toggle_ban_state([[uuid, ""]], "False", single_flag=True)  # not necessary, but maybe i should use it
         db_handler = DatabaseHandler("ban_interface")
         query = "INSERT INTO status (webserver_changed_sth) VALUES (?)"
         uuid = self.convert_trimmed_to_full(uuid)
