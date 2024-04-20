@@ -432,6 +432,14 @@ class DatabaseHandler:
             print(f"Error: {e}")
             return None
 
+    def get_chosen_prefix_by_uuid(self, uuid):
+        # Query to find the occurrence of the UUID
+        query = "SELECT prefix FROM main WHERE members LIKE ?"
+        self.cursor.execute(query, (f"%{uuid}%",))
+        result = self.cursor.fetchone()[0]
+        print(result)
+        return result
+
     def check_for_prefix(self, prefix, password=None, require_pwd=False):
         require_pwd_message = False
         try:

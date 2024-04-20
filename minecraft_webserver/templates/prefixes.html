@@ -24,8 +24,6 @@
       type="image/vnd.microsoft.icon"
     />
 
-    <link href="./static/css/popup.css" rel="stylesheet" />
-
     <script src="https://cdn.jsdelivr.net/npm/js-sha256"></script>
   </head>
 
@@ -33,11 +31,12 @@
     {% include 'header.html' %}
 
     <div class="content">
+      
       <!-- content here!! -->
       <div class="container mt-5">
         {% for result in results %}
         <ul class="list-group">
-          <li class="list-group-item">
+          <li class="list-group-item" style="cursor:pointer;{% if result[0]==currentPref %}background-color: #e4fffa;{% endif %}">
             <a
               class="text-decoration-none list-item-content"
               color="{{result[0]}}"
@@ -58,22 +57,6 @@
       </div>
       <div class="text"></div>
     </div>
-
-    <div class="custom-modal" id="custom-modal">
-      <div class="modal-header">
-        <div class="title" id="modal-title">(ERROR)</div>
-        <button
-          class="close-button"
-          data-close-button
-          id="custom-close-button"
-          onclick="closeModal(this.closest(`.custom-modal`))"
-        >
-          &times;
-        </button>
-      </div>
-      <div class="modal-body" id="modal-content">(ERROR)</div>
-    </div>
-    <div id="custom-overlay"></div>
     <footer>
       <nav>
         <ul>
@@ -117,24 +100,27 @@
       }
 
       function ask_for_pref(pref, require_pwd = false) {
-        const modal_body = document.getElementById("modal-content");
-        const modal_title = document.getElementById("modal-title");
-        const modal = document.getElementById("custom-modal");
-        const input_field = "<input id='pwd'></input>";
-        modal_body.innerHTML =
+        const myinput_field = "<input id='pwd'></input>";
+        mymodal_body =
           "Möchtest du wirklich deinen aktuellen Prefix <X> gegen den neuen Prefix " +
           pref +
-          ` eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.<br><br>`;
+          ` eintauschen?<br><br>Hinweis:<br>Du kannst jeder Zeit wieder wechseln.`;
 
         if (require_pwd) {
-          modal_body.innerHTML += input_field;
-          modal_body.innerHTML += `<br><br><div class='button-container'><button onclick='closeModal(this.closest(".custom-modal"))'>Abbruch</button><button onclick='send_prefix("${pref}",true,true)'>Bestätigen</button></div>`;
-        } else {
-          modal_body.innerHTML += `<br><br><div class='button-container'><button onclick='closeModal(this.closest(".custom-modal"))'>Abbruch</button><button onclick='send_prefix("${pref}",true)'>Bestätigen</button></div>`;
+          mymodal_body += "<br>Es ist ein Passwort von nöten um diesen Prefix zu wählen<br><br>"+myinput_field;paramString = [pref,true,true]
+        } else { paramString = [pref,true]
         }
 
-        modal_title.innerHTML = "Bestätigung";
-        openModal(modal);
+        mymodal_title = "Bestätigung";
+        messagebox_info(
+          mymodal_title,
+          mymodal_body,
+          {
+            confirmationButton: "Bestätigen",
+            cancelButton: "Abbruch",
+          },
+          { confirmationCallback: send_prefix, confirmationParams: paramString }, true
+        );
       }
 
       function send_prefix(prefix, apply_mode = false, pwd = null) {
@@ -185,49 +171,31 @@
           });
       }
 
-      function openModal(modal) {
-        if (modal == null) return;
-        modal.classList.add("active");
-        const overlay = document.getElementById("custom-overlay");
-        overlay.classList.add("active");
-      }
-
-      function closeModal(modal) {
-        if (modal == null) return;
-        modal.classList.remove("active");
-        overlay.classList.remove("active");
-      }
-
       function success(prefix) {
-        const modal_body = document.getElementById("modal-content");
-        const modal_title = document.getElementById("modal-title");
-        const modal = document.getElementById("custom-modal");
-        modal_body.innerHTML =
-          "Du hast erfolgreich deinen Prefix geändert :) <br><br><button onclick='closeModal(this.closest(`.custom-modal`))'>OK</button>";
-        modal_title.innerHTML = "Erfolgreich :)";
-        openModal(modal);
+        text = "Du hast erfolgreich deinen Prefix geändert :) <br><br>Alter Prefix: {{currentPref}}<br>Neuer Prefix: " + prefix;
+        messagebox_info(
+          "Erfolgreich :}",
+          text,
+          {confirmationButton: "Super!", },
+          {cancelCallback: reloadFunc,cancelParams: [],confirmationCallback: reloadFunc,confirmationParams: []},true
+        );
       }
-
+      function reloadFunc() {
+        window.location.reload();
+      }
       function failure(prefix, reason) {
-        const modal_body = document.getElementById("modal-content");
-        const modal_title = document.getElementById("modal-title");
-        const modal = document.getElementById("custom-modal");
-        modal_body.innerHTML =
-          "Es it ein Fehler beim setzen folgendes Prefixes aufgetreten: " +
-          prefix +
-          "<br><br>Weitere Informationen:<br>" +
-          reason;
-        modal_title.innerHTML = "ERROR :[";
-        openModal(modal);
+        text = "Es it ein Fehler beim setzen folgendes Prefixes aufgetreten: " +
+        prefix +
+        "<br><br>Weitere Informationen:<br>" +
+        reason;
+        messagebox_error(
+          "ERROR :[",
+          text,
+          {},
+          {},true
+        );
       }
 
-      const overlay = document.getElementById("custom-overlay");
-      overlay.addEventListener("click", () => {
-        const modals = document.querySelectorAll(".custom-modal.active");
-        modals.forEach((modal) => {
-          closeModal(modal);
-        });
-      });
       function hashPassword(password) {
         const hashHex = sha256(password);
         return hashHex;

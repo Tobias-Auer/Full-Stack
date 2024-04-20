@@ -13,16 +13,11 @@
     <script src="https://cdn.jsdelivr.net/npm/js-sha256"></script>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
             background-color: #f8f8f8;
             color: #333;
             /* margin: 20px;
             margin: 20px; */
             text-align: center;
-        }
-
-        header {
-            text-align: left;
         }
 
         h1 {
@@ -66,13 +61,13 @@
 
         .eye-icon {
             position: absolute;
-            top: 50%;
-            right: 8px;
+            top: 58%;
+            right: 19px;
             transform: translateY(-50%);
             cursor: pointer;
         }
 
-        button {
+        .submitBtn {
             background-color: #004080;
             color: #fff;
             padding: 10px 20px;
@@ -81,7 +76,7 @@
             cursor: pointer;
         }
 
-        button:hover {
+        .submitBtn :hover {
             background-color: #003366;
         }
 
@@ -97,6 +92,12 @@
             opacity: 1;
             height: auto;
         }
+
+        @media (max-width: 627px) {
+            h4 {
+                font-size:  17px;
+            }
+        }
     </style>
 
 </head>
@@ -107,8 +108,12 @@
     {% include 'header.html' %}
 <div class="text">
     <br><br>
-    <h1>Minecraft Prefix Konfigurator</h1>
-    <div class="config-container">
+    <h1>Prefix Konfigurator</h1>
+    <div style="width: 100%;justify-content: center;display: flex;">
+     <h4 style="text-align: center; max-width: 1000px;">Erstelle hier deinen eigenen Prefix der im Spiel vor deinem Namen angezeigt wird! <br>Du kannst dir auch einen aus der <a href="/join_pref">Liste der bestehenden Prefixe</a> aussuchen. </h4>
+        
+    </div>
+   <div class="config-container">
         <form id="config-form">
             <label for="player-name">Prefix (max. 10 Zeichen):</label>
             <input id="player-name" maxlength="10" name="player-name" required type="text">
@@ -137,10 +142,10 @@
             <div class="password-container" id="password-field">
                 <label for="password">Passwort:</label>
                 <input id="password" name="password" type="password">
-                <span class="eye-icon" onclick="togglePasswordVisibility()">👁️‍🗨️</span>
+                <span class="eye-icon" onclick="togglePasswordVisibility()">👁️</span>
             </div>
 
-            <button onclick="saveConfig()" type="button">Konfiguration speichern</button>
+            <button class="submitBtn" onclick="saveConfig()" type="button">Konfiguration speichern</button>
         </form>
     </div>
 </div>
@@ -181,7 +186,7 @@
             eyeIcon.textContent = "👁️‍🗨️";
         } else {
             passwordInput.type = "password";
-            eyeIcon.textContent = "👁️‍🗨️";
+            eyeIcon.textContent = "👁️";
         }
     }
 
@@ -195,6 +200,12 @@
             password = ""
         } else if (password === "") {
             console.warn("Enter a password!");
+            messagebox_info(
+        "Fehlendes Passwort",
+        "Bitte gebe ein Passwrt ein oder stelle die Option 'jeder darf beitreten' ein!",
+        {},
+        {}
+      );
             return
         }
 
@@ -220,11 +231,33 @@
             .then(data => {
                 // Handle the response data
                 console.log('Response:', data);
+                console.error(data["result"])
+                if (data["result"].split(":")[0]=="error") {
+                    throw new Error(data["result"].split(":")[1]); 
+                } else if (data["result"] =="denied") {
+                    throw new Error("Aktion verweigert! Grund: " + data["reason"]); 
+                }
+                messagebox_info(
+        "Erfolg :}",
+        "Du hast deinen Prefix erfolgreich erstellt/geändert.<br><br>Entdecke auch Prefixe anderer Spieler. <br><br>Hinweis: Wenn Dein Prefix sich im Spiel nicht aktualisiert, überprüfe ob Du in auch in der Liste ausgewählt hast",
+        {confirmationButton: "Super!" },
+        { confirmationCallback: redirectFunc, confirmationParams: [] ,cancelCallback: redirectFunc, cancelParams: [] },true
+      );
             })
             .catch(error => {
                 console.error('Error:', error);
+                messagebox_error(
+        "Fehler :[",
+        "<br>Es ist bedauerlicherweise folgender Fehler aufgetreten: <br><br>" + error + "<br>",
+        {},
+        {},true
+      );
             });
     }
+
+function redirectFunc() {
+    document.location.href = "/join_pref";
+}
 
     function hashPassword(password) {
         const hashHex = sha256(password);

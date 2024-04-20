@@ -240,9 +240,7 @@ def add_pref_path():
     return render_template("create-prefix.html", prefix=prefix, color=color)
 
 
-@app.route('/manage_pref')
-def manage_pref_path():
-    return redirect("/add_pref")  # TODO: Delete route and link in header
+
 
 
 @FL.require_auth()
@@ -276,8 +274,12 @@ def join_pref_path():
 
     all_available_prefixes = db_handler.get_all_pref()
 
+    uuid = session.get("uuid")
+    currentPref = db_handler.get_chosen_prefix_by_uuid(uuid)
+    created_pref = db_handler.get_pref(uuid)
+
     db_handler.disconnect()
-    return render_template("prefixes.html", results=all_available_prefixes)
+    return render_template("prefixes.html", results=all_available_prefixes, currentPref=currentPref, created_pref=created_pref)
 
 
 @app.route('/pref_api', methods=['POST'])
@@ -292,15 +294,15 @@ def pref_api():
 
     db_handler = dataBaseOperations.DatabaseHandler("prefix")
     if len(prefixName) > 10:
-        response_data = {'result': 'denied', "reason": "length"}
+        response_data = {'result': 'denied', "reason": "Prefix tooo long"}
         return jsonify(response_data)
     if color not in ["§e", "§b", "§3", "§1", "§9", "§d", "§5", "§f", "§7", "§8", "§0"] or prefixName == "":
-        response_data = {'result': 'denied', "reason": "invalid color or name"}
+        response_data = {'result': 'denied', "reason": "Invalid color or name"}
         return jsonify(response_data)
     with open("blacklist.txt", 'r') as file:
         blacklist = ast.literal_eval(file.readline())
     if prefixName.lower().replace(" ", "") in blacklist or prefixName.lower().replace(" ", "").find("owner") != -1:
-        response_data = {'result': 'denied', "reason": "blacklist"}
+        response_data = {'result': 'denied', "reason": "Prefix is on the blacklist"}
         return jsonify(response_data)
 
     result = db_handler.write_prefix(uuid, prefixName, color, password)
