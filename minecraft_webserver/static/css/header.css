@@ -3,7 +3,9 @@
   --secondary: #2435fd;
   --accent: #FF7A38;
 }
-
+body {
+  line-height: var(--bs-body-line-height);
+}
 nav li {
   display: inline;
   margin-right: 0.5rem;
