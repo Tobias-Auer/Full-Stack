@@ -1,3 +1,6 @@
+This is V1. V2 can be found [here](https://github.com/Tobias-Auer/MCConnect) 
+
+
 Legal Information:
 
 
