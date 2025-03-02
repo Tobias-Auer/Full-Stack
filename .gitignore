@@ -1,1 +1,5 @@
 instance/
+hoffest_planung/docker-compose.yml
+/hoffest_planung/__pycache__
+hoffest_planung/credentials.txt
+/hoffest_planung/logs
