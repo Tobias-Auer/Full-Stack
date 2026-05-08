@@ -6,3 +6,4 @@ hoffest_planung/credentials.txt
 hoffest_planung/secretAuthCode.txt
 hoffest_planung/flaskSecretKey.txt
 .DS_Store
+hoffest_planung/eventdb_2026-01-02.sql
